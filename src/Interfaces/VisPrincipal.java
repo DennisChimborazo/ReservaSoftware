@@ -4,6 +4,11 @@
  */
 package Interfaces;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Dalex
@@ -29,11 +34,24 @@ public class VisPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jbtnAulas = new javax.swing.JButton();
-        jbtnLaboratorio = new javax.swing.JButton();
+        jbtnTaller = new javax.swing.JButton();
+        jbtnLaboratorio1 = new javax.swing.JButton();
+        jbtnTaller1 = new javax.swing.JButton();
+        jbtnAuditorio = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/fondo_escritorio.png"));
+        Image imagen= icon.getImage();
+        jdskEscritorio = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                g.drawImage(imagen,0,0,getWidth(), getHeight(),this);
+            }
+        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner1.jpg"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1212, -1));
 
         jPanel1.setBackground(new java.awt.Color(110, 7, 7));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -42,54 +60,109 @@ public class VisPrincipal extends javax.swing.JFrame {
         jbtnAulas.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
         jbtnAulas.setForeground(new java.awt.Color(255, 255, 255));
         jbtnAulas.setText("Aulas");
-        jbtnAulas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtnAulas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jbtnLaboratorio.setBackground(new java.awt.Color(110, 7, 7));
-        jbtnLaboratorio.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
-        jbtnLaboratorio.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnLaboratorio.setText("Laboratorios");
-        jbtnLaboratorio.setBorder(null);
-        jbtnLaboratorio.setMaximumSize(new java.awt.Dimension(66, 44));
-        jbtnLaboratorio.setMinimumSize(new java.awt.Dimension(66, 44));
+        jbtnTaller.setBackground(new java.awt.Color(110, 7, 7));
+        jbtnTaller.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
+        jbtnTaller.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnTaller.setText("Talleres");
+        jbtnTaller.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtnTaller.setMaximumSize(new java.awt.Dimension(68, 46));
+        jbtnTaller.setMinimumSize(new java.awt.Dimension(68, 46));
+        jbtnTaller.setPreferredSize(new java.awt.Dimension(68, 46));
+
+        jbtnLaboratorio1.setBackground(new java.awt.Color(110, 7, 7));
+        jbtnLaboratorio1.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
+        jbtnLaboratorio1.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnLaboratorio1.setText("Laboratorios");
+        jbtnLaboratorio1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtnLaboratorio1.setMaximumSize(new java.awt.Dimension(68, 46));
+        jbtnLaboratorio1.setMinimumSize(new java.awt.Dimension(68, 46));
+        jbtnLaboratorio1.setPreferredSize(new java.awt.Dimension(68, 46));
+
+        jbtnTaller1.setBackground(new java.awt.Color(110, 7, 7));
+        jbtnTaller1.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
+        jbtnTaller1.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnTaller1.setText("Reservar");
+        jbtnTaller1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtnTaller1.setMaximumSize(new java.awt.Dimension(68, 46));
+        jbtnTaller1.setMinimumSize(new java.awt.Dimension(68, 46));
+        jbtnTaller1.setPreferredSize(new java.awt.Dimension(68, 46));
+
+        jbtnAuditorio.setBackground(new java.awt.Color(110, 7, 7));
+        jbtnAuditorio.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
+        jbtnAuditorio.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnAuditorio.setText("Auditorio");
+        jbtnAuditorio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtnAuditorio.setMaximumSize(new java.awt.Dimension(68, 46));
+        jbtnAuditorio.setMinimumSize(new java.awt.Dimension(68, 46));
+        jbtnAuditorio.setPreferredSize(new java.awt.Dimension(68, 46));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbtnLaboratorio, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                    .addComponent(jbtnAulas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbtnAuditorio, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnLaboratorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(67, 67, 67)
                 .addComponent(jbtnAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jbtnLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(404, Short.MAX_VALUE))
+                .addComponent(jbtnLaboratorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jbtnTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jbtnTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jbtnAuditorio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(119, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1212, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(layout.createSequentialGroup()
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 240, 660));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jdskEscritorio.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jdskEscritorioLayout = new javax.swing.GroupLayout(jdskEscritorio);
+        jdskEscritorio.setLayout(jdskEscritorioLayout);
+        jdskEscritorioLayout.setHorizontalGroup(
+            jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 958, Short.MAX_VALUE)
+        );
+        jdskEscritorioLayout.setVerticalGroup(
+            jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 618, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jdskEscritorio)
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jdskEscritorio)
+                .addContainerGap())
         );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 970, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -132,7 +205,12 @@ public class VisPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton jbtnAuditorio;
     private javax.swing.JButton jbtnAulas;
-    private javax.swing.JButton jbtnLaboratorio;
+    private javax.swing.JButton jbtnLaboratorio1;
+    private javax.swing.JButton jbtnTaller;
+    private javax.swing.JButton jbtnTaller1;
+    private javax.swing.JDesktopPane jdskEscritorio;
     // End of variables declaration//GEN-END:variables
 }

@@ -63,6 +63,26 @@ public class VisHorarios extends javax.swing.JFrame {
         return semana;
 
     }
+        
+    public int horasAsignadas(int horaInicio, int horaFin) {
+        int hora = 0;
+        if (horaInicio <= 12 && horaFin >= 14) {
+            hora = ((horaFin - horaInicio) - 1);
+        }
+        if (horaInicio <= 12 && horaFin <= 13 || horaInicio >= 14 && horaFin >= 14) {
+            hora = horaFin - horaInicio;
+
+        }
+
+        return hora;
+    }
+
+    public int horaInicio(int horaInicio) {
+        if (horaInicio >= 14) {
+            horaInicio = (horaInicio - 1);
+        }
+        return horaInicio;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

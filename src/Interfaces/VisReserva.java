@@ -4,29 +4,22 @@
  */
 package Interfaces;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import java.awt.Color;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 
 /**
  *
- * @author melsi
+ * @author Dalex
  */
-public class VisLogin extends javax.swing.JFrame {
+public class VisReserva extends javax.swing.JFrame {
     int Xmov, Ymov;
 
     /**
-     * Creates new form VisLogin
+     * Creates new form VisReserva
      */
-    public VisLogin() {
+    public VisReserva() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        ImageIcon iconobanner = new ImageIcon(getClass().getResource( "/Imagenes/banner1.jpg"));
-        jLabel1.setIcon(iconobanner);
-        ImageIcon iconosello = new ImageIcon(getClass().getResource( "/Imagenes/sello_login.png"));
-        jLabel2.setIcon(iconosello);
     }
 
     /**
@@ -39,44 +32,49 @@ public class VisLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jtxtUsuario = new javax.swing.JTextField();
-        jbtnIniciarSesion = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPnl_min = new javax.swing.JPanel();
         jLbl_min = new javax.swing.JLabel();
-        jpswContraseña = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
-        jLabel4.setText("Usuario:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 110, 50));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Descripcion");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
-        jLabel5.setText("Contraseña:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 430, 140, 50));
-        jPanel1.add(jtxtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 270, 40));
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
-        jbtnIniciarSesion.setBackground(new java.awt.Color(110, 7, 7));
-        jbtnIniciarSesion.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
-        jbtnIniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnIniciarSesion.setText("Iniciar Sesión");
-        jbtnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 490, 160));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("Nombre");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, -1, -1));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 310, 40));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Reserva");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
+
+        jButton1.setText("Reservar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnIniciarSesionActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 600, 170, 40));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 290, 50));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -106,11 +104,11 @@ public class VisLogin extends javax.swing.JFrame {
         });
         jPnl_salida.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setText("   X");
-        jPnl_salida.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 30));
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setText("   X");
+        jPnl_salida.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 30));
 
-        jPanel2.add(jPnl_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 0, 50, 30));
+        jPanel2.add(jPnl_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 0, 50, 30));
 
         jPnl_min.setBackground(new java.awt.Color(255, 255, 255));
         jPnl_min.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -131,12 +129,9 @@ public class VisLogin extends javax.swing.JFrame {
         jLbl_min.setText("   -");
         jPnl_min.add(jLbl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 30));
 
-        jPanel2.add(jPnl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 0, 50, 30));
+        jPanel2.add(jPnl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 50, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 30));
-        jPanel1.add(jpswContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 270, 40));
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 780, 100));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 190, 160));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,25 +141,25 @@ public class VisLogin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIniciarSesionActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbtnIniciarSesionActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
 
-         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-        
+        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
+
         if (mensaje==JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(null, "Salió del sistema");
             System.exit(0);
         }
-           
+
     }//GEN-LAST:event_jPnl_salidaMouseClicked
 
     private void jPnl_salidaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseEntered
@@ -173,7 +168,7 @@ public class VisLogin extends javax.swing.JFrame {
 
     private void jPnl_salidaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseExited
         jPnl_salida.setBackground(Color.WHITE);
-        
+
     }//GEN-LAST:event_jPnl_salidaMouseExited
 
     private void jPnl_minMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_minMouseClicked
@@ -218,37 +213,37 @@ public class VisLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VisLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VisLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VisLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VisLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VisLogin().setVisible(true);
+                new VisReserva().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLbl_min;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;
-    private javax.swing.JButton jbtnIniciarSesion;
-    public javax.swing.JPasswordField jpswContraseña;
-    public javax.swing.JTextField jtxtUsuario;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

@@ -34,6 +34,7 @@ public class utcJTable extends JTable {
         Font font = new Font("Lucida fax", Font.PLAIN, 16); // Por ejemplo, Arial, negrita, tamaño 16
         this.jitmReserva.setFont(font);
         this.jitmEliminarReserva.setFont(font);
+        this.jitmModfificarReserva.setFont(font);
         this.setModel(modelotabla);
         this.jppmMenu.add(jitmReserva);
         this.jppmMenu.add(jitmModfificarReserva);
@@ -41,13 +42,34 @@ public class utcJTable extends JTable {
         this.setComponentPopupMenu(jppmMenu);
         this.setDefaultEditor(Object.class, null); // Esto deshabilita la edición de celdas
         this.setCellSelectionEnabled(true);
-        estilo();
+        horasDia();
         cambiarTamanioCeldasAncho();
         cambiarTamanioCeldasLargo();
-        centrarContenidoConSaltoDeLinea();
-        agregarBordesCeldas();
+        aplicarEstilos();
 
     }
+    private void aplicarEstilos() {
+    DefaultTableCellRenderer renderizador = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            label.setBorder(BorderFactory.createMatteBorder(1, 1, 0, 0, Color.BLACK));
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            if (value != null) {
+                label.setText("<html>" + value.toString().replaceAll("\n", "<br>"));
+            } else {
+                label.setText(""); 
+            }
+            
+            return label;
+        }
+    };
+
+    for (int i = 0; i < this.getColumnCount(); i++) {
+        this.getColumnModel().getColumn(i).setCellRenderer(renderizador);
+    }
+}
+
 
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int fila, int columna) {
@@ -63,23 +85,8 @@ public class utcJTable extends JTable {
         return componente;
     }
 
-    private void agregarBordesCeldas() {
-        TableCellRenderer renderizador = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                ((JLabel) c).setBorder(BorderFactory.createMatteBorder(1, 1, 0, 0, Color.BLACK));
-                return c;
-            }
-        };
-
-        for (int i = 0; i < this.getColumnCount(); i++) {
-            this.getColumnModel().getColumn(i).setCellRenderer(renderizador);
-        }
-
-    }
-
-    private void estilo() {
+   
+    private void horasDia() {
         this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setValueAt("7:00 - 8:00", 0, 0);
         this.setValueAt("8:00 - 9:00", 1, 0);
@@ -93,27 +100,6 @@ public class utcJTable extends JTable {
         this.setValueAt("17:00 - 18:00", 9, 0);
         this.setValueAt("18:00 - 19:00", 10, 0);
         this.setValueAt("19:00 - 20:00", 11, 0);
-
-    }
-
-    private void centrarContenidoConSaltoDeLinea() {
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                label.setHorizontalAlignment(SwingConstants.CENTER);
-                if (value != null) {
-                    label.setText("<html>" + value.toString().replaceAll("\n", "<br>"));
-                } else {
-                    label.setText(""); // Si el valor es nulo, establecer el texto como vacío
-                }
-                return label;
-            }
-        };
-
-        for (int i = 0; i < this.getColumnCount(); i++) {
-            this.getColumnModel().getColumn(i).setCellRenderer(renderer);
-        }
 
     }
 

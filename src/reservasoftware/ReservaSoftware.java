@@ -4,6 +4,8 @@
  */
 package reservasoftware;
 
+import Interfaces.VisHorario;
+
 /**
  *
  * @author Dalex
@@ -15,6 +17,8 @@ public class ReservaSoftware {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        VisHorario ss=new VisHorario();
+        ss.setVisible(true);
     }
     
 }

@@ -4,17 +4,64 @@
  */
 package Interfaces;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Dalex
  */
 public class VisHorarios extends javax.swing.JFrame {
 
+    private SimpleDateFormat FormatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+
     /**
      * Creates new form VisHorarios
      */
     public VisHorarios() {
         initComponents();
+        asignarFechaActual();
+    }
+
+    public void asignarFechaActual() {
+        Date fecha = new Date();
+        this.jcnlCalendar.setDate(fecha);
+
+    }
+
+    public int indiceDia(String fecha) {
+        int numDia = 0;
+        try {
+            Date date = FormatoFecha.parse(fecha);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            numDia = calendar.get(Calendar.DAY_OF_WEEK);
+        } catch (ParseException e) {
+            System.out.println(e);
+        }
+        return numDia;
+    }
+    
+        public int indiceSemana(String fecha) {
+        int semana = 0;
+        try {
+
+            Date date = this.FormatoFecha.parse(fecha);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            semana = calendar.get(Calendar.WEEK_OF_YEAR);
+
+        } catch (ParseException ex) {
+            System.out.println(ex);
+        }
+        return semana;
+
     }
 
     /**
@@ -32,7 +79,7 @@ public class VisHorarios extends javax.swing.JFrame {
         utcJTable1 = new ComponentesPropios.utcJTable();
         jLabel1 = new javax.swing.JLabel();
         jcmbSeleccion = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jcnlCalendar = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,7 +109,7 @@ public class VisHorarios extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, -1, -1));
 
         jPanel1.add(jcmbSeleccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 170, 30));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 210, 30));
+        jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 210, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Eliga");
@@ -118,13 +165,13 @@ public class VisHorarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> jcmbSeleccion;
+    private com.toedter.calendar.JDateChooser jcnlCalendar;
     private ComponentesPropios.utcJTable utcJTable1;
     // End of variables declaration//GEN-END:variables
 }

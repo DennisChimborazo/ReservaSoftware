@@ -26,16 +26,16 @@ public class utcJTable extends JTable {
     DefaultTableModel modelotabla = new DefaultTableModel(13, 6);
     JPopupMenu jppmMenu = new JPopupMenu();
     public JMenuItem jitmReserva = new JMenuItem("Reservar");
-    public JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar reserva");
+    //public JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar reserva");
 
     public utcJTable() {
 
         Font font = new Font("Lucida fax", Font.PLAIN, 16); // Por ejemplo, Arial, negrita, tamaño 16
         this.jitmReserva.setFont(font);
-        this.jitmEliminarReserva.setFont(font);
+     //   this.jitmEliminarReserva.setFont(font);
         this.setModel(modelotabla);
         this.jppmMenu.add(jitmReserva);
-        this.jppmMenu.add(jitmEliminarReserva);
+       // this.jppmMenu.add(jitmEliminarReserva);
         this.setComponentPopupMenu(jppmMenu);
         this.setDefaultEditor(Object.class, null); // Esto deshabilita la edición de celdas
         this.setCellSelectionEnabled(true);
@@ -112,11 +112,11 @@ public class utcJTable extends JTable {
     }
 
     private void cambiarTamanioCeldasAncho() {
-        for (int i = 0; i < this.getRowCount(); i++) {
-            this.setRowHeight(i + 1, 51);
-            this.setRowHeight(0, 60);
+         for (int i = 0; i < this.getRowCount(); i++) {
+            this.setRowHeight(i + 1, 85);
 
         }
+        this.setRowHeight(0, 70);
 
     }
 

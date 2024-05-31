@@ -30,7 +30,6 @@ public class VisHorarios extends javax.swing.JFrame {
     public void asignarFechaActual() {
         Date fecha = new Date();
         this.jcnlCalendar.setDate(fecha);
-
     }
 
     public int indiceDia(String fecha) {

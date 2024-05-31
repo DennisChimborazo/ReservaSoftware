@@ -23,19 +23,21 @@ import javax.swing.table.TableCellRenderer;
  */
 public class utcJTable extends JTable {
 
-    DefaultTableModel modelotabla = new DefaultTableModel(13, 6);
+    DefaultTableModel modelotabla = new DefaultTableModel(new Object[]{"", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"}, 12);
     JPopupMenu jppmMenu = new JPopupMenu();
-    public JMenuItem jitmReserva = new JMenuItem("Reservar");
-    //public JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar reserva");
+    JMenuItem jitmReserva = new JMenuItem("Reservar");
+    JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar reserva");
+    JMenuItem jitmModfificarReserva = new JMenuItem(" Modificar reserva");
 
     public utcJTable() {
 
         Font font = new Font("Lucida fax", Font.PLAIN, 16); // Por ejemplo, Arial, negrita, tamaño 16
         this.jitmReserva.setFont(font);
-     //   this.jitmEliminarReserva.setFont(font);
+        this.jitmEliminarReserva.setFont(font);
         this.setModel(modelotabla);
         this.jppmMenu.add(jitmReserva);
-       // this.jppmMenu.add(jitmEliminarReserva);
+        this.jppmMenu.add(jitmModfificarReserva);
+        this.jppmMenu.add(jitmEliminarReserva);
         this.setComponentPopupMenu(jppmMenu);
         this.setDefaultEditor(Object.class, null); // Esto deshabilita la edición de celdas
         this.setCellSelectionEnabled(true);
@@ -43,6 +45,7 @@ public class utcJTable extends JTable {
         cambiarTamanioCeldasAncho();
         cambiarTamanioCeldasLargo();
         centrarContenidoConSaltoDeLinea();
+        agregarBordesCeldas();
 
     }
 
@@ -60,25 +63,36 @@ public class utcJTable extends JTable {
         return componente;
     }
 
+    private void agregarBordesCeldas() {
+        TableCellRenderer renderizador = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                ((JLabel) c).setBorder(BorderFactory.createMatteBorder(1, 1, 0, 0, Color.BLACK));
+                return c;
+            }
+        };
+
+        for (int i = 0; i < this.getColumnCount(); i++) {
+            this.getColumnModel().getColumn(i).setCellRenderer(renderizador);
+        }
+
+    }
+
     private void estilo() {
         this.setBorder(BorderFactory.createLineBorder(Color.black));
-        this.setValueAt("Lunes", 0, 1);
-        this.setValueAt("Martes", 0, 2);
-        this.setValueAt("Miércoles", 0, 3);
-        this.setValueAt("Jueves", 0, 4);
-        this.setValueAt("Viernes", 0, 5);
-        this.setValueAt("7:00 - 8:00", 1, 0);
-        this.setValueAt("8:00 - 9:00", 2, 0);
-        this.setValueAt("9:00 - 10:00", 3, 0);
-        this.setValueAt("10:00 - 11:00", 4, 0);
-        this.setValueAt("11:00 - 12:00", 5, 0);
-        this.setValueAt("12:00 - 13:00", 6, 0);
-        this.setValueAt("14:00 - 15:00", 7, 0);
-        this.setValueAt("15:00 - 16:00", 8, 0);
-        this.setValueAt("16:00 - 17:00", 9, 0);
-        this.setValueAt("17:00 - 18:00", 10, 0);
-        this.setValueAt("18:00 - 19:00", 11, 0);
-        this.setValueAt("19:00 - 20:00", 12, 0);
+        this.setValueAt("7:00 - 8:00", 0, 0);
+        this.setValueAt("8:00 - 9:00", 1, 0);
+        this.setValueAt("9:00 - 10:00", 2, 0);
+        this.setValueAt("10:00 - 11:00", 3, 0);
+        this.setValueAt("11:00 - 12:00", 4, 0);
+        this.setValueAt("12:00 - 13:00", 5, 0);
+        this.setValueAt("14:00 - 15:00", 6, 0);
+        this.setValueAt("15:00 - 16:00", 7, 0);
+        this.setValueAt("16:00 - 17:00", 8, 0);
+        this.setValueAt("17:00 - 18:00", 9, 0);
+        this.setValueAt("18:00 - 19:00", 10, 0);
+        this.setValueAt("19:00 - 20:00", 11, 0);
 
     }
 
@@ -112,7 +126,7 @@ public class utcJTable extends JTable {
     }
 
     private void cambiarTamanioCeldasAncho() {
-         for (int i = 0; i < this.getRowCount(); i++) {
+        for (int i = 0; i < this.getRowCount(); i++) {
             this.setRowHeight(i + 1, 85);
 
         }

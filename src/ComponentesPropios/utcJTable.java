@@ -24,22 +24,10 @@ import javax.swing.table.TableCellRenderer;
 public class utcJTable extends JTable {
 
     DefaultTableModel modelotabla = new DefaultTableModel(new Object[]{"", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"}, 12);
-    JPopupMenu jppmMenu = new JPopupMenu();
-    JMenuItem jitmReserva = new JMenuItem("Reservar");
-    JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar reserva");
-    JMenuItem jitmModfificarReserva = new JMenuItem(" Modificar reserva");
+
 
     public utcJTable() {
-
-        Font font = new Font("Lucida fax", Font.PLAIN, 16); // Por ejemplo, Arial, negrita, tamaño 16
-        this.jitmReserva.setFont(font);
-        this.jitmEliminarReserva.setFont(font);
-        this.jitmModfificarReserva.setFont(font);
         this.setModel(modelotabla);
-        this.jppmMenu.add(jitmReserva);
-        this.jppmMenu.add(jitmModfificarReserva);
-        this.jppmMenu.add(jitmEliminarReserva);
-        this.setComponentPopupMenu(jppmMenu);
         this.setDefaultEditor(Object.class, null); // Esto deshabilita la edición de celdas
         this.setCellSelectionEnabled(true);
         horasDia();

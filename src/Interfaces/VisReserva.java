@@ -13,13 +13,48 @@ import javax.swing.JOptionPane;
  * @author Dalex
  */
 public class VisReserva extends javax.swing.JFrame {
+
     int Xmov, Ymov;
+    int horainico;
+    int horasTotales;
+    String fecha;
 
     /**
      * Creates new form VisReserva
      */
-    public VisReserva() {
+    public VisReserva(int horainico, int horasTotales, String fecha) {
         initComponents();
+        this.fecha = fecha;
+        this.horainico = horainico;
+        this.horasTotales = horasTotales;
+        asignarHorasDisponibles(this.horainico,this.horasTotales);
+    }
+
+    public void asignarHorasDisponibles(int horainico, int horaFin) {
+        if (horainico >= 13) {
+            horainico = horainico + 1;
+        }
+        int cont = 0;
+        this.jtxtHoraInicio.setText(String.valueOf(horainico));
+        if (horainico <= 12) {
+            cont = horainico;
+            for (int i = 0; i < horaFin; i++) {
+                if (cont == 13) {
+                    horainico = horainico + 1;
+                }
+                this.jcmbHorasDisponibles.addItem((horainico + i) + ":00 - " + (horainico + i + 1) + ":00");
+                cont++;
+            }
+        } else {
+
+            for (int i = 0; i < horaFin; i++) {
+                this.jcmbHorasDisponibles.addItem((horainico + i) + ":00 - " + (horainico + i + 1) + ":00");
+            }
+        }
+    }
+
+    private VisReserva() {
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -34,47 +69,51 @@ public class VisReserva extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jtxtaDescripcion = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtxtNombres = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jbtnReservar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPnl_min = new javax.swing.JPanel();
         jLbl_min = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jcmbHorasDisponibles = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jtxtHoraInicio = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Descripcion");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
+        jLabel1.setText("Hasta");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, -1, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jtxtaDescripcion.setColumns(20);
+        jtxtaDescripcion.setRows(5);
+        jScrollPane1.setViewportView(jtxtaDescripcion);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 490, 160));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 490, 160));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Nombre");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, -1, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 310, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
+        jPanel1.add(jtxtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 310, 40));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Reserva");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
 
-        jButton1.setText("Reservar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbtnReservar.setText("Reservar");
+        jbtnReservar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbtnReservarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 290, 50));
+        jPanel1.add(jbtnReservar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, 290, 50));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -133,6 +172,22 @@ public class VisReserva extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 30));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setText("Descripcion");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, -1, -1));
+
+        jcmbHorasDisponibles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcmbHorasDisponiblesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jcmbHorasDisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, 160, 40));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel6.setText("Hora de inicio ");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        jPanel1.add(jtxtHoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 120, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,21 +196,21 @@ public class VisReserva extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbtnReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReservarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jbtnReservarActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
 
         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
 
-        if (mensaje==JOptionPane.YES_OPTION) {
+        if (mensaje == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(null, "Salió del sistema");
             System.exit(0);
         }
@@ -196,6 +251,10 @@ public class VisReserva extends javax.swing.JFrame {
         Ymov = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
 
+    private void jcmbHorasDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmbHorasDisponiblesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcmbHorasDisponiblesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -232,18 +291,22 @@ public class VisReserva extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLbl_min;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton jbtnReservar;
+    private javax.swing.JComboBox<String> jcmbHorasDisponibles;
+    private javax.swing.JTextField jtxtHoraInicio;
+    private javax.swing.JTextField jtxtNombres;
+    private javax.swing.JTextArea jtxtaDescripcion;
     // End of variables declaration//GEN-END:variables
 }

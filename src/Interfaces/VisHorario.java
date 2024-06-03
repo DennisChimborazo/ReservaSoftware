@@ -4,12 +4,15 @@
  */
 package Interfaces;
 
+import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,7 +20,10 @@ import java.util.logging.Logger;
  */
 public class VisHorario extends javax.swing.JFrame {
 
-    private SimpleDateFormat FormatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+    private SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+      public JMenuItem jitmReserva = new JMenuItem("Reservar");
+   public JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar reserva");
+   public JMenuItem jitmModfificarReserva = new JMenuItem(" Modificar reserva");
 
     /**
      * Creates new form VisHorarios
@@ -25,21 +31,29 @@ public class VisHorario extends javax.swing.JFrame {
     public VisHorario() {
         initComponents();
         asignarFechaActual();
+        Font font = new Font("Lucida fax", Font.PLAIN, 16); // Por ejemplo, Arial, negrita, tamaño 16
+        this.jitmReserva.setFont(font);
+        this.jitmEliminarReserva.setFont(font);
+        this.jitmModfificarReserva.setFont(font);
+       this.jppmMenu.add(jitmReserva);
+        this.jppmMenu.add(jitmModfificarReserva);
+        this.jppmMenu.add(jitmEliminarReserva);
+        this.jtblHorarios.setComponentPopupMenu(jppmMenu);
         this.jtblHorarios.setValueAt("hola\nmundo", 2, 2);
-                this.jtblHorarios.setValueAt("hola\nmundo\nreserva", 4, 4);
+        this.jtblHorarios.setValueAt("hola\nmundo\nreserva", 4, 4);
 
     }
 
     private void asignarFechaActual() {
         Date fecha = new Date();
         this.jcnlCalendar.setDate(fecha);
-        
+
     }
 
-    public int indiceDia(String fecha) {
+    private int indiceDia(String fecha) {
         int numDia = 0;
         try {
-            Date date = FormatoFecha.parse(fecha);
+            Date date = formatoFecha.parse(fecha);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             numDia = calendar.get(Calendar.DAY_OF_WEEK);
@@ -53,7 +67,7 @@ public class VisHorario extends javax.swing.JFrame {
         int semana = 0;
         try {
 
-            Date date = this.FormatoFecha.parse(fecha);
+            Date date = this.formatoFecha.parse(fecha);
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
@@ -67,7 +81,7 @@ public class VisHorario extends javax.swing.JFrame {
 
     }
 
-    public int horasAsignadas(int horaInicio, int horaFin) {
+    private int horasAsignadas(int horaInicio, int horaFin) {
         int hora = 0;
         if (horaInicio <= 12 && horaFin >= 14) {
             hora = ((horaFin - horaInicio) - 1);
@@ -80,11 +94,71 @@ public class VisHorario extends javax.swing.JFrame {
         return hora;
     }
 
-    public int horaInicio(int horaInicio) {
+    private int horaInicio(int horaInicio) {
         if (horaInicio >= 14) {
             horaInicio = (horaInicio - 1);
         }
         return horaInicio;
+    }
+
+    private int horasDisponibles() {
+        int cont = 0;
+        int fila = this.jtblHorarios.getSelectedRow();
+        int columna = this.jtblHorarios.getSelectedColumn();
+        if (fila != -1 && columna != -1) {
+            while (fila < this.jtblHorarios.getRowCount()) {
+                Object valor = this.jtblHorarios.getValueAt(fila, columna);
+                if (valor == null || valor.toString().isEmpty()) {
+                    cont++;
+                    fila++;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        return cont;
+    }
+
+    private boolean verificacionFechaValida(String fecha) {
+        Date fechaActual = new Date();
+        Date fechaOtra = null;
+        try {
+            fechaOtra = formatoFecha.parse(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (fechaOtra != null && fechaOtra.before(fechaActual)) {
+            return false;
+
+        } else {
+            return true;
+        }
+
+    }
+
+    public boolean verificacionDatosReserva() {
+        String valor = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
+        if (verificacionFechaValida(valor)) {
+            int verificacionDiaValido = indiceDia(valor);
+            if (verificacionDiaValido == 1 || verificacionDiaValido == 7) {
+                JOptionPane.showMessageDialog(null, "No se puede reservar en fines de semana");
+                return false;
+            } else if ((this.jtblHorarios.getSelectedColumn() + 1) != verificacionDiaValido) {
+                JOptionPane.showMessageDialog(null, "El dia seleccionado no"
+                        + "\ncorresponde a la fecha selecionada");
+                return false;
+
+            } else {
+                return true;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No puede reservar en una fecha"
+                    + "\nanterior a la fecha actual");
+            return false;
+        }
+
     }
 
     /**
@@ -96,6 +170,7 @@ public class VisHorario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jppmMenu = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jcmbSeleccion = new javax.swing.JComboBox<>();
@@ -131,7 +206,7 @@ public class VisHorario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -178,8 +253,9 @@ public class VisHorario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JComboBox<String> jcmbSeleccion;
-    private com.toedter.calendar.JDateChooser jcnlCalendar;
-    private ComponentesPropios.utcJTable jtblHorarios;
+    public javax.swing.JComboBox<String> jcmbSeleccion;
+    public com.toedter.calendar.JDateChooser jcnlCalendar;
+    private javax.swing.JPopupMenu jppmMenu;
+    public ComponentesPropios.utcJTable jtblHorarios;
     // End of variables declaration//GEN-END:variables
 }

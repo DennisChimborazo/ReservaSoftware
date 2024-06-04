@@ -5,7 +5,11 @@
         <group>
             <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VisHorario.java</file>
             <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VisReserva.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Controladores/ContReservas.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/ComponentesPropios/utcJTable.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/reservasoftware/ReservaSoftware.java</file>
             <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VisLogin.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VisPrincipal.java</file>
         </group>
     </open-files>
 </project-private>

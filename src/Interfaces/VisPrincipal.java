@@ -11,33 +11,33 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author Dalex
  */
 public class VisPrincipal extends javax.swing.JFrame {
-        int Xmov, Ymov;
 
+    int Xmov, Ymov;
 
     /**
      * Creates new form VisPrincipal
      */
     public VisPrincipal() {
         initComponents();
-        ImageIcon icono = new ImageIcon(getClass().getResource( "/Imagenes/banner1.jpg"));
+        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/banner1.jpg"));
         jLabel1.setIcon(icono);
-        ImageIcon iconoa = new ImageIcon(getClass().getResource( "/Imagenes/aulas.png"));
+        ImageIcon iconoa = new ImageIcon(getClass().getResource("/Imagenes/aulas.png"));
         jbtnAulas.setIcon(iconoa);
-        ImageIcon iconol = new ImageIcon(getClass().getResource( "/Imagenes/laboratorio.png"));
+        ImageIcon iconol = new ImageIcon(getClass().getResource("/Imagenes/laboratorio.png"));
         jbtnLaboratorio1.setIcon(iconol);
-        ImageIcon iconot = new ImageIcon(getClass().getResource( "/Imagenes/taller.png"));
+        ImageIcon iconot = new ImageIcon(getClass().getResource("/Imagenes/taller.png"));
         jbtnTaller.setIcon(iconot);
-        ImageIcon iconoli = new ImageIcon(getClass().getResource( "/Imagenes/lista_reserva.png"));
+        ImageIcon iconoli = new ImageIcon(getClass().getResource("/Imagenes/lista_reserva.png"));
         jbtnReservar.setIcon(iconoli);
-        ImageIcon iconoau = new ImageIcon(getClass().getResource( "/Imagenes/auditorios.png"));
+        ImageIcon iconoau = new ImageIcon(getClass().getResource("/Imagenes/auditorios.png"));
         jbtnAuditorio.setIcon(iconoau);
-        
+        this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -84,6 +84,11 @@ public class VisPrincipal extends javax.swing.JFrame {
         jbtnAulas.setText("Aulas");
         jbtnAulas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jbtnAulas.setBackground(Color.WHITE);
+        jbtnAulas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAulasActionPerformed(evt);
+            }
+        });
 
         jbtnTaller.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
         jbtnTaller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/taller.png"))); // NOI18N
@@ -252,7 +257,7 @@ public class VisPrincipal extends javax.swing.JFrame {
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-        if (mensaje==JOptionPane.YES_OPTION) {
+        if (mensaje == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(null, "Salió del sistema");
             System.exit(0);
         }
@@ -291,6 +296,12 @@ public class VisPrincipal extends javax.swing.JFrame {
         Xmov = evt.getX();
         Ymov = evt.getY();
     }//GEN-LAST:event_jPanel3MousePressed
+
+    private void jbtnAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAulasActionPerformed
+        VisHorario visHorario = new VisHorario();
+        this.jdskEscritorio.add(visHorario);
+        visHorario.setVisible(true);
+    }//GEN-LAST:event_jbtnAulasActionPerformed
 
     /**
      * @param args the command line arguments

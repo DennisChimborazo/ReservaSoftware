@@ -9,12 +9,12 @@ import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author melsi
  */
 public class VisLogin extends javax.swing.JFrame {
+
     int Xmov, Ymov;
 
     /**
@@ -23,9 +23,12 @@ public class VisLogin extends javax.swing.JFrame {
     public VisLogin() {
         initComponents();
         this.setLocationRelativeTo(null);
-        ImageIcon iconobanner = new ImageIcon(getClass().getResource( "/Imagenes/banner1.jpg"));
-        jLabel1.setIcon(iconobanner);
-        ImageIcon iconosello = new ImageIcon(getClass().getResource( "/Imagenes/sello_login.png"));
+        int ancho = 755;
+        int alto = 100;
+        ImageIcon iconobanner = new ImageIcon(getClass().getResource("/Imagenes/bannerLog.jpg"));
+        ImageIcon bannerRedimensionado = new ImageIcon(iconobanner.getImage().getScaledInstance(ancho, alto, java.awt.Image.SCALE_SMOOTH));
+        jLabel1.setIcon(bannerRedimensionado);
+        ImageIcon iconosello = new ImageIcon(getClass().getResource("/Imagenes/sello_login.png"));
         jLabel2.setIcon(iconosello);
     }
 
@@ -135,7 +138,7 @@ public class VisLogin extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 30));
         jPanel1.add(jpswContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 270, 40));
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 780, 100));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 780, 110));
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 190, 160));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,25 +149,28 @@ public class VisLogin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIniciarSesionActionPerformed
+
+        VisPrincipal visPrincipal = new VisPrincipal();
+        visPrincipal.setVisible(true);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnIniciarSesionActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
 
-         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-        
-        if (mensaje==JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null, "Salió del sistema");
+        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
+
+        if (mensaje == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
-           
+
     }//GEN-LAST:event_jPnl_salidaMouseClicked
 
     private void jPnl_salidaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseEntered
@@ -173,7 +179,7 @@ public class VisLogin extends javax.swing.JFrame {
 
     private void jPnl_salidaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseExited
         jPnl_salida.setBackground(Color.WHITE);
-        
+
     }//GEN-LAST:event_jPnl_salidaMouseExited
 
     private void jPnl_minMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_minMouseClicked

@@ -5,6 +5,8 @@
 package Interfaces;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,12 +20,12 @@ import javax.swing.JOptionPane;
  *
  * @author Dalex
  */
-public class VisHorario extends javax.swing.JFrame {
+public class VisHorario extends javax.swing.JInternalFrame {
 
     private SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-      public JMenuItem jitmReserva = new JMenuItem("Reservar");
-   public JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar reserva");
-   public JMenuItem jitmModfificarReserva = new JMenuItem(" Modificar reserva");
+    public JMenuItem jitmReserva = new JMenuItem("Reservar");
+    public JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar reserva");
+    public JMenuItem jitmModfificarReserva = new JMenuItem(" Modificar reserva");
 
     /**
      * Creates new form VisHorarios
@@ -35,13 +37,89 @@ public class VisHorario extends javax.swing.JFrame {
         this.jitmReserva.setFont(font);
         this.jitmEliminarReserva.setFont(font);
         this.jitmModfificarReserva.setFont(font);
-       this.jppmMenu.add(jitmReserva);
+        this.jppmMenu.add(jitmReserva);
         this.jppmMenu.add(jitmModfificarReserva);
         this.jppmMenu.add(jitmEliminarReserva);
         this.jtblHorarios.setComponentPopupMenu(jppmMenu);
         this.jtblHorarios.setValueAt("hola\nmundo", 2, 2);
         this.jtblHorarios.setValueAt("hola\nmundo\nreserva", 4, 4);
+        accionJitmReserva();
+        jitmModfificarReserva();
+        jitmEliminarReserva();
 
+    }
+
+    private void accionJitmReserva() {
+
+        this.jitmReserva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (jtblHorarios.getSelectedColumn() != 0) {
+                    int filHora = jtblHorarios.getSelectedRow();
+                    int columDia = jtblHorarios.getSelectedColumn();
+                    String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
+                    if (!valor.contains("reserva")) {
+                        if (valor.contains("null")) {
+                            JOptionPane.showMessageDialog(null, "OK");
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "La fecha seleccionada corresponde a un jornada laboral");
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No puede reversar esta fecha se \n"
+                                + " encuentra ya reservada");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
+                }
+
+            }
+        });
+    }
+
+    private void jitmModfificarReserva() {
+
+        this.jitmModfificarReserva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (jtblHorarios.getSelectedColumn() != 0) {
+                    int filHora = jtblHorarios.getSelectedRow();
+                    int columDia = jtblHorarios.getSelectedColumn();
+                    String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
+                    if (valor.contains("reserva")) {
+                        // this.vistaHorarios.verificacionDatosReserva();
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede modificar");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
+                }
+            }
+        });
+    }
+
+    private void jitmEliminarReserva() {
+        this.jitmEliminarReserva.addActionListener((ActionEvent e) -> {
+            if (jtblHorarios.getSelectedColumn() != 0) {
+                int filHora = jtblHorarios.getSelectedRow();
+                int columDia = jtblHorarios.getSelectedColumn();
+                String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
+                if (valor.contains("reserva")) {
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede elinimar");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
+            }
+
+        });
     }
 
     private void asignarFechaActual() {
@@ -129,11 +207,11 @@ public class VisHorario extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-        if (fechaOtra != null && fechaOtra.before(fechaActual)) {
-            return false;
-
-        } else {
+        if (fechaOtra != null && !fechaOtra.before(fechaActual)
+                || fechaOtra.toString().substring(0, 10).equals(fechaActual.toString().substring(0, 10))) {
             return true;
+        } else {
+            return false;
         }
 
     }
@@ -151,6 +229,8 @@ public class VisHorario extends javax.swing.JFrame {
                 return false;
 
             } else {
+                VisReserva vr = new VisReserva(this.jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor);
+                vr.setVisible(rootPaneCheckingEnabled);
                 return true;
             }
         } else {

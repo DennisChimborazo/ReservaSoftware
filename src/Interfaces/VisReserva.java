@@ -24,6 +24,7 @@ public class VisReserva extends javax.swing.JFrame {
      */
     public VisReserva(int horainico, int horasTotales, String fecha) {
         initComponents();
+        this.setLocationRelativeTo(this);
         this.fecha = fecha;
         this.horainico = horainico;
         this.horasTotales = horasTotales;
@@ -83,8 +84,10 @@ public class VisReserva extends javax.swing.JFrame {
         jcmbHorasDisponibles = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jtxtHoraInicio = new javax.swing.JTextField();
+        jbtnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -113,7 +116,7 @@ public class VisReserva extends javax.swing.JFrame {
                 jbtnReservarActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnReservar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, 290, 50));
+        jPanel1.add(jbtnReservar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 210, 50));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -188,6 +191,14 @@ public class VisReserva extends javax.swing.JFrame {
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
         jPanel1.add(jtxtHoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 120, 40));
 
+        jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, 230, 50));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,8 +222,7 @@ public class VisReserva extends javax.swing.JFrame {
         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
 
         if (mensaje == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null, "Salió del sistema");
-            System.exit(0);
+          this.dispose();
         }
 
     }//GEN-LAST:event_jPnl_salidaMouseClicked
@@ -254,6 +264,10 @@ public class VisReserva extends javax.swing.JFrame {
     private void jcmbHorasDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmbHorasDisponiblesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcmbHorasDisponiblesActionPerformed
+
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,6 +317,7 @@ public class VisReserva extends javax.swing.JFrame {
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtnCancelar;
     private javax.swing.JButton jbtnReservar;
     private javax.swing.JComboBox<String> jcmbHorasDisponibles;
     private javax.swing.JTextField jtxtHoraInicio;

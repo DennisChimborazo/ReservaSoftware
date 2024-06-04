@@ -5,6 +5,7 @@
 package reservasoftware;
 
 import Interfaces.VisHorario;
+import Interfaces.VisLogin;
 
 /**
  *
@@ -17,7 +18,7 @@ public class ReservaSoftware {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        VisHorario ss=new VisHorario();
+        VisLogin ss=new VisLogin();
         ss.setVisible(true);
     }
     

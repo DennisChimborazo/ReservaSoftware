@@ -4,7 +4,12 @@
  */
 package Interfaces;
 
+import Repositorio.Conexion;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -18,17 +23,29 @@ public class VisReserva extends javax.swing.JFrame {
     int horainico;
     int horasTotales;
     String fecha;
+    String id;
+    ArrayList<String> datos;
+    int cont = 3;
 
     /**
      * Creates new form VisReserva
+     *
+     * @param horainico
+     * @param horasTotales
+     * @param fecha
+     * @param id
+     * @param datos
      */
-    public VisReserva(int horainico, int horasTotales, String fecha) {
+    public VisReserva(int horainico, int horasTotales, String fecha, String id, ArrayList<String> datos) {
         initComponents();
         this.setLocationRelativeTo(this);
+        this.datos = datos;
         this.fecha = fecha;
+        this.id = id;
         this.horainico = horainico;
         this.horasTotales = horasTotales;
-        asignarHorasDisponibles(this.horainico,this.horasTotales);
+        verificacionAccion();
+        this.jtxtHoraInicio.setEditable(false);
     }
 
     public void asignarHorasDisponibles(int horainico, int horaFin) {
@@ -51,6 +68,85 @@ public class VisReserva extends javax.swing.JFrame {
             for (int i = 0; i < horaFin; i++) {
                 this.jcmbHorasDisponibles.addItem((horainico + i) + ":00 - " + (horainico + i + 1) + ":00");
             }
+        }
+    }
+
+    private boolean controlIngresosValidos() {
+        if (!this.jtxtNombres.getText().isEmpty() && !this.jtxtaDescripcion.getText().isEmpty()) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese todos los datos requeridos");
+        }
+        return false;
+    }
+
+    private void guardar() {
+        this.cont=cont+1;
+        try {
+            Conexion cc = new Conexion();
+            Connection cn = cc.conectar();
+            String sql = "insert into reseva (idhorario,nombre,descripcion,fecha,horainicio,horafin)values(?,?,?,?,?,?)";
+            PreparedStatement psd = cn.prepareStatement(sql);
+            psd.setString(1, String.valueOf(cont));
+            psd.setString(2, this.jtxtNombres.getText());
+            psd.setString(3, this.jtxtaDescripcion.getText().toLowerCase());
+            psd.setString(4, this.fecha);
+            psd.setString(5, this.jtxtHoraInicio.getText());
+            psd.setString(6, obtenerHoraFinal());
+            int num = psd.executeUpdate();
+            if (num != 0) {
+                JOptionPane.showMessageDialog(null, "Se guardo la reserva");
+                this.dispose();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+
+            // JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar");
+        }
+    }
+
+    private String obtenerHoraFinal() {
+        String h = this.jcmbHorasDisponibles.getSelectedItem().toString();
+        h = h.split(":")[0];
+        return String.valueOf(Integer.parseInt(h) + 1);
+    }
+
+    public void editarReserva() {
+
+        int op = JOptionPane.showConfirmDialog(null, "Desea editar la reserva", "Confirmacion", JOptionPane.YES_NO_OPTION);
+        if (op == 0) {
+
+            try {
+                Conexion cc = new Conexion();
+                Connection cn = cc.conectar();
+                String sql = "update reseva set nombre='" + this.jtxtNombres.getText()
+                        + "',descripcion='" + this.jtxtaDescripcion.getText() + "' where idhorario = '" + this.id + "'";
+                PreparedStatement psd = cn.prepareStatement(sql);
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Se actualizo la infomacion de la reserva");
+                    this.dispose();
+
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Verifique los datos que desea editar");
+            }
+
+        }
+
+    }
+
+    public void verificacionAccion() {
+        if (this.id == null) {
+            this.jbtnReservar.setText("Reservar");
+            asignarHorasDisponibles(this.horainico, this.horasTotales);
+        } else {
+            this.jtxtNombres.setText(this.datos.get(0));
+            this.jtxtaDescripcion.setText(this.datos.get(1));
+            this.jtxtHoraInicio.setText(this.datos.get(2));
+            this.jcmbHorasDisponibles.addItem(this.datos.get(3));
+            this.jbtnReservar.setText("Editar");
+
         }
     }
 
@@ -214,6 +310,12 @@ public class VisReserva extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReservarActionPerformed
+        if (this.id == null) {
+            guardar();
+        } else {
+            editarReserva();
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnReservarActionPerformed
 
@@ -222,7 +324,7 @@ public class VisReserva extends javax.swing.JFrame {
         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
 
         if (mensaje == JOptionPane.YES_OPTION) {
-          this.dispose();
+            this.dispose();
         }
 
     }//GEN-LAST:event_jPnl_salidaMouseClicked

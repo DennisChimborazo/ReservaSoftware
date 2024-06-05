@@ -4,11 +4,19 @@
  */
 package Interfaces;
 
+import Repositorio.Conexion;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -46,59 +54,194 @@ public class VisHorario extends javax.swing.JInternalFrame {
         accionJitmReserva();
         jitmModfificarReserva();
         jitmEliminarReserva();
+        seleccionarFecha();
+        cargarTabla();
 
+    }
+
+    public void LimpiarTabla() {
+        for (int i = 0; i < this.jtblHorarios.getRowCount(); i++) {
+            for (int j = 1; j < this.jtblHorarios.getColumnCount(); j++) {
+                this.jtblHorarios.setValueAt(null, i, j);
+            }
+        }
+    }
+
+    private void seleccionarFecha() {
+        jcnlCalendar.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            LimpiarTablaReserva();
+            String fechaVerificacion = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
+            int indexSemana = indiceSemana(fechaVerificacion);
+            cargarReservas(indexSemana);
+        });
+    }
+
+    public void LimpiarTablaReserva() {
+        for (int i = 0; i < this.jtblHorarios.getRowCount(); i++) {
+            for (int j = 1; j < this.jtblHorarios.getColumnCount(); j++) {
+                String valor = String.valueOf(jtblHorarios.getValueAt(i, j));
+                if (valor.contains("reserva")) {
+                    this.jtblHorarios.setValueAt(null, i, j);
+                }
+            }
+        }
+
+    }
+
+    public void borrarReserva() {
+        int op = JOptionPane.showConfirmDialog(null, "Desea borrar la reserva", "Confirmacion", JOptionPane.YES_NO_OPTION);
+        if (op == 0) {
+            try {
+                int fila = this.jtblHorarios.getSelectedRow();
+                int columna = this.jtblHorarios.getSelectedColumn();
+                String valor = String.valueOf(this.jtblHorarios.getValueAt(fila, columna));
+                valor = valor.substring(0, 1);
+                Conexion cc = new Conexion();
+                Connection cn = cc.conectar();
+                String Sql = "delete from reseva where idhorario='" + valor + " ' ";
+                PreparedStatement psd = cn.prepareStatement(Sql);
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Se elimino la reserva del registro");
+                    LimpiarTablaReserva();
+                    String fechaVerificacion = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
+                    int indexSemana = indiceSemana(fechaVerificacion);
+                    cargarReservas(indexSemana);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Verifique los datos que desea borrar");
+            }
+
+        }
+
+    }
+
+    public void cargarReservas(int indice) {
+        try {
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+            String sql = "select * from reseva";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                String idhorario = rs.getString("idhorario");
+                String profe = rs.getString("nombre");
+                int horaInicio = Integer.parseInt(rs.getString("horainicio"));
+                int horaFin = Integer.parseInt(rs.getString("horafin"));
+                String dia = rs.getString("fecha");
+                int horas = horasAsignadas(horaInicio, horaFin);
+                int indicehorario = horaInicio(horaInicio) - 7;
+                int indexSemana = indiceSemana(dia);
+                if (indice == indexSemana) {
+                    for (int i = 0; i < horas; i++) {
+                        this.jtblHorarios.setValueAt(idhorario + ". reserva\n" + profe, (indicehorario + i), indiceDia(dia) - 1);
+                    }
+                }
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public ArrayList cargarReservasindividual() {
+        ArrayList<String> datos = new ArrayList();
+        int fila = this.jtblHorarios.getSelectedRow();
+        int columna = this.jtblHorarios.getSelectedColumn();
+        String valor = String.valueOf(this.jtblHorarios.getValueAt(fila, columna));
+        valor = valor.substring(0, 1);
+        try {
+            Repositorio.Conexion cn = new Repositorio.Conexion();
+            Connection cc = cn.conectar();
+            String sql = "select * from reseva where idhorario= '" + valor + " '";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                String profe = rs.getString("nombre");
+                String descripcion = rs.getString("descripcion");
+                String horaInicio = (rs.getString("horainicio"));
+                String horaFin = (rs.getString("horafin"));
+                datos.add(profe);
+                datos.add(descripcion);
+                datos.add(horaInicio);
+                datos.add(horaFin);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return datos;
+    }
+
+    private void cargarTabla() {
+        try {
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+            String sql = "select * from horario";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                String materia = rs.getString("materia");
+                String profe = rs.getString("profesor");
+                int horaInicio = Integer.parseInt(rs.getString("horainicio"));
+                int horaFin = Integer.parseInt(rs.getString("horafin"));
+                int dia = Integer.parseInt(rs.getString("dia"));
+                int horas = horasAsignadas(horaInicio, horaFin);
+                int indicehorario = horaInicio(horaInicio) - 7;
+
+                for (int i = 0; i < horas; i++) {
+                    this.jtblHorarios.setValueAt(materia + "\n" + profe, (indicehorario + i), dia);
+                }
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }
 
     private void accionJitmReserva() {
 
-        this.jitmReserva.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if (jtblHorarios.getSelectedColumn() != 0) {
-                    int filHora = jtblHorarios.getSelectedRow();
-                    int columDia = jtblHorarios.getSelectedColumn();
-                    String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
-                    if (!valor.contains("reserva")) {
-                        if (valor.contains("null")) {
-                            JOptionPane.showMessageDialog(null, "OK");
-
-                        } else {
-                            JOptionPane.showMessageDialog(null, "La fecha seleccionada corresponde a un jornada laboral");
-
-                        }
+        this.jitmReserva.addActionListener((ActionEvent e) -> {
+            if (jtblHorarios.getSelectedColumn() != 0) {
+                int filHora = jtblHorarios.getSelectedRow();
+                int columDia = jtblHorarios.getSelectedColumn();
+                String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
+                if (!valor.contains("reserva")) {
+                    if (valor.contains("null")) {
+                        verificacionDatosReserva();
                     } else {
-                        JOptionPane.showMessageDialog(null, "No puede reversar esta fecha se \n"
-                                + " encuentra ya reservada");
+                        JOptionPane.showMessageDialog(null, "La fecha seleccionada corresponde \na un jornada laboral");
                     }
-
                 } else {
-                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
+                    JOptionPane.showMessageDialog(null, "No puede reversar esta fecha se \nencuentra ya reservada");
                 }
 
+            } else {
+                JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
             }
         });
     }
 
     private void jitmModfificarReserva() {
-
-        this.jitmModfificarReserva.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (jtblHorarios.getSelectedColumn() != 0) {
-                    int filHora = jtblHorarios.getSelectedRow();
-                    int columDia = jtblHorarios.getSelectedColumn();
-                    String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
-                    if (valor.contains("reserva")) {
-                        // this.vistaHorarios.verificacionDatosReserva();
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede modificar");
-                    }
+        this.jitmModfificarReserva.addActionListener((ActionEvent e) -> {
+            if (jtblHorarios.getSelectedColumn() != 0) {
+                int filHora = jtblHorarios.getSelectedRow();
+                int columDia = jtblHorarios.getSelectedColumn();
+                String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
+                if (valor.contains("reserva")) {
+                    int fila = jtblHorarios.getSelectedRow();
+                    int columna = jtblHorarios.getSelectedColumn();
+                    String id = String.valueOf(jtblHorarios.getValueAt(fila, columna));
+                    id = id.substring(0, 1);
+                    VisReserva vr = new VisReserva(jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, id, cargarReservasindividual());
+                    vr.setVisible(true);
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
+                    JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede modificar");
                 }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
             }
         });
     }
@@ -110,6 +253,8 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 int columDia = jtblHorarios.getSelectedColumn();
                 String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
                 if (valor.contains("reserva")) {
+
+                    borrarReserva();
 
                 } else {
                     JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede elinimar");
@@ -229,8 +374,8 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 return false;
 
             } else {
-                VisReserva vr = new VisReserva(this.jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor);
-                vr.setVisible(rootPaneCheckingEnabled);
+                VisReserva vr = new VisReserva(this.jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, null, null);
+                vr.setVisible(true);
                 return true;
             }
         } else {

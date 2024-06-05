@@ -258,7 +258,6 @@ public class VisPrincipal extends javax.swing.JFrame {
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
         if (mensaje == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null, "Salió del sistema");
             System.exit(0);
         }
         // TODO add your handling code here:

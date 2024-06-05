@@ -4,9 +4,16 @@
  */
 package Interfaces;
 
+import Repositorio.Conexion;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,6 +37,25 @@ public class VisLogin extends javax.swing.JFrame {
         jLabel1.setIcon(bannerRedimensionado);
         ImageIcon iconosello = new ImageIcon(getClass().getResource("/Imagenes/sello_login.png"));
         jLabel2.setIcon(iconosello);
+    }
+
+    public boolean verificarDatos() {
+        try {
+            Conexion cc = new Conexion();
+            Connection cn = cc.conectar();
+            String consulta = "SELECT * FROM personal WHERE user = ? AND password = ?";
+            PreparedStatement declaración = cn.prepareStatement(consulta);
+            declaración.setString(1, this.jtxtUsuario.getText());
+            declaración.setString(2, this.jpswContraseña.getText());
+            ResultSet resultado = declaración.executeQuery();
+            if (resultado.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return false;
+
     }
 
     /**
@@ -156,10 +182,15 @@ public class VisLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIniciarSesionActionPerformed
+        if (verificarDatos()) {
+            VisPrincipal visPrincipal = new VisPrincipal();
+            visPrincipal.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
 
-        VisPrincipal visPrincipal = new VisPrincipal();
-        visPrincipal.setVisible(true);
-        this.dispose();
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnIniciarSesionActionPerformed
 

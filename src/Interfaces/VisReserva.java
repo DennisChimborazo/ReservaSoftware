@@ -26,19 +26,22 @@ public class VisReserva extends javax.swing.JFrame {
     String id;
     ArrayList<String> datos;
     int cont = 3;
+    VisHorario vistHorario;
 
     /**
      * Creates new form VisReserva
      *
+     * @param vistHorario
      * @param horainico
      * @param horasTotales
      * @param fecha
      * @param id
      * @param datos
      */
-    public VisReserva(int horainico, int horasTotales, String fecha, String id, ArrayList<String> datos) {
+    public VisReserva(VisHorario vistHorario, int horainico, int horasTotales, String fecha, String id, ArrayList<String> datos) {
         initComponents();
         this.setLocationRelativeTo(this);
+        this.vistHorario = vistHorario;
         this.datos = datos;
         this.fecha = fecha;
         this.id = id;
@@ -81,7 +84,7 @@ public class VisReserva extends javax.swing.JFrame {
     }
 
     private void guardar() {
-        this.cont=cont+1;
+        this.cont = cont + 1;
         try {
             Conexion cc = new Conexion();
             Connection cn = cc.conectar();
@@ -96,6 +99,7 @@ public class VisReserva extends javax.swing.JFrame {
             int num = psd.executeUpdate();
             if (num != 0) {
                 JOptionPane.showMessageDialog(null, "Se guardo la reserva");
+                this.vistHorario.acutualizarDatos();
                 this.dispose();
             }
         } catch (SQLException ex) {
@@ -125,6 +129,7 @@ public class VisReserva extends javax.swing.JFrame {
                 int n = psd.executeUpdate();
                 if (n > 0) {
                     JOptionPane.showMessageDialog(null, "Se actualizo la infomacion de la reserva");
+                    this.vistHorario.acutualizarDatos();
                     this.dispose();
 
                 }

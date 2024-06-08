@@ -5,9 +5,12 @@
 package Interfaces;
 
 import Repositorio.Conexion;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,8 +52,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
         this.jppmMenu.add(jitmModfificarReserva);
         this.jppmMenu.add(jitmEliminarReserva);
         this.jtblHorarios.setComponentPopupMenu(jppmMenu);
-        this.jtblHorarios.setValueAt("hola\nmundo", 2, 2);
-        this.jtblHorarios.setValueAt("hola\nmundo\nreserva", 4, 4);
         accionJitmReserva();
         jitmModfificarReserva();
         jitmEliminarReserva();
@@ -86,6 +87,11 @@ public class VisHorario extends javax.swing.JInternalFrame {
             }
         }
 
+    }
+
+    public void acutualizarDatos() {
+        int fechaActual = indiceSemana(this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime()));
+        cargarReservas(fechaActual);
     }
 
     public void borrarReserva() {
@@ -233,7 +239,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
                     int columna = jtblHorarios.getSelectedColumn();
                     String id = String.valueOf(jtblHorarios.getValueAt(fila, columna));
                     id = id.substring(0, 1);
-                    VisReserva vr = new VisReserva(jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, id, cargarReservasindividual());
+                    VisReserva vr = new VisReserva(this, jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, id, cargarReservasindividual());
                     vr.setVisible(true);
 
                 } else {
@@ -365,7 +371,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         String valor = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
         if (verificacionFechaValida(valor)) {
             int verificacionDiaValido = indiceDia(valor);
-            if (verificacionDiaValido == 1 || verificacionDiaValido == 7) {
+            if (verificacionDiaValido == 1) {
                 JOptionPane.showMessageDialog(null, "No se puede reservar en fines de semana");
                 return false;
             } else if ((this.jtblHorarios.getSelectedColumn() + 1) != verificacionDiaValido) {
@@ -374,7 +380,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 return false;
 
             } else {
-                VisReserva vr = new VisReserva(this.jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, null, null);
+                VisReserva vr = new VisReserva(this, this.jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, null, null);
                 vr.setVisible(true);
                 return true;
             }
@@ -404,7 +410,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtblHorarios = new ComponentesPropios.utcJTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -421,7 +427,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
 
         jScrollPane2.setViewportView(jtblHorarios);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 900, 520));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 900, 430));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -431,7 +437,9 @@ public class VisHorario extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();

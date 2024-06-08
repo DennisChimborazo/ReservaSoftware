@@ -23,8 +23,7 @@ import javax.swing.table.TableCellRenderer;
  */
 public class utcJTable extends JTable {
 
-    DefaultTableModel modelotabla = new DefaultTableModel(new Object[]{"", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"}, 12);
-
+    DefaultTableModel modelotabla = new DefaultTableModel(new Object[]{"", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes","Sabado"}, 12);
 
     public utcJTable() {
         this.setModel(modelotabla);
@@ -36,28 +35,28 @@ public class utcJTable extends JTable {
         aplicarEstilos();
 
     }
+
     private void aplicarEstilos() {
-    DefaultTableCellRenderer renderizador = new DefaultTableCellRenderer() {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            label.setBorder(BorderFactory.createMatteBorder(1, 1, 0, 0, Color.BLACK));
-            label.setHorizontalAlignment(SwingConstants.CENTER);
-            if (value != null) {
-                label.setText("<html>" + value.toString().replaceAll("\n", "<br>"));
-            } else {
-                label.setText(""); 
+        DefaultTableCellRenderer renderizador = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setBorder(BorderFactory.createMatteBorder(1, 1, 0, 0, Color.BLACK));
+                label.setHorizontalAlignment(SwingConstants.CENTER);
+                if (value != null) {
+                    label.setText("<html>" + value.toString().replaceAll("\n", "<br>"));
+                } else {
+                    label.setText("");
+                }
+
+                return label;
             }
-            
-            return label;
+        };
+
+        for (int i = 0; i < this.getColumnCount(); i++) {
+            this.getColumnModel().getColumn(i).setCellRenderer(renderizador);
         }
-    };
-
-    for (int i = 0; i < this.getColumnCount(); i++) {
-        this.getColumnModel().getColumn(i).setCellRenderer(renderizador);
     }
-}
-
 
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int fila, int columna) {
@@ -65,15 +64,18 @@ public class utcJTable extends JTable {
         Object valorCelda = getValueAt(fila, columna);
         String valor = String.valueOf(valorCelda);
         if (valor != null && valor.contains("reserva")) {
+            componente.setBackground(new Color(243, 185, 181));
+            componente.setForeground(Color.black);
+        } else if (valor != null&& valor.length()> 5 ) {
+            componente.setBackground(new Color(175, 185, 240));
+            componente.setForeground(Color.black);
+        } else  {
             componente.setBackground(new Color(210, 247, 175));
             componente.setForeground(Color.black);
-        } else {
-            componente.setBackground(getBackground());
         }
         return componente;
     }
 
-   
     private void horasDia() {
         this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setValueAt("7:00 - 8:00", 0, 0);

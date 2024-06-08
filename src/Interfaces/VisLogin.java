@@ -182,6 +182,7 @@ public class VisLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIniciarSesionActionPerformed
+      /*
         if (verificarDatos()) {
             VisPrincipal visPrincipal = new VisPrincipal();
             visPrincipal.setVisible(true);
@@ -190,7 +191,10 @@ public class VisLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
 
         }
-
+*/
+      VisPrincipal visPrincipal = new VisPrincipal();
+            visPrincipal.setVisible(true);
+            this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnIniciarSesionActionPerformed
 

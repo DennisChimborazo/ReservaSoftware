@@ -405,10 +405,10 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jcmbSeleccion = new javax.swing.JComboBox<>();
-        jcnlCalendar = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtblHorarios = new ComponentesPropios.utcJTable();
+        jcnlCalendar = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -418,8 +418,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jLabel1.setText("Fecha");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
 
-        jPanel1.add(jcmbSeleccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 170, 30));
-        jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 210, 30));
+        jPanel1.add(jcmbSeleccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 170, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Eliga");
@@ -428,6 +427,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jtblHorarios);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 900, 430));
+        jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 170, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -487,7 +487,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JComboBox<String> jcmbSeleccion;
-    public com.toedter.calendar.JDateChooser jcnlCalendar;
+    private com.toedter.calendar.JDateChooser jcnlCalendar;
     private javax.swing.JPopupMenu jppmMenu;
     public ComponentesPropios.utcJTable jtblHorarios;
     // End of variables declaration//GEN-END:variables

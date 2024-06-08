@@ -30,13 +30,11 @@ public class VisLogin extends javax.swing.JFrame {
     public VisLogin() {
         initComponents();
         this.setLocationRelativeTo(null);
-        int ancho = 755;
-        int alto = 100;
-        ImageIcon iconobanner = new ImageIcon(getClass().getResource("/Imagenes/bannerLog.jpg"));
-        ImageIcon bannerRedimensionado = new ImageIcon(iconobanner.getImage().getScaledInstance(ancho, alto, java.awt.Image.SCALE_SMOOTH));
-        jLabel1.setIcon(bannerRedimensionado);
+       rsscalelabel.RSScaleLabel.setScaleLabel(jlb_banner, "src/Imagenes/banner1.jpg");
         ImageIcon iconosello = new ImageIcon(getClass().getResource("/Imagenes/sello_login.png"));
         jLabel2.setIcon(iconosello);
+         rsscalelabel.RSScaleLabel.setScaleLabel(lb_fondo, "src/Imagenes/fondo_escritorio.png");
+
     }
 
     public boolean verificarDatos() {
@@ -78,8 +76,10 @@ public class VisLogin extends javax.swing.JFrame {
         jPnl_min = new javax.swing.JPanel();
         jLbl_min = new javax.swing.JLabel();
         jpswContraseña = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
+        jlb_banner = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        lb_fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -89,12 +89,14 @@ public class VisLogin extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
         jLabel4.setText("Usuario:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 110, 50));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 370, 110, 50));
 
         jLabel5.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
         jLabel5.setText("Contraseña:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 430, 140, 50));
-        jPanel1.add(jtxtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 270, 40));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 480, 140, 40));
+
+        jtxtUsuario.setFont(new java.awt.Font("Microsoft Uighur", 1, 20)); // NOI18N
+        jPanel1.add(jtxtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 430, 270, 40));
 
         jbtnIniciarSesion.setBackground(new java.awt.Color(110, 7, 7));
         jbtnIniciarSesion.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
@@ -105,7 +107,7 @@ public class VisLogin extends javax.swing.JFrame {
                 jbtnIniciarSesionActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 600, 170, 40));
+        jPanel1.add(jbtnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 600, 170, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -139,7 +141,7 @@ public class VisLogin extends javax.swing.JFrame {
         jLabel3.setText("   X");
         jPnl_salida.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 30));
 
-        jPanel2.add(jPnl_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 0, 50, 30));
+        jPanel2.add(jPnl_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 0, 50, 30));
 
         jPnl_min.setBackground(new java.awt.Color(255, 255, 255));
         jPnl_min.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -160,12 +162,18 @@ public class VisLogin extends javax.swing.JFrame {
         jLbl_min.setText("   -");
         jPnl_min.add(jLbl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 30));
 
-        jPanel2.add(jPnl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 0, 50, 30));
+        jPanel2.add(jPnl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 0, 50, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 30));
-        jPanel1.add(jpswContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 270, 40));
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 780, 110));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 190, 160));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 30));
+
+        jpswContraseña.setFont(new java.awt.Font("Microsoft Uighur", 0, 20)); // NOI18N
+        jPanel1.add(jpswContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 530, 270, 40));
+        jPanel1.add(jlb_banner, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1200, 130));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 200, 190, 160));
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 160, 10, 510));
+        jPanel1.add(lb_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 160, 780, 510));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,7 +183,7 @@ public class VisLogin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -278,7 +286,6 @@ public class VisLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -288,8 +295,11 @@ public class VisLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton jbtnIniciarSesion;
+    private javax.swing.JLabel jlb_banner;
     public javax.swing.JPasswordField jpswContraseña;
     public javax.swing.JTextField jtxtUsuario;
+    private javax.swing.JLabel lb_fondo;
     // End of variables declaration//GEN-END:variables
 }

@@ -50,9 +50,9 @@ public class VisReserva extends javax.swing.JFrame {
         this.horasTotales = horasTotales;
         verificacionAccion();
         this.jtxtHoraInicio.setEditable(false);
-       ImageIcon iconoa = new ImageIcon(getClass().getResource("/Imagenes/reserva.png"));
+       ImageIcon iconoa = new ImageIcon(getClass().getResource("src/Imagenes/reserva.png"));
         jbtnReservar.setIcon(iconoa);
-        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/cancel.jpg"));
+        ImageIcon icono = new ImageIcon(getClass().getResource("src/Imagenes/cancel.jpg"));
         jbtnCancelar.setIcon(icono);
         
     }

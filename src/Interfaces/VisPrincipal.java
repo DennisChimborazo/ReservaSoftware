@@ -162,7 +162,7 @@ public class VisPrincipal extends javax.swing.JFrame {
         );
         jdskEscritorioLayout.setVerticalGroup(
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 550, Short.MAX_VALUE)
         );
 
         getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 1030, 550));
@@ -212,9 +212,14 @@ public class VisPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MousePressed
 
     private void jbtnAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAulasActionPerformed
-        VisHorario visHorario = new VisHorario();
-        this.jdskEscritorio.add(visHorario);
-        visHorario.setVisible(true);
+      VisHorario vishorario= new VisHorario();
+        vishorario.show(true);
+        if(this.jdskEscritorio.getComponentCount() < 1){
+            this.jdskEscritorio.add(vishorario);
+            this.jdskEscritorio.updateUI();
+        }else{
+            JOptionPane.showMessageDialog(this.jdskEscritorio, "No puede generar mas de 1 Ventana");
+        }
     }//GEN-LAST:event_jbtnAulasActionPerformed
 
     /**

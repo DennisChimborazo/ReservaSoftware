@@ -414,6 +414,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jcbCurso = new javax.swing.JComboBox<>();
 
+        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
@@ -422,32 +423,36 @@ public class VisHorario extends javax.swing.JInternalFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jLabel1.setText("Fecha");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, -1, -1));
 
+        jcmEdificio.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jPanel1.add(jcmEdificio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 170, 30));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jLabel2.setText("Aula:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, -1, -1));
 
         jScrollPane2.setViewportView(jtblHorarios);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 900, 430));
+
+        jcnlCalendar.setFont(new java.awt.Font("Microsoft Uighur", 1, 18)); // NOI18N
         jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 160, 30));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jLabel3.setText("Edificio:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
+        jcbCurso.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jPanel1.add(jcbCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 170, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 946, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

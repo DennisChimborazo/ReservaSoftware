@@ -5,6 +5,7 @@
 package Interfaces;
 
 import Repositorio.Conexion;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -52,6 +53,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         this.jppmMenu.add(jitmModfificarReserva);
         this.jppmMenu.add(jitmEliminarReserva);
         this.jtblHorarios.setComponentPopupMenu(jppmMenu);
+        this.jPanel1.setBackground(Color.WHITE);
         accionJitmReserva();
         jitmModfificarReserva();
         jitmEliminarReserva();
@@ -404,36 +406,53 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jppmMenu = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jcmbSeleccion = new javax.swing.JComboBox<>();
-        jcnlCalendar = new com.toedter.calendar.JDateChooser();
+        jcmEdificio = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtblHorarios = new ComponentesPropios.utcJTable();
+        jcnlCalendar = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        jcbCurso = new javax.swing.JComboBox<>();
 
+        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setVisible(true);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jLabel1.setText("Fecha");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, -1, -1));
 
-        jPanel1.add(jcmbSeleccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 170, 30));
-        jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 210, 30));
+        jcmEdificio.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jPanel1.add(jcmEdificio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 170, 30));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Eliga");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+        jLabel2.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jLabel2.setText("Aula:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, -1, -1));
 
         jScrollPane2.setViewportView(jtblHorarios);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 900, 430));
 
+        jcnlCalendar.setFont(new java.awt.Font("Microsoft Uighur", 1, 18)); // NOI18N
+        jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 160, 30));
+
+        jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jLabel3.setText("Edificio:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+
+        jcbCurso.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jPanel1.add(jcbCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 170, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 946, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,10 +503,12 @@ public class VisHorario extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JComboBox<String> jcmbSeleccion;
-    public com.toedter.calendar.JDateChooser jcnlCalendar;
+    public javax.swing.JComboBox<String> jcbCurso;
+    public javax.swing.JComboBox<String> jcmEdificio;
+    private com.toedter.calendar.JDateChooser jcnlCalendar;
     private javax.swing.JPopupMenu jppmMenu;
     public ComponentesPropios.utcJTable jtblHorarios;
     // End of variables declaration//GEN-END:variables

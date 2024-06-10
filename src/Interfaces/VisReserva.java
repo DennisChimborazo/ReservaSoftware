@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -49,7 +51,24 @@ public class VisReserva extends javax.swing.JFrame {
         this.horasTotales = horasTotales;
         verificacionAccion();
         this.jtxtHoraInicio.setEditable(false);
+//       ImageIcon iconoa = new ImageIcon(getClass().getResource("Imagenes/reserva.png"));
+//        jbtnReservar.setIcon(iconoa);
+//        ImageIcon icono = new ImageIcon(getClass().getResource("Imagenes/cancel.jpg"));
+//        jbtnCancelar.setIcon(icono);
+//        
+            setButtonIcon(jbtnReservar, "/Imagenes/reserva.png");
+        setButtonIcon(jbtnCancelar, "/Imagenes/cancel.png");
     }
+     private void setButtonIcon(JButton button, String resourcePath) {
+        java.net.URL imgURL = getClass().getResource(resourcePath);
+        if (imgURL != null) {
+            ImageIcon icon = new ImageIcon(imgURL);
+            button.setIcon(icon);
+        } else {
+            System.err.println("No se pudo encontrar la imagen: " + resourcePath);
+        }
+    }
+
 
     public void asignarHorasDisponibles(int horainico, int horaFin) {
         if (horainico >= 13) {
@@ -190,34 +209,42 @@ public class VisReserva extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Hasta");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
+        jLabel1.setText("Hora de fin:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, -1, -1));
 
         jtxtaDescripcion.setColumns(20);
+        jtxtaDescripcion.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jtxtaDescripcion.setRows(5);
+        jtxtaDescripcion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(jtxtaDescripcion);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 490, 160));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 490, 160));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Nombre");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
-        jPanel1.add(jtxtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 310, 40));
+        jLabel2.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
+        jLabel2.setText("Nombre:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jtxtNombres.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jPanel1.add(jtxtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 310, 40));
+
+        jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 50)); // NOI18N
         jLabel3.setText("Reserva");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
 
+        jbtnReservar.setBackground(new java.awt.Color(25, 134, 191));
+        jbtnReservar.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnReservar.setForeground(new java.awt.Color(255, 255, 255));
         jbtnReservar.setText("Reservar");
         jbtnReservar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnReservarActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnReservar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 210, 50));
+        jPanel1.add(jbtnReservar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 520, 170, 50));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -276,29 +303,35 @@ public class VisReserva extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 30));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel5.setText("Descripcion");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, -1, -1));
+        jLabel5.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
+        jLabel5.setText("Descripción:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, -1, -1));
 
+        jcmbHorasDisponibles.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jcmbHorasDisponibles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcmbHorasDisponiblesActionPerformed(evt);
             }
         });
-        jPanel1.add(jcmbHorasDisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, 160, 40));
+        jPanel1.add(jcmbHorasDisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 160, 40));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel6.setText("Hora de inicio ");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-        jPanel1.add(jtxtHoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 120, 40));
+        jLabel6.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
+        jLabel6.setText("Hora de inicio: ");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, -1, -1));
 
+        jtxtHoraInicio.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jPanel1.add(jtxtHoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 160, 40));
+
+        jbtnCancelar.setBackground(new java.awt.Color(110, 7, 7));
+        jbtnCancelar.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         jbtnCancelar.setText("Cancelar");
         jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, 230, 50));
+        jPanel1.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 520, 170, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -308,7 +341,7 @@ public class VisReserva extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
         );
 
         pack();
@@ -429,6 +462,6 @@ public class VisReserva extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcmbHorasDisponibles;
     private javax.swing.JTextField jtxtHoraInicio;
     private javax.swing.JTextField jtxtNombres;
-    private javax.swing.JTextArea jtxtaDescripcion;
+    public javax.swing.JTextArea jtxtaDescripcion;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,7 +4,7 @@
  */
 package Interfaces;
 
-import Repositorio.Conexion;
+import Repositorio.Conexiones;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import java.awt.Color;
@@ -39,7 +39,7 @@ public class VisLogin extends javax.swing.JFrame {
 
     public boolean verificarDatos() {
         try {
-            Conexion cc = new Conexion();
+            Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
             String consulta = "SELECT * FROM personal WHERE user = ? AND password = ?";
             PreparedStatement declaración = cn.prepareStatement(consulta);
@@ -207,9 +207,7 @@ public class VisLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnIniciarSesionActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-
         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-
         if (mensaje == JOptionPane.YES_OPTION) {
             System.exit(0);
         }

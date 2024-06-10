@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
@@ -57,6 +58,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         accionJitmReserva();
         jitmModfificarReserva();
         jitmEliminarReserva();
+        cargarcomboEfidicios();
         seleccionarFecha();
         cargarTabla();
 
@@ -94,6 +96,58 @@ public class VisHorario extends javax.swing.JInternalFrame {
     public void acutualizarDatos() {
         int fechaActual = indiceSemana(this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime()));
         cargarReservas(fechaActual);
+    }
+
+    private void cargarcomboEfidicios() {
+        try {
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+            String sql = "select nom_edi from edificios";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                String materia = rs.getString("nom_edi");
+                this.jcmbEdificios.addItem(materia);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void cargarcomboTipoAula(String nombre) {
+        this.jcmbtipoAula.removeAllItems();
+        try {
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+            String sql = "SELECT DISTINCT aulas.tipo_aul FROM aulas JOIN edificios ON aulas.id_edi_per = edificios.id_edi WHERE edificios.nom_edi = '" + nombre + "'";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                String materia = rs.getString("tipo_aul");
+                this.jcmbtipoAula.addItem(materia);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void cargarcomboAulasDisponibles(String idEdificio, String tipoAula) {
+        this.jcmbEspaciosDisponibles.removeAllItems();
+        try {
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+            String sql = "SELECT nom_aul FROM aulas JOIN edificios ON aulas.id_edi_per = edificios.id_edi WHERE edificios.nom_edi = '" + idEdificio + "' and aulas.tipo_aul = '" + tipoAula + "'";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                String materia = rs.getString("nom_aul");
+                this.jcmbEspaciosDisponibles.addItem(materia);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }
 
     public void borrarReserva() {
@@ -406,13 +460,15 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jppmMenu = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jcmEdificio = new javax.swing.JComboBox<>();
+        jcmbtipoAula = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtblHorarios = new ComponentesPropios.utcJTable();
         jcnlCalendar = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
-        jcbCurso = new javax.swing.JComboBox<>();
+        jcmbEspaciosDisponibles = new javax.swing.JComboBox<>();
+        jcmbEdificios = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         setClosable(true);
@@ -425,28 +481,39 @@ public class VisHorario extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jLabel1.setText("Fecha");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 20, -1, -1));
 
-        jcmEdificio.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
-        jPanel1.add(jcmEdificio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 170, 30));
+        jcmbtipoAula.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jPanel1.add(jcmbtipoAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 160, 30));
 
         jLabel2.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
-        jLabel2.setText("Aula:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, -1, -1));
+        jLabel2.setText("Tipo:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
 
         jScrollPane2.setViewportView(jtblHorarios);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 900, 430));
 
         jcnlCalendar.setFont(new java.awt.Font("Microsoft Uighur", 1, 18)); // NOI18N
-        jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 160, 30));
+        jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, 160, 30));
 
         jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jLabel3.setText("Edificio:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        jcbCurso.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
-        jPanel1.add(jcbCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 170, 30));
+        jcmbEspaciosDisponibles.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jPanel1.add(jcmbEspaciosDisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 170, 30));
+
+        jcmbEdificios.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcmbEdificiosItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(jcmbEdificios, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 160, 30));
+
+        jLabel4.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jLabel4.setText("Aula:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -463,6 +530,13 @@ public class VisHorario extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jcmbEdificiosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmbEdificiosItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cargarcomboTipoAula(this.jcmbEdificios.getSelectedItem().toString());
+        }
+
+    }//GEN-LAST:event_jcmbEdificiosItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -504,10 +578,12 @@ public class VisHorario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JComboBox<String> jcbCurso;
-    public javax.swing.JComboBox<String> jcmEdificio;
+    private javax.swing.JComboBox<String> jcmbEdificios;
+    public javax.swing.JComboBox<String> jcmbEspaciosDisponibles;
+    public javax.swing.JComboBox<String> jcmbtipoAula;
     private com.toedter.calendar.JDateChooser jcnlCalendar;
     private javax.swing.JPopupMenu jppmMenu;
     public ComponentesPropios.utcJTable jtblHorarios;

@@ -201,7 +201,7 @@ public class VisReserva extends javax.swing.JFrame {
             int num = psd.executeUpdate();
             if (num != 0) {
                 JOptionPane.showMessageDialog(null, "Se guardo la reserva");
-                this.vistHorario.acutualizarDatos();
+                this.vistHorario.actualizarDatos();
                 this.dispose();
             }
         } catch (SQLException ex) {
@@ -227,7 +227,7 @@ public class VisReserva extends javax.swing.JFrame {
             int num = psd.executeUpdate();
             if (num != 0) {
                // JOptionPane.showMessageDialog(null, "Se guardo un nuevo miembro");
-                this.vistHorario.acutualizarDatos();
+                this.vistHorario.actualizarDatos();
                 this.dispose();
             }
         } catch (SQLException ex) {
@@ -270,7 +270,7 @@ public class VisReserva extends javax.swing.JFrame {
                 int n = psd.executeUpdate();
                 if (n > 0) {
                     JOptionPane.showMessageDialog(null, "Se actualizo la infomacion de la reserva");
-                    this.vistHorario.acutualizarDatos();
+                    this.vistHorario.actualizarDatos();
                     this.dispose();
 
                 }
@@ -295,7 +295,7 @@ public class VisReserva extends javax.swing.JFrame {
             int n = psd.executeUpdate();
             if (n > 0) {
                 JOptionPane.showMessageDialog(null, "Se actualizo la infomacion de la reserva");
-                this.vistHorario.acutualizarDatos();
+                this.vistHorario.actualizarDatos();
                 this.dispose();
 
             }

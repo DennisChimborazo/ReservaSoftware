@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -217,7 +218,7 @@ public class VisReserva extends javax.swing.JFrame {
             Connection cn = cc.conectar();
             String sql = "insert into personas (id_per,nom_per,ape_per,fech_nac,telf_per,dir_per)values(?,?,?,?,?,?)";
             PreparedStatement psd = cn.prepareStatement(sql);
-            psd.setString(1, "35");
+            psd.setString(1, String.valueOf(cargarNumPersonas()+6));
             psd.setString(2, nombres[0]);
             psd.setString(3, nombres[1]);
             psd.setString(4, "estudiante");
@@ -225,13 +226,30 @@ public class VisReserva extends javax.swing.JFrame {
             psd.setString(6, "estudiante");
             int num = psd.executeUpdate();
             if (num != 0) {
-                JOptionPane.showMessageDialog(null, "Se guardo un nuevo miembro");
+               // JOptionPane.showMessageDialog(null, "Se guardo un nuevo miembro");
                 this.vistHorario.acutualizarDatos();
                 this.dispose();
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar");
         }
+    }
+         private int cargarNumPersonas() {
+         int num = 0;
+        try {
+            Conexiones cn = new Conexiones();
+            Connection cc = cn.conectar();
+                   String sql = "SELECT COUNT(*) AS total_personas FROM personas";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                num = rs.getInt("total_personas");
+            }
+            cc.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return num;
     }
 
     private String obtenerHoraFinal() {

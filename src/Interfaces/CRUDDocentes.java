@@ -6,7 +6,7 @@ package Interfaces;
 
 import Modelos.Docente;
 import Modelos.ModeloUsuarios;
-import Repositorio.Conexion;
+import Repositorio.Conexiones;
 import Validadores.Validadores;
 import java.awt.HeadlessException;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +28,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
     public CRUDDocentes() {
         initComponents();
         textosBlancos();
-        cargarTabla("");
+        cargarTabla();
         bloquearTextos();
         this.setLocationRelativeTo(null);
         selecionarTabla();
@@ -64,31 +64,23 @@ public class CRUDDocentes extends javax.swing.JFrame {
         this.jbtnEliminar.setEnabled(true);
     }
 
-    private void cargarTabla(String dato) {
-        DefaultTableModel modeloTabla = new DefaultTableModel(new Object[]{"Cedula", "Nombre", "Telefono", "Usuario", "Correo",}, 0);
+    private void cargarTabla() {
+        DefaultTableModel modeloTabla = new DefaultTableModel(new Object[]{"Cedula", "Nombre", "Telefono", "Direccion"}, 0);
         this.jTable1.setModel(modeloTabla);
         modeloTabla.setRowCount(0);
         try {
-            String sql = "Select personas.id_per, personas.nom_per, personas.ape_per, personas.telf_per,usuarios.usuario,usuarios.correo,usuarios.tipo_usuario "
-                    + "from personas,usuarios "
-                    + "where personas.id_per=usuarios.id_per";
-            Statement st = Conexion.getConnection().createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            Conexiones cn = new Conexiones();
+            Connection cc = cn.conectar();
+            String sql = "Select * from personas";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {
                 Object[] docente = new Object[5];
-                docente[0] = rs.getString("personas.id_per");
-                docente[1] = ModeloUsuarios.modelomayus(rs.getString("personas.nom_per")) + " " + ModeloUsuarios.modelomayus(rs.getString("personas.ape_per"));
-                docente[2] = rs.getString("personas.telf_per");
-                docente[3] = rs.getString("usuarios.usuario");
-                docente[4] = rs.getString("usuarios.correo");
-                if (rs.getString("usuarios.tipo_usuario").equals("docente")) {
-                    try {
-                        doc = new Docente(docente[0].toString(), rs.getString("personas.nom_per"), rs.getString("personas.ape_per"), docente[2].toString(), docente[3].toString(), docente[4].toString());
-                    } catch (SQLException e) {
-                        System.out.println(e.toString());
-                    }
+                docente[0] = rs.getString("ced_per");
+                docente[1] = ModeloUsuarios.modelomayus(rs.getString("nom_per")) + " " + ModeloUsuarios.modelomayus(rs.getString("ape_per"));
+                docente[2] = rs.getString("telf_per");
+                docente[3] = rs.getString("dir_per");
                     modeloTabla.addRow(docente);
-                }
             }
             this.jTable1.setModel(modeloTabla);
         } catch (SQLException e) {
@@ -108,10 +100,12 @@ public class CRUDDocentes extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Debe ingresar nombre y apellido");
                         } else {
                             try {
+                                Conexiones cc = new Conexiones();
+                                Connection cn = cc.conectar();
                                 sql = "INSERT INTO personas"
-                                        + "(id_per, nom_per, ape_per, fech_nac, telf_per, dir_per)"
+                                        + "(ced_per, nom_per, ape_per, fech_nac, telf_per, dir_per)"
                                         + "VALUES(?, ?, ?, ?, ?, ?);";
-                                PreparedStatement ps = Conexion.getConnection().prepareStatement(sql);
+                                PreparedStatement ps = cn.prepareStatement(sql);
                                 ps.setString(1, this.jtxtCedula.getText());
                                 ps.setString(2, nombreCompleto[0].toLowerCase());
                                 ps.setString(3, nombreCompleto[1].toLowerCase());
@@ -120,28 +114,13 @@ public class CRUDDocentes extends javax.swing.JFrame {
                                 ps.setString(6, this.jtxtDireccion.getText().toLowerCase());
                                 int res = ps.executeUpdate();
                                 if (res > 0) {
-                                    try {
-                                        sql = "INSERT INTO usuarios"
-                                                + "(usuario, correo, contrasenia, tipo_usuario, id_per)"
-                                                + "VALUES(?, ?, ?, ?, ?);";
-                                        ps = Conexion.getConnection().prepareStatement(sql);
-                                        ps.setString(1, ModeloUsuarios.modeloUsser(nombreCompleto[0].toLowerCase(), nombreCompleto[1].toLowerCase(), this.jtxtCedula.getText()));
-                                        ps.setString(2, ModeloUsuarios.modeloCorreo(nombreCompleto[0].toLowerCase(), nombreCompleto[1].toLowerCase()));
-                                        ps.setString(3, "1234");
-                                        ps.setString(4, "docente");
-                                        ps.setString(5, this.jtxtCedula.getText());
-                                        int rs = ps.executeUpdate();
-                                        if (rs > 0) {
-                                            JOptionPane.showMessageDialog(null, "Se ingreso correctamene");
-                                            cargarTabla("");
-                                            textosBlancos();
-                                            bloquearTextos();
-                                            ps.close();
-                                        }
-                                    } catch (HeadlessException | SQLException e) {
-                                        System.out.println(e.toString());
-                                    }
+                                    JOptionPane.showMessageDialog(null, "Se ingreso correctamene");
+                                    cargarTabla();
+                                    textosBlancos();
+                                    bloquearTextos();
+                                    ps.close();
                                 }
+
                             } catch (SQLException e) {
                                 System.out.println(e.toString());
                             }
@@ -165,13 +144,15 @@ public class CRUDDocentes extends javax.swing.JFrame {
     private void editarDocente() {
 
         if (!this.jtxtCedula.getText().isEmpty() && !this.jtxtNombre.getText().isEmpty() && !this.jtxtTelefono.getText().isEmpty() && !this.jtxtDireccion.getText().isEmpty()) {
-            String sql = "UPDATE personas SET  telf_per='" + this.jtxtTelefono.getText() + "', dir_per='" + this.jtxtDireccion.getText() + "' WHERE id_per='" + this.jtxtCedula.getText() + "'";
+            String sql = "UPDATE personas SET  telf_per='" + this.jtxtTelefono.getText() + "', dir_per='" + this.jtxtDireccion.getText() + "' WHERE ced_per='" + this.jtxtCedula.getText() + "'";
             try {
-                PreparedStatement ps = Conexion.getConnection().prepareStatement(sql);
+                Conexiones cc = new Conexiones();
+                Connection cn = cc.conectar();
+                PreparedStatement ps = cn.prepareStatement(sql);
                 int res = ps.executeUpdate();
                 if (res > 0) {
                     JOptionPane.showMessageDialog(null, "Se actualizo correctamene");
-                    cargarTabla("");
+                    cargarTabla();
                     textosBlancos();
                     bloquearTextos();
                     ps.close();
@@ -185,22 +166,18 @@ public class CRUDDocentes extends javax.swing.JFrame {
     }
 
     private void eliminarDocente() {
-        String sql;
         try {
-            sql = "Delete from usuarios where id_per ='" + this.jtxtCedula.getText() + "'";
-            PreparedStatement ps = Conexion.getConnection().prepareStatement(sql);
-            int res = ps.executeUpdate();
+            Conexiones cc = new Conexiones();
+            Connection cn = cc.conectar();
+            String sql = "Delete from personas where ced_per='" + this.jtxtCedula.getText() + "'";
+            PreparedStatement psd = cn.prepareStatement(sql);
+            int res = psd.executeUpdate();
             if (res > 0) {
-                sql = "Delete from personas where id_per ='" + this.jtxtCedula.getText() + "'";
-                ps = Conexion.getConnection().prepareStatement(sql);
-                res = ps.executeUpdate();
-                if (res > 0) {
-                    JOptionPane.showMessageDialog(null, "Se Elimino correctamene");
-                    cargarTabla("");
-                    textosBlancos();
-                    bloquearTextos();
-                    ps.close();
-                }
+                JOptionPane.showMessageDialog(null, "Se Elimino correctamene");
+                cargarTabla();
+                textosBlancos();
+                bloquearTextos();
+                psd.close();
             }
 
         } catch (SQLException e) {

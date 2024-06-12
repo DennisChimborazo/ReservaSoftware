@@ -22,7 +22,7 @@ public class Conexiones {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             try {
-                conectar = DriverManager.getConnection("jdbc:mysql://localhost/proyecto", "root", "");
+                conectar = DriverManager.getConnection("jdbc:mysql://localhost/proyectot", "root", "");
 
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex);

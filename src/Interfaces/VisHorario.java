@@ -6,13 +6,9 @@ package Interfaces;
 
 import Repositorio.Conexiones;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -212,7 +208,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 int columna = this.jtblHorarios.getSelectedColumn();
                 String valor = String.valueOf(this.jtblHorarios.getValueAt(fila, columna));
                 valor = valor.substring(0, 2).trim();
-                System.out.println("valor " + valor);
                 Conexiones cc = new Conexiones();
                 Connection cn = cc.conectar();
                 String Sql = "delete from reservas where id_reser='" + valor + " ' ";
@@ -266,7 +261,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         int fila = this.jtblHorarios.getSelectedRow();
         int columna = this.jtblHorarios.getSelectedColumn();
         String valor = String.valueOf(this.jtblHorarios.getValueAt(fila, columna));
-        valor = valor.substring(0, 1).trim();
+        valor = valor.substring(0, 2).trim();
         System.out.println("valooor " + valor);
         try {
             Repositorio.Conexiones cn = new Repositorio.Conexiones();
@@ -397,10 +392,11 @@ public class VisHorario extends javax.swing.JInternalFrame {
             if (jtblHorarios.getSelectedRow() == -1) {
                 JOptionPane.showMessageDialog(null, "Porfavor seleccione de \nde manera adecuada");
             } else {
-
                 if (jtblHorarios.getSelectedColumn() != 0) {
                     String valordia = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
                     if (verificacionFechaValida(valordia)) {
+                        
+                        /*
                         int filHora = jtblHorarios.getSelectedRow();
                         int columDia = jtblHorarios.getSelectedColumn();
                         String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
@@ -410,6 +406,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
                         } else {
                             JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede elinimar");
                         }
+                        */
 
                     } else {
                         JOptionPane.showMessageDialog(null, "No puede borrar la reserva corespondiente\na esa fecha");
@@ -507,6 +504,9 @@ public class VisHorario extends javax.swing.JInternalFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println("fecha ingreso "+fecha);
+                System.out.println("fecha hoy "+fechaActual.toString());
+
 
         if (fechaOtra != null && !fechaOtra.before(fechaActual)
                 || fechaOtra.toString().substring(0, 10).equals(fechaActual.toString().substring(0, 10))) {

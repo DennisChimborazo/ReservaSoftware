@@ -59,11 +59,6 @@ public class VisReserva extends javax.swing.JFrame {
         this.nombreAula = nombreAula;
         verificacionAccion();
         this.jtxtHoraInicio.setEditable(false);
-//       ImageIcon iconoa = new ImageIcon(getClass().getResource("Imagenes/reserva.png"));
-//        jbtnReservar.setIcon(iconoa);
-//        ImageIcon icono = new ImageIcon(getClass().getResource("Imagenes/cancel.jpg"));
-//        jbtnCancelar.setIcon(icono);
-//        
         setButtonIcon(jbtnReservar, "/Imagenes/reserva.png");
         setButtonIcon(jbtnCancelar, "/Imagenes/cancel.png");
     }
@@ -186,9 +181,7 @@ public class VisReserva extends javax.swing.JFrame {
             Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
             String idAula = buscarIdAula();
-            System.out.println("idAula " + idAula);
             String idPersona = buscarIdPersona();
-            System.out.println("idPersona " + idPersona);
             String sql = "insert into reservas (id_per_reserv,id_lab_reser,fecha_reserv,hor_reserv,hora_fin_reserv,desc_reser)values(?,?,?,?,?,?)";
             PreparedStatement psd = cn.prepareStatement(sql);
             psd.setString(1, idPersona);
@@ -216,9 +209,9 @@ public class VisReserva extends javax.swing.JFrame {
         try {
             Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
-            String sql = "insert into personas (id_per,nom_per,ape_per,fech_nac,telf_per,dir_per)values(?,?,?,?,?,?)";
+            String sql = "insert into personas (ced_per,nom_per,ape_per,fech_nac,telf_per,dir_per)values(?,?,?,?,?,?)";
             PreparedStatement psd = cn.prepareStatement(sql);
-            psd.setString(1, String.valueOf(cargarNumPersonas()+6));
+            psd.setString(1, "000000");
             psd.setString(2, nombres[0]);
             psd.setString(3, nombres[1]);
             psd.setString(4, "estudiante");
@@ -226,30 +219,13 @@ public class VisReserva extends javax.swing.JFrame {
             psd.setString(6, "estudiante");
             int num = psd.executeUpdate();
             if (num != 0) {
-               // JOptionPane.showMessageDialog(null, "Se guardo un nuevo miembro");
                 this.vistHorario.actualizarDatos();
                 this.dispose();
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar");
         }
-    }
-         private int cargarNumPersonas() {
-         int num = 0;
-        try {
-            Conexiones cn = new Conexiones();
-            Connection cc = cn.conectar();
-                   String sql = "SELECT COUNT(*) AS total_personas FROM personas";
-            Statement psd = cc.createStatement();
-            ResultSet rs = psd.executeQuery(sql);
-            while (rs.next()) {
-                num = rs.getInt("total_personas");
-            }
-            cc.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
-        return num;
+
     }
 
     private String obtenerHoraFinal() {
@@ -530,9 +506,9 @@ public class VisReserva extends javax.swing.JFrame {
             }
         } else {
             if (controlIngresosValidos()) {
-                    editarReserva();
-                    editarPersona();
-                
+                editarReserva();
+                editarPersona();
+
             }
         }
 

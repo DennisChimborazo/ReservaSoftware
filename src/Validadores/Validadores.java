@@ -4,9 +4,7 @@
  */
 package Validadores;
 
-import Repositorio.Conexion;
-import com.mysql.cj.protocol.Resultset;
-import com.mysql.cj.xdevapi.Result;
+import Repositorio.Conexiones;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,9 +56,12 @@ public class Validadores {
 
     public static boolean existeUsuario(String cedula) {
         try {
-            String sql = "SELECT COUNT(*) FROM personas WHERE id_per='" + cedula + "'";
-            Statement st = Conexion.getConnection().createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            Conexiones cc = new Conexiones();
+            Connection cn = cc.conectar();
+            String sql = "SELECT COUNT(*) FROM personas WHERE id_per = ?";
+            PreparedStatement declaración = cn.prepareStatement(sql);
+            declaración.setString(1, cedula);
+            ResultSet rs = declaración.executeQuery(sql);
             while (rs.next()) {
                 if (rs.getInt(1) > 0) {
                     return false;

@@ -24,8 +24,7 @@ public class VisPrincipal extends javax.swing.JFrame {
      */
     public VisPrincipal() {
         initComponents();
-        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/banner1.jpg"));
-        jLabel1.setIcon(icono);
+        rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, "src/Imagenes/banner1.jpg");
         ImageIcon iconoa = new ImageIcon(getClass().getResource("/Imagenes/aulas.png"));
         jbtnAulas.setIcon(iconoa);
         this.setLocationRelativeTo(null);
@@ -44,7 +43,11 @@ public class VisPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jbtnAulas = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPnl_salida = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPnl_min = new javax.swing.JPanel();
+        jLbl_min = new javax.swing.JLabel();
         ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/fondo_escritorio.png"));
         Image imagen= icon.getImage();
         jdskEscritorio = new javax.swing.JDesktopPane(){
@@ -52,24 +55,19 @@ public class VisPrincipal extends javax.swing.JFrame {
                 g.drawImage(imagen,0,0,getWidth(), getHeight(),this);
             }
         };
-        jPanel3 = new javax.swing.JPanel();
-        jPnl_salida = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jPnl_min = new javax.swing.JPanel();
-        jLbl_min = new javax.swing.JLabel();
 
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner1.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1212, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1220, -1));
 
         jPanel1.setBackground(new java.awt.Color(110, 7, 7));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jbtnAulas.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
         jbtnAulas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aulas.png"))); // NOI18N
-        jbtnAulas.setText("Aulas");
+        jbtnAulas.setText("Espacios");
         jbtnAulas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jbtnAulas.setBackground(Color.WHITE);
         jbtnAulas.addActionListener(new java.awt.event.ActionListener() {
@@ -83,53 +81,19 @@ public class VisPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jbtnAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1040, 1040, 1040))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(175, 175, 175)
                 .addComponent(jbtnAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(423, Short.MAX_VALUE))
+                .addContainerGap(293, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 260, 540));
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        jdskEscritorio.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jdskEscritorioLayout = new javax.swing.GroupLayout(jdskEscritorio);
-        jdskEscritorio.setLayout(jdskEscritorioLayout);
-        jdskEscritorioLayout.setHorizontalGroup(
-            jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 950, Short.MAX_VALUE)
-        );
-        jdskEscritorioLayout.setVerticalGroup(
-            jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 535, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jdskEscritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jdskEscritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 970, 610));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 190, 550));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -186,7 +150,22 @@ public class VisPrincipal extends javax.swing.JFrame {
 
         jPanel3.add(jPnl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 0, 50, 30));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1210, 30));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 30));
+
+        jdskEscritorio.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jdskEscritorioLayout = new javax.swing.GroupLayout(jdskEscritorio);
+        jdskEscritorio.setLayout(jdskEscritorioLayout);
+        jdskEscritorioLayout.setHorizontalGroup(
+            jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1030, Short.MAX_VALUE)
+        );
+        jdskEscritorioLayout.setVerticalGroup(
+            jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 550, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 1030, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -233,9 +212,14 @@ public class VisPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MousePressed
 
     private void jbtnAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAulasActionPerformed
-        VisHorario visHorario = new VisHorario();
-        this.jdskEscritorio.add(visHorario);
-        visHorario.setVisible(true);
+      VisHorario vishorario= new VisHorario();
+        vishorario.show(true);
+        if(this.jdskEscritorio.getComponentCount() < 1){
+            this.jdskEscritorio.add(vishorario);
+            this.jdskEscritorio.updateUI();
+        }else{
+            JOptionPane.showMessageDialog(this.jdskEscritorio, "No puede generar mas de 1 Ventana");
+        }
     }//GEN-LAST:event_jbtnAulasActionPerformed
 
     /**
@@ -278,7 +262,6 @@ public class VisPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLbl_min;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;

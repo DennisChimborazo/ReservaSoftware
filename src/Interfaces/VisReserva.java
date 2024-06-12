@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -50,12 +51,24 @@ public class VisReserva extends javax.swing.JFrame {
         this.horasTotales = horasTotales;
         verificacionAccion();
         this.jtxtHoraInicio.setEditable(false);
-       ImageIcon iconoa = new ImageIcon(getClass().getResource("/Imagenes/reserva.png"));
-        jbtnReservar.setIcon(iconoa);
-        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/cancel.jpg"));
-        jbtnCancelar.setIcon(icono);
-        
+//       ImageIcon iconoa = new ImageIcon(getClass().getResource("Imagenes/reserva.png"));
+//        jbtnReservar.setIcon(iconoa);
+//        ImageIcon icono = new ImageIcon(getClass().getResource("Imagenes/cancel.jpg"));
+//        jbtnCancelar.setIcon(icono);
+//        
+            setButtonIcon(jbtnReservar, "/Imagenes/reserva.png");
+        setButtonIcon(jbtnCancelar, "/Imagenes/cancel.png");
     }
+     private void setButtonIcon(JButton button, String resourcePath) {
+        java.net.URL imgURL = getClass().getResource(resourcePath);
+        if (imgURL != null) {
+            ImageIcon icon = new ImageIcon(imgURL);
+            button.setIcon(icon);
+        } else {
+            System.err.println("No se pudo encontrar la imagen: " + resourcePath);
+        }
+    }
+
 
     public void asignarHorasDisponibles(int horainico, int horaFin) {
         if (horainico >= 13) {

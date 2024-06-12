@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author edupu
  */
-public class Conexion {
+public class Conexiones {
 
     
     Connection conectar;
@@ -22,10 +22,10 @@ public class Conexion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             try {
-                conectar = DriverManager.getConnection("jdbc:mysql://localhost/p", "root", "");
+                conectar = DriverManager.getConnection("jdbc:mysql://localhost/proyecto", "root", "");
 
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "revisa la connexion");
+                JOptionPane.showMessageDialog(null, ex);
 
             }
         } catch (ClassNotFoundException ex) {

@@ -4,7 +4,7 @@
  */
 package Interfaces;
 
-import Repositorio.Conexion;
+import Repositorio.Conexiones;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import java.awt.Color;
@@ -39,9 +39,9 @@ public class VisLogin extends javax.swing.JFrame {
 
     public boolean verificarDatos() {
         try {
-            Conexion cc = new Conexion();
+            Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
-            String consulta = "SELECT * FROM personal WHERE user = ? AND password = ?";
+            String consulta = "SELECT * FROM ussers WHERE usuario = ? AND contrasenia = ?";
             PreparedStatement declaración = cn.prepareStatement(consulta);
             declaración.setString(1, this.jtxtUsuario.getText());
             declaración.setString(2, this.jpswContraseña.getText());
@@ -190,7 +190,7 @@ public class VisLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIniciarSesionActionPerformed
-      /*
+      
         if (verificarDatos()) {
             VisPrincipal visPrincipal = new VisPrincipal();
             visPrincipal.setVisible(true);
@@ -199,17 +199,10 @@ public class VisLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
 
         }
-*/
-      VisPrincipal visPrincipal = new VisPrincipal();
-            visPrincipal.setVisible(true);
-            this.dispose();
-        // TODO add your handling code here:
     }//GEN-LAST:event_jbtnIniciarSesionActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-
         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-
         if (mensaje == JOptionPane.YES_OPTION) {
             System.exit(0);
         }

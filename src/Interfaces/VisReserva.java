@@ -4,12 +4,16 @@
  */
 package Interfaces;
 
-import Repositorio.Conexion;
+import Repositorio.Conexiones;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,18 +33,21 @@ public class VisReserva extends javax.swing.JFrame {
     ArrayList<String> datos;
     int cont = 3;
     VisHorario vistHorario;
+    String nombreAula;
+    String[] nombresModificados;
 
     /**
      * Creates new form VisReserva
      *
      * @param vistHorario
+     * @param nombreAula
      * @param horainico
      * @param horasTotales
      * @param fecha
      * @param id
      * @param datos
      */
-    public VisReserva(VisHorario vistHorario, int horainico, int horasTotales, String fecha, String id, ArrayList<String> datos) {
+    public VisReserva(VisHorario vistHorario, String nombreAula, int horainico, int horasTotales, String fecha, String id, ArrayList<String> datos) {
         initComponents();
         this.setLocationRelativeTo(this);
         this.vistHorario = vistHorario;
@@ -49,6 +56,7 @@ public class VisReserva extends javax.swing.JFrame {
         this.id = id;
         this.horainico = horainico;
         this.horasTotales = horasTotales;
+        this.nombreAula = nombreAula;
         verificacionAccion();
         this.jtxtHoraInicio.setEditable(false);
 //       ImageIcon iconoa = new ImageIcon(getClass().getResource("Imagenes/reserva.png"));
@@ -56,10 +64,11 @@ public class VisReserva extends javax.swing.JFrame {
 //        ImageIcon icono = new ImageIcon(getClass().getResource("Imagenes/cancel.jpg"));
 //        jbtnCancelar.setIcon(icono);
 //        
-            setButtonIcon(jbtnReservar, "/Imagenes/reserva.png");
+        setButtonIcon(jbtnReservar, "/Imagenes/reserva.png");
         setButtonIcon(jbtnCancelar, "/Imagenes/cancel.png");
     }
-     private void setButtonIcon(JButton button, String resourcePath) {
+
+    private void setButtonIcon(JButton button, String resourcePath) {
         java.net.URL imgURL = getClass().getResource(resourcePath);
         if (imgURL != null) {
             ImageIcon icon = new ImageIcon(imgURL);
@@ -68,7 +77,6 @@ public class VisReserva extends javax.swing.JFrame {
             System.err.println("No se pudo encontrar la imagen: " + resourcePath);
         }
     }
-
 
     public void asignarHorasDisponibles(int horainico, int horaFin) {
         if (horainico >= 13) {
@@ -102,30 +110,146 @@ public class VisReserva extends javax.swing.JFrame {
         return false;
     }
 
-    private void guardar() {
-        this.cont = cont + 1;
+    private String buscarIdAula() {
+        String idAula = "";
         try {
-            Conexion cc = new Conexion();
+            Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
-            String sql = "insert into reseva (idhorario,nombre,descripcion,fecha,horainicio,horafin)values(?,?,?,?,?,?)";
+            String queryBuscarIdAula = "SELECT id_aul FROM aulas WHERE nom_aul = ?";
+            PreparedStatement declaración = cn.prepareStatement(queryBuscarIdAula);
+            declaración.setString(1, this.nombreAula);
+            ResultSet resultado = declaración.executeQuery();
+            if (resultado.next()) {
+                idAula = resultado.getString("id_aul");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VisReserva.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idAula;
+
+    }
+
+    public String buscarIdPersona() {
+        String idPersona = "";
+        String[] nombres = this.jtxtNombres.getText().split(" ");
+        if (nombres.length <= 1) {
+            JOptionPane.showMessageDialog(null, "ingrese dos nombres");
+        } else {
+            try {
+                Conexiones cc = new Conexiones();
+                Connection cn = cc.conectar();
+                String consulta = "SELECT id_per,nom_per,ape_per FROM personas WHERE LOWER(nom_per) = ? AND LOWER(ape_per) = ?";
+                PreparedStatement declaración = cn.prepareStatement(consulta);
+                declaración.setString(1, nombres[0].toLowerCase());
+                declaración.setString(2, nombres[1].toLowerCase());
+                ResultSet resultado = declaración.executeQuery();
+                if (resultado.next()) {
+                    idPersona = resultado.getString("id_per");
+                }
+            } catch (SQLException ex) {
+                // System.out.println(ex);
+                JOptionPane.showMessageDialog(null, " buscarIdPersona  " + ex);
+
+            }
+        }
+        return idPersona;
+    }
+
+    public String buscarIdPersonaModificada() {
+        String idPersona = "";
+        if (this.nombresModificados.length <= 1) {
+            JOptionPane.showMessageDialog(null, "ingrese dos nombres");
+        } else {
+            try {
+                Conexiones cc = new Conexiones();
+                Connection cn = cc.conectar();
+                String consulta = "SELECT id_per,nom_per,ape_per FROM personas WHERE LOWER(nom_per) = ? AND LOWER(ape_per) = ?";
+                PreparedStatement declaración = cn.prepareStatement(consulta);
+                declaración.setString(1, this.nombresModificados[0].toLowerCase());
+                declaración.setString(2, this.nombresModificados[1].toLowerCase());
+                ResultSet resultado = declaración.executeQuery();
+                if (resultado.next()) {
+                    idPersona = resultado.getString("id_per");
+                }
+            } catch (SQLException ex) {
+                // System.out.println(ex);
+                JOptionPane.showMessageDialog(null, " buscarIdPersona  " + ex);
+
+            }
+        }
+        return idPersona;
+    }
+
+    private void guardarReserva() {
+
+        try {
+            Conexiones cc = new Conexiones();
+            Connection cn = cc.conectar();
+            String idAula = buscarIdAula();
+            System.out.println("idAula " + idAula);
+            String idPersona = buscarIdPersona();
+            System.out.println("idPersona " + idPersona);
+            String sql = "insert into reservas (id_per_reserv,id_lab_reser,fecha_reserv,hor_reserv,hora_fin_reserv,desc_reser)values(?,?,?,?,?,?)";
             PreparedStatement psd = cn.prepareStatement(sql);
-            psd.setString(1, String.valueOf(cont));
-            psd.setString(2, this.jtxtNombres.getText());
-            psd.setString(3, this.jtxtaDescripcion.getText().toLowerCase());
-            psd.setString(4, this.fecha);
-            psd.setString(5, this.jtxtHoraInicio.getText());
-            psd.setString(6, obtenerHoraFinal());
+            psd.setString(1, idPersona);
+            psd.setString(2, idAula);
+            psd.setString(3, this.fecha);
+            psd.setString(4, this.jtxtHoraInicio.getText());
+            psd.setString(5, obtenerHoraFinal());
+            psd.setString(6, this.jtxtaDescripcion.getText().toLowerCase());
+
             int num = psd.executeUpdate();
             if (num != 0) {
                 JOptionPane.showMessageDialog(null, "Se guardo la reserva");
-                this.vistHorario.acutualizarDatos();
+                this.vistHorario.actualizarDatos();
                 this.dispose();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            JOptionPane.showMessageDialog(null, "guardarReserva  " + ex);
 
             // JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar");
         }
+    }
+
+    private void guardarPersona() {
+        String[] nombres = this.jtxtNombres.getText().split(" ");
+        try {
+            Conexiones cc = new Conexiones();
+            Connection cn = cc.conectar();
+            String sql = "insert into personas (id_per,nom_per,ape_per,fech_nac,telf_per,dir_per)values(?,?,?,?,?,?)";
+            PreparedStatement psd = cn.prepareStatement(sql);
+            psd.setString(1, String.valueOf(cargarNumPersonas()+6));
+            psd.setString(2, nombres[0]);
+            psd.setString(3, nombres[1]);
+            psd.setString(4, "estudiante");
+            psd.setString(5, "estudiante");
+            psd.setString(6, "estudiante");
+            int num = psd.executeUpdate();
+            if (num != 0) {
+               // JOptionPane.showMessageDialog(null, "Se guardo un nuevo miembro");
+                this.vistHorario.actualizarDatos();
+                this.dispose();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar");
+        }
+    }
+         private int cargarNumPersonas() {
+         int num = 0;
+        try {
+            Conexiones cn = new Conexiones();
+            Connection cc = cn.conectar();
+                   String sql = "SELECT COUNT(*) AS total_personas FROM personas";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                num = rs.getInt("total_personas");
+            }
+            cc.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return num;
     }
 
     private String obtenerHoraFinal() {
@@ -135,20 +259,18 @@ public class VisReserva extends javax.swing.JFrame {
     }
 
     public void editarReserva() {
-
         int op = JOptionPane.showConfirmDialog(null, "Desea editar la reserva", "Confirmacion", JOptionPane.YES_NO_OPTION);
         if (op == 0) {
-
+            String[] nombres = this.jtxtNombres.getText().split(" ");
             try {
-                Conexion cc = new Conexion();
+                Conexiones cc = new Conexiones();
                 Connection cn = cc.conectar();
-                String sql = "update reseva set nombre='" + this.jtxtNombres.getText()
-                        + "',descripcion='" + this.jtxtaDescripcion.getText() + "' where idhorario = '" + this.id + "'";
+                String sql = "update reservas set desc_reser='" + this.jtxtaDescripcion.getText() + "' where id_reser= '" + this.id + "'";
                 PreparedStatement psd = cn.prepareStatement(sql);
                 int n = psd.executeUpdate();
                 if (n > 0) {
                     JOptionPane.showMessageDialog(null, "Se actualizo la infomacion de la reserva");
-                    this.vistHorario.acutualizarDatos();
+                    this.vistHorario.actualizarDatos();
                     this.dispose();
 
                 }
@@ -160,17 +282,63 @@ public class VisReserva extends javax.swing.JFrame {
 
     }
 
+    public void editarPersona() {
+
+        String[] nombres = this.jtxtNombres.getText().split(" ");
+
+        String idPersonas = buscarIdPersonaModificada();
+        try {
+            Conexiones cc = new Conexiones();
+            Connection cn = cc.conectar();
+            String sql = "update personas set nom_per='" + nombres[0] + "',ape_per='" + nombres[1] + "' where id_per= '" + idPersonas + "'";
+            PreparedStatement psd = cn.prepareStatement(sql);
+            int n = psd.executeUpdate();
+            if (n > 0) {
+                JOptionPane.showMessageDialog(null, "Se actualizo la infomacion de la reserva");
+                this.vistHorario.actualizarDatos();
+                this.dispose();
+
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Verifique los datos que desea editar");
+        }
+
+    }
+
+    public boolean verificarDatos() {
+        String[] nombres = this.jtxtNombres.getText().split(" ");
+        if (nombres.length <= 1) {
+            JOptionPane.showMessageDialog(null, "ingrese dos nombres");
+        } else {
+            try {
+                Conexiones cc = new Conexiones();
+                Connection cn = cc.conectar();
+                String consulta = "SELECT nom_per,ape_per FROM personas WHERE LOWER(nom_per) = ? AND LOWER(ape_per) = ?";
+                PreparedStatement declaración = cn.prepareStatement(consulta);
+                declaración.setString(1, nombres[0].toLowerCase());
+                declaración.setString(2, nombres[1].toLowerCase());
+                ResultSet resultado = declaración.executeQuery();
+                if (resultado.next()) {
+                    return true;
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }
+        return false;
+    }
+
     public void verificacionAccion() {
         if (this.id == null) {
             this.jbtnReservar.setText("Reservar");
             asignarHorasDisponibles(this.horainico, this.horasTotales);
         } else {
-            this.jtxtNombres.setText(this.datos.get(0));
-            this.jtxtaDescripcion.setText(this.datos.get(1));
-            this.jtxtHoraInicio.setText(this.datos.get(2));
-            this.jcmbHorasDisponibles.addItem(this.datos.get(3));
+            this.jtxtNombres.setText(this.datos.get(0) + " " + this.datos.get(1));
+            this.jtxtaDescripcion.setText(this.datos.get(2));
+            this.jtxtHoraInicio.setText(this.datos.get(3));
+            this.jcmbHorasDisponibles.addItem(this.datos.get(4));
             this.jbtnReservar.setText("Editar");
-
+            this.nombresModificados = this.jtxtNombres.getText().split(" ");
         }
     }
 
@@ -349,9 +517,23 @@ public class VisReserva extends javax.swing.JFrame {
 
     private void jbtnReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReservarActionPerformed
         if (this.id == null) {
-            guardar();
+            if (controlIngresosValidos()) {
+                if (verificarDatos()) {
+                    guardarReserva();
+                } else {
+                    int mensaje = JOptionPane.showConfirmDialog(null, "¿El nombre registrado no corresponde a ningun\nregistro previo desea registrarlo?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                    if (mensaje == JOptionPane.YES_OPTION) {
+                        guardarPersona();
+                        guardarReserva();
+                    }
+                }
+            }
         } else {
-            editarReserva();
+            if (controlIngresosValidos()) {
+                    editarReserva();
+                    editarPersona();
+                
+            }
         }
 
         // TODO add your handling code here:

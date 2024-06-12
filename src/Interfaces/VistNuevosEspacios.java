@@ -119,20 +119,22 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jcmbEspacios = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jcmbTipoEspacio = new javax.swing.JComboBox<>();
-        jtxtNombreEspacio = new javax.swing.JTextField();
         jbtnCrear = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPnl_min = new javax.swing.JPanel();
         jLbl_min = new javax.swing.JLabel();
         jbtnVolver = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jtxtNombreEspacio = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
 
@@ -142,31 +144,22 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Edificio");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
+        jcmbEspacios.setFont(new java.awt.Font("Microsoft Uighur", 0, 23)); // NOI18N
+        jPanel1.add(jcmbEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 110, 210, 38));
 
-        jPanel1.add(jcmbEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 219, 38));
+        jcmbTipoEspacio.setFont(new java.awt.Font("Microsoft Uighur", 0, 23)); // NOI18N
+        jPanel1.add(jcmbTipoEspacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 170, 210, 38));
 
-        jLabel2.setText("Tipo de espacio");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
-
-        jLabel3.setText("Nombre");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
-
-        jPanel1.add(jcmbTipoEspacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 219, 38));
-        jPanel1.add(jtxtNombreEspacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 242, 219, 50));
-
+        jbtnCrear.setBackground(new java.awt.Color(110, 7, 7));
+        jbtnCrear.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnCrear.setForeground(new java.awt.Color(255, 255, 255));
         jbtnCrear.setText("Crear");
         jbtnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnCrearActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, 150, 41));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel4.setText("Espacios");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, -1, -1));
+        jPanel1.add(jbtnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 150, 41));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -225,13 +218,60 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 30));
 
+        jbtnVolver.setBackground(new java.awt.Color(25, 134, 191));
+        jbtnVolver.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnVolver.setForeground(new java.awt.Color(255, 255, 255));
         jbtnVolver.setText("Volver");
         jbtnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnVolverActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 140, 40));
+        jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 150, 40));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jLabel1.setText("Edificio:");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jLabel2.setText("Tipo de espacio:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jLabel3.setText("Nombre:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
+
+        jtxtNombreEspacio.setFont(new java.awt.Font("Microsoft Uighur", 0, 23)); // NOI18N
+        jPanel2.add(jtxtNombreEspacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 210, 40));
+
+        jPanel4.setBackground(new java.awt.Color(110, 7, 7));
+
+        jLabel4.setFont(new java.awt.Font("Microsoft Uighur", 1, 50)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Espacios");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(163, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(150, 150, 150))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel4))
+        );
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 440, 390));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -358,10 +398,12 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLbl_min;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;
-    private javax.swing.JButton jbtnCrear;
+    public javax.swing.JButton jbtnCrear;
     private javax.swing.JButton jbtnVolver;
     private javax.swing.JComboBox<String> jcmbEspacios;
     private javax.swing.JComboBox<String> jcmbTipoEspacio;

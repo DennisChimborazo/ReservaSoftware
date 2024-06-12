@@ -337,7 +337,6 @@ public class VisReserva extends javax.swing.JFrame {
         jtxtaDescripcion = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jtxtNombres = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jbtnReservar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
@@ -349,6 +348,8 @@ public class VisReserva extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jtxtHoraInicio = new javax.swing.JTextField();
         jbtnCancelar = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -374,10 +375,6 @@ public class VisReserva extends javax.swing.JFrame {
 
         jtxtNombres.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jPanel1.add(jtxtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 310, 40));
-
-        jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 50)); // NOI18N
-        jLabel3.setText("Reserva");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
 
         jbtnReservar.setBackground(new java.awt.Color(25, 134, 191));
         jbtnReservar.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
@@ -476,6 +473,30 @@ public class VisReserva extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 520, 170, 50));
+
+        jPanel4.setBackground(new java.awt.Color(110, 7, 7));
+
+        jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 50)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Reserva");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(253, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(250, 250, 250))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel3))
+        );
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 30, 620, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -612,6 +633,7 @@ public class VisReserva extends javax.swing.JFrame {
     private javax.swing.JLabel jLbl_min;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;
     private javax.swing.JScrollPane jScrollPane1;

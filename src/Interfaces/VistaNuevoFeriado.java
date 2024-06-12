@@ -83,20 +83,22 @@ VisPrincipal vsP;
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jtxtDiasFeriado = new javax.swing.JTextField();
         jbtnGuardar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jtxtDescripFeriado = new javax.swing.JTextField();
         jcnlCalendar = new com.toedter.calendar.JCalendar();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jbtnVolver = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPnl_min = new javax.swing.JPanel();
         jLbl_min = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jtxtDescripFeriado = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -104,46 +106,46 @@ VisPrincipal vsP;
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("FERIADOS");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
-
+        jtxtDiasFeriado.setFont(new java.awt.Font("Microsoft Uighur", 0, 23)); // NOI18N
         jtxtDiasFeriado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtxtDiasFeriadoKeyTyped(evt);
             }
         });
-        jPanel1.add(jtxtDiasFeriado, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 450, 210, 32));
+        jPanel1.add(jtxtDiasFeriado, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 210, 40));
 
+        jbtnGuardar.setBackground(new java.awt.Color(110, 7, 7));
+        jbtnGuardar.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         jbtnGuardar.setText("Guardar");
         jbtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 520, 150, 40));
+        jPanel1.add(jbtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 520, 160, 40));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setText("Dias de feriado");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, -1, -1));
-        jPanel1.add(jtxtDescripFeriado, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 320, 40));
+        jLabel4.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
+        jLabel4.setText("Dias de feriado:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, -1, -1));
+
+        jcnlCalendar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 418, 200));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Selecione la fecha");
+        jLabel2.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
+        jLabel2.setText("Selecione la fecha:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Motivo");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, -1, -1));
-
+        jbtnVolver.setBackground(new java.awt.Color(25, 134, 191));
+        jbtnVolver.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnVolver.setForeground(new java.awt.Color(255, 255, 255));
         jbtnVolver.setText("Volver");
         jbtnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnVolverActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, 160, 40));
+        jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 160, 40));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -202,6 +204,61 @@ VisPrincipal vsP;
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 30));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel4.setBackground(new java.awt.Color(110, 7, 7));
+
+        jLabel1.setFont(new java.awt.Font("Microsoft Uighur", 1, 50)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("FERIADOS");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(180, 180, 180))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jtxtDescripFeriado.setFont(new java.awt.Font("Microsoft Uighur", 0, 23)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
+        jLabel3.setText("Motivo:");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addComponent(jtxtDescripFeriado, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtDescripFeriado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap(425, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 560, 560));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -210,7 +267,7 @@ VisPrincipal vsP;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -331,7 +388,9 @@ VisPrincipal vsP;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLbl_min;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;
     private javax.swing.JButton jbtnGuardar;

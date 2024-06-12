@@ -24,6 +24,7 @@ import javax.swing.event.ListSelectionListener;
 public class CRUDDocentes extends javax.swing.JFrame {
 
     Docente doc;
+    VisPrincipal vsP;
 
     public CRUDDocentes() {
         initComponents();
@@ -32,6 +33,10 @@ public class CRUDDocentes extends javax.swing.JFrame {
         bloquearTextos();
         this.setLocationRelativeTo(null);
         selecionarTabla();
+    }
+
+    public void consumirDatos(VisPrincipal vsP) {
+        this.vsP = vsP;
     }
 
     private void textosBlancos() {
@@ -80,7 +85,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 docente[1] = ModeloUsuarios.modelomayus(rs.getString("nom_per")) + " " + ModeloUsuarios.modelomayus(rs.getString("ape_per"));
                 docente[2] = rs.getString("telf_per");
                 docente[3] = rs.getString("dir_per");
-                    modeloTabla.addRow(docente);
+                modeloTabla.addRow(docente);
             }
             this.jTable1.setModel(modeloTabla);
         } catch (SQLException e) {
@@ -237,8 +242,12 @@ public class CRUDDocentes extends javax.swing.JFrame {
         jbtnEditar = new javax.swing.JButton();
         jbtnCancelar = new javax.swing.JButton();
         jbtnEliminar = new javax.swing.JButton();
+        jbtnVolver = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        setUndecorated(true);
+        setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png"))); // NOI18N
 
@@ -300,6 +309,13 @@ public class CRUDDocentes extends javax.swing.JFrame {
             }
         });
 
+        jbtnVolver.setText("volver");
+        jbtnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -326,7 +342,11 @@ public class CRUDDocentes extends javax.swing.JFrame {
                     .addComponent(jbtnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                    .addComponent(jbtnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jbtnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtnVolver)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -353,16 +373,18 @@ public class CRUDDocentes extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtnEliminar))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(jtxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 18, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jbtnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnCancelar)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtnCancelar)
+                            .addComponent(jbtnVolver))
                         .addGap(27, 27, 27))))
         );
 
@@ -422,6 +444,11 @@ public class CRUDDocentes extends javax.swing.JFrame {
         eliminarDocente();
     }//GEN-LAST:event_jbtnEliminarMouseClicked
 
+    private void jbtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverActionPerformed
+        this.vsP.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbtnVolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -440,6 +467,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
     private javax.swing.JButton jbtnEliminar;
     private javax.swing.JButton jbtnGuardar;
     private javax.swing.JButton jbtnNuevo;
+    private javax.swing.JButton jbtnVolver;
     private javax.swing.JTextField jtxtBuscar;
     private javax.swing.JTextField jtxtCedula;
     private javax.swing.JTextField jtxtDireccion;

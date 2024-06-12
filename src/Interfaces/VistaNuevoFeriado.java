@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Dalex
  */
 public class VistaNuevoFeriado extends javax.swing.JFrame {
-
+VisPrincipal vsP;
     int Xmov, Ymov;
     private SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -68,6 +68,9 @@ public class VistaNuevoFeriado extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
 
         }
+    }
+      public void consumirDatos(VisPrincipal vsP){
+        this.vsP=vsP;
     }
 
     /**
@@ -135,6 +138,11 @@ public class VistaNuevoFeriado extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, -1, -1));
 
         jbtnVolver.setText("Volver");
+        jbtnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnVolverActionPerformed(evt);
+            }
+        });
         jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, 160, 40));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -270,6 +278,14 @@ public class VistaNuevoFeriado extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtDiasFeriadoKeyTyped
+
+    private void jbtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverActionPerformed
+         this.vsP.setVisible(true);
+    this.dispose();
+        
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_jbtnVolverActionPerformed
 
     /**
      * @param args the command line arguments

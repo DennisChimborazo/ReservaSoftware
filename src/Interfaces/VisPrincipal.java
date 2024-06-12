@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Dalex
  */
 public class VisPrincipal extends javax.swing.JFrame {
-
+    
     int Xmov, Ymov;
 
     /**
@@ -28,7 +28,7 @@ public class VisPrincipal extends javax.swing.JFrame {
         ImageIcon iconoa = new ImageIcon(getClass().getResource("/Imagenes/aulas.png"));
         jbtnAulas.setIcon(iconoa);
         this.setLocationRelativeTo(null);
-
+        
     }
 
     /**
@@ -44,6 +44,8 @@ public class VisPrincipal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jbtnAulas = new javax.swing.JButton();
         jbtnFeriados = new javax.swing.JButton();
+        jbtnGestionPersonas = new javax.swing.JButton();
+        jbtnEspacios = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -84,6 +86,20 @@ public class VisPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jbtnGestionPersonas.setText("gestion Personas");
+        jbtnGestionPersonas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnGestionPersonasActionPerformed(evt);
+            }
+        });
+
+        jbtnEspacios.setText("Espacios");
+        jbtnEspacios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEspaciosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -94,7 +110,10 @@ public class VisPrincipal extends javax.swing.JFrame {
                 .addGap(1040, 1040, 1040))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jbtnFeriados)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbtnEspacios)
+                    .addComponent(jbtnGestionPersonas)
+                    .addComponent(jbtnFeriados))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -104,7 +123,11 @@ public class VisPrincipal extends javax.swing.JFrame {
                 .addComponent(jbtnAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jbtnFeriados)
-                .addContainerGap(353, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(jbtnEspacios)
+                .addGap(39, 39, 39)
+                .addComponent(jbtnGestionPersonas)
+                .addContainerGap(233, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 190, 550));
@@ -226,22 +249,41 @@ public class VisPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MousePressed
 
     private void jbtnAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAulasActionPerformed
-      VisHorario vishorario= new VisHorario();
+        VisHorario vishorario = new VisHorario();
         vishorario.show(true);
-        if(this.jdskEscritorio.getComponentCount() < 1){
+        if (this.jdskEscritorio.getComponentCount() < 1) {
             this.jdskEscritorio.add(vishorario);
             this.jdskEscritorio.updateUI();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this.jdskEscritorio, "No puede generar mas de 1 Ventana");
         }
     }//GEN-LAST:event_jbtnAulasActionPerformed
 
     private void jbtnFeriadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFeriadosActionPerformed
-    VistaNuevoFeriado vf= new VistaNuevoFeriado();
-    vf.setVisible(true);
-    this.dispose();
+        VistaNuevoFeriado vf = new VistaNuevoFeriado();
+        vf.consumirDatos(this);
+        vf.setVisible(true);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnFeriadosActionPerformed
+
+    private void jbtnEspaciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEspaciosActionPerformed
+        VistNuevosEspacios visE = new VistNuevosEspacios();
+        visE.consumirDatos(this);
+        visE.setVisible(true);
+        this.dispose();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnEspaciosActionPerformed
+
+    private void jbtnGestionPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGestionPersonasActionPerformed
+        CRUDDocentes cru = new CRUDDocentes();
+        cru.consumirDatos(this);
+        cru.setVisible(true);
+        this.dispose();
+       
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnGestionPersonasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,7 +329,9 @@ public class VisPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;
     public javax.swing.JButton jbtnAulas;
+    private javax.swing.JButton jbtnEspacios;
     private javax.swing.JButton jbtnFeriados;
+    private javax.swing.JButton jbtnGestionPersonas;
     public javax.swing.JDesktopPane jdskEscritorio;
     // End of variables declaration//GEN-END:variables
 }

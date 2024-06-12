@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class VistNuevosEspacios extends javax.swing.JFrame {
     int Xmov, Ymov;
+    VisPrincipal vsP;
 
     /**
      * Creates new form NewJFrame
@@ -43,11 +44,13 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
         this.jcmbTipoEspacio.addItem("Laboratorio");
         this.jcmbTipoEspacio.addItem("Taller");
         this.jcmbTipoEspacio.addItem("Auditorio");
-
+    }
+    
+    public void consumirDatos(VisPrincipal vsP){
+        this.vsP=vsP;
     }
 
     private void guardarEspacios() {
-
         try {
             Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
@@ -57,12 +60,10 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
             psd.setString(1, this.jtxtNombreEspacio.getText());
             psd.setString(2, this.jcmbTipoEspacio.getSelectedItem().toString());
             psd.setString(3, idEdidicio);
-
             int num = psd.executeUpdate();
             if (num != 0) {
                 JOptionPane.showMessageDialog(null, "Se creo un nuevo espacio");
                 this.jtxtNombreEspacio.setText("");
-
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -105,23 +106,6 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
         }
 
         return false;
-    }
-    public void verificacionFeriado(){
-         LocalDate fechaInicio = LocalDate.of(2024, 6, 25);
-        LocalDate fechaFin = LocalDate.of(2024, 7, 4);
-        LocalDate fechaObjetivo = LocalDate.of(2024, 7, 4);
-
-        // Comprobar si la fechaObjetivo está dentro del rango
-        boolean dentroDelRango = (fechaObjetivo.isEqual(fechaInicio) || fechaObjetivo.isAfter(fechaInicio))
-                                && (fechaObjetivo.isEqual(fechaFin) || fechaObjetivo.isBefore(fechaFin));
-
-        // Imprimir resultado
-        if (dentroDelRango) {
-            System.out.println("La fecha " + fechaObjetivo + " está dentro del rango de fechas.");
-        } else {
-            System.out.println("La fecha " + fechaObjetivo + " está fuera del rango de fechas.");
-        }
-    
     }
 
     /**
@@ -242,6 +226,11 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 30));
 
         jbtnVolver.setText("Volver");
+        jbtnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnVolverActionPerformed(evt);
+            }
+        });
         jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 140, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -262,6 +251,7 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
         if (!this.jtxtNombreEspacio.getText().isEmpty()) {
             if (!valdacionEspacio()) {
                 guardarEspacios();
+                
             } else {
                 JOptionPane.showMessageDialog(null, "El nombre elegido ya se encuentra en los registros");
 
@@ -312,6 +302,14 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
         Xmov = evt.getX();
         Ymov = evt.getY();
     }//GEN-LAST:event_jPanel3MousePressed
+
+    private void jbtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverActionPerformed
+   
+    this.vsP.setVisible(true);
+    this.dispose();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnVolverActionPerformed
 
     /**
      * @param args the command line arguments

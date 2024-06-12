@@ -7,6 +7,7 @@ package Repositorio;
 import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,12 +15,24 @@ import java.sql.SQLException;
  */
 public class Conexion {
 
-    private static final String URL = "jdbc:mysql://localhost:33060/UTA Booking";
-    private static final String USER = "root";
-    private static final String PASSWORD = "mysql";
+    
+    Connection conectar;
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    public Connection conectar() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            try {
+                conectar = DriverManager.getConnection("jdbc:mysql://localhost/p", "root", "");
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "revisa la connexion");
+
+            }
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return conectar;
+
     }
 
 }

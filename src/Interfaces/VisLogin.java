@@ -41,7 +41,7 @@ public class VisLogin extends javax.swing.JFrame {
         try {
             Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
-            String consulta = "SELECT * FROM ussers WHERE usuario = ? AND contrasenia = ?";
+            String consulta = "SELECT * FROM usuarios WHERE user = ? AND password = ?";
             PreparedStatement declaración = cn.prepareStatement(consulta);
             declaración.setString(1, this.jtxtUsuario.getText());
             declaración.setString(2, this.jpswContraseña.getText());

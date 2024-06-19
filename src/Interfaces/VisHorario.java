@@ -395,8 +395,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 if (jtblHorarios.getSelectedColumn() != 0) {
                     String valordia = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
                     if (verificacionFechaValida(valordia)) {
-                        
-                        /*
                         int filHora = jtblHorarios.getSelectedRow();
                         int columDia = jtblHorarios.getSelectedColumn();
                         String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
@@ -406,7 +404,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
                         } else {
                             JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede elinimar");
                         }
-                        */
 
                     } else {
                         JOptionPane.showMessageDialog(null, "No puede borrar la reserva corespondiente\na esa fecha");
@@ -623,7 +620,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

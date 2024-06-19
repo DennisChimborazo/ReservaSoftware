@@ -27,6 +27,15 @@ public class VisPrincipal extends javax.swing.JFrame {
         rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, "src/Imagenes/banner1.jpg");
         ImageIcon iconoa = new ImageIcon(getClass().getResource("/Imagenes/aulas.png"));
         jbtnAulas.setIcon(iconoa);
+        jbtnFeriados.setBackground(Color.WHITE);
+        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/calendar.png"));
+        jbtnFeriados.setIcon(icono);
+         ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/nuevo.png"));
+        jbtnEspacios.setIcon(icon);
+        jbtnEspacios.setBackground(Color.WHITE);
+        ImageIcon ico = new ImageIcon(getClass().getResource("/Imagenes/aguser.png"));
+        jbtnGestionPersonas.setIcon(ico);
+        jbtnGestionPersonas.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
         
     }
@@ -67,8 +76,9 @@ public class VisPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(110, 7, 7));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jbtnAulas.setFont(new java.awt.Font("Microsoft Uighur", 1, 36)); // NOI18N
+        jbtnAulas.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnAulas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aulas.png"))); // NOI18N
         jbtnAulas.setText("Espacios");
         jbtnAulas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -78,57 +88,34 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnAulasActionPerformed(evt);
             }
         });
+        jPanel1.add(jbtnAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 55, 162, 78));
 
+        jbtnFeriados.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnFeriados.setText("Feriados");
         jbtnFeriados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnFeriadosActionPerformed(evt);
             }
         });
+        jPanel1.add(jbtnFeriados, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 164, 162, 78));
 
-        jbtnGestionPersonas.setText("gestion Personas");
+        jbtnGestionPersonas.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnGestionPersonas.setText("Personas");
         jbtnGestionPersonas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnGestionPersonasActionPerformed(evt);
             }
         });
+        jPanel1.add(jbtnGestionPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 396, 160, 78));
 
-        jbtnEspacios.setText("Espacios");
+        jbtnEspacios.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnEspacios.setText("Nuevo Espacio");
         jbtnEspacios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnEspaciosActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtnAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1040, 1040, 1040))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtnEspacios)
-                    .addComponent(jbtnGestionPersonas)
-                    .addComponent(jbtnFeriados))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jbtnAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jbtnFeriados)
-                .addGap(35, 35, 35)
-                .addComponent(jbtnEspacios)
-                .addGap(39, 39, 39)
-                .addComponent(jbtnGestionPersonas)
-                .addContainerGap(233, Short.MAX_VALUE))
-        );
+        jPanel1.add(jbtnEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 279, 162, 78));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 190, 550));
 

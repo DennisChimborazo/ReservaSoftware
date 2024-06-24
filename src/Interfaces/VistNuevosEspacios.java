@@ -291,6 +291,8 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
         if (!this.jtxtNombreEspacio.getText().isEmpty()) {
             if (!valdacionEspacio()) {
                 guardarEspacios();
+                this.vsP.setVisible(true);
+                this.dispose();
                 
             } else {
                 JOptionPane.showMessageDialog(null, "El nombre elegido ya se encuentra en los registros");

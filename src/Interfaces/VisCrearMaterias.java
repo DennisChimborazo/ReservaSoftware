@@ -145,6 +145,8 @@ public class VisCrearMaterias extends javax.swing.JFrame {
             int num = psd.executeUpdate();
             if (num != 0) {
                 JOptionPane.showMessageDialog(null, "Se creo una nueva materia");
+                this.vsP.setVisible(true);
+                this.dispose();
                 this.jtxtMateria.setText("");
             }
         } catch (SQLException ex) {

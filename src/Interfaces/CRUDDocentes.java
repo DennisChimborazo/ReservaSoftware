@@ -89,7 +89,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
         try {
             Conexiones cn = new Conexiones();
             Connection cc = cn.conectar();
-            String sql = "Select * from personas";
+            String sql = "SELECT * FROM personas";
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {

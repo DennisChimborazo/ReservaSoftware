@@ -24,7 +24,7 @@ public class VisPrincipal extends javax.swing.JFrame {
      */
     public VisPrincipal() {
         initComponents();
-        rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, "src/Imagenes/banner.png");
+        rsscalelabel.RSScaleLabel.setScaleLabel(jLabel3, "src/Imagenes/banner.png");
         ImageIcon iconoa = new ImageIcon(getClass().getResource("/Imagenes/aulas.png"));
         jbtnAulas.setIcon(iconoa);
         jbtnFeriados.setBackground(Color.WHITE);
@@ -68,14 +68,11 @@ public class VisPrincipal extends javax.swing.JFrame {
             }
         };
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner1.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1140, 110));
 
         jPanel1.setBackground(new java.awt.Color(110, 7, 7));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -187,8 +184,29 @@ public class VisPrincipal extends javax.swing.JFrame {
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 950, Short.MAX_VALUE)
         );
+        jdskEscritorioLayout.setVerticalGroup(
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 540, Short.MAX_VALUE)
+        );
+
         getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 950, 540));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1140, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 48, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1140, 150));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -307,8 +325,8 @@ public class VisPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLbl_min;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

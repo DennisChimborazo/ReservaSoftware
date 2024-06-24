@@ -255,7 +255,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Microsoft Uighur", 1, 50)); // NOI18N
-        jLabel2.setText("Lista Docentes");
+        jLabel2.setText("Lista Personas");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(454, 0, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N

@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class VisPrincipal extends javax.swing.JFrame {
 
     int Xmov, Ymov;
-     public VisHorario vishorario =new VisHorario();
+    public VisHorario vishorario = new VisHorario();
 
     /**
      * Creates new form VisPrincipal
@@ -37,13 +37,16 @@ public class VisPrincipal extends javax.swing.JFrame {
         ImageIcon ico = new ImageIcon(getClass().getResource("/Imagenes/aguser.png"));
         jbtnGestionPersonas.setIcon(ico);
         jbtnGestionPersonas.setBackground(Color.WHITE);
-      //  ImageIcon iconoL = new ImageIcon(getClass().getResource("/Imagenes/lista_reserva.png"));
+        //  ImageIcon iconoL = new ImageIcon(getClass().getResource("/Imagenes/lista_reserva.png"));
         //jbtnListado.setIcon(iconoL);
         //jbtnListado.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
         ImageIcon iconos = new ImageIcon(getClass().getResource("/Imagenes/materias.png"));
         jbtnMaterias.setIcon(iconos);
         this.jbtnMaterias.setBackground(Color.WHITE);
+        ImageIcon iconoL = new ImageIcon(getClass().getResource("/Imagenes/lista_reserva.png"));
+        jbtnReservas.setIcon(iconoL);
+        jbtnReservas.setBackground(Color.WHITE);
     }
 
     /**
@@ -61,6 +64,7 @@ public class VisPrincipal extends javax.swing.JFrame {
         jbtnGestionPersonas = new javax.swing.JButton();
         jbtnEspacios = new javax.swing.JButton();
         jbtnMaterias = new javax.swing.JButton();
+        jbtnReservas = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -94,7 +98,7 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnAulasActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 162, 78));
+        jPanel1.add(jbtnAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 162, 78));
 
         jbtnFeriados.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnFeriados.setText("Feriados");
@@ -105,7 +109,7 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnFeriadosActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnFeriados, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 164, 162, 70));
+        jPanel1.add(jbtnFeriados, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 162, 70));
 
         jbtnGestionPersonas.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnGestionPersonas.setText("Personas");
@@ -116,7 +120,7 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnGestionPersonasActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnGestionPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 160, 70));
+        jPanel1.add(jbtnGestionPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 160, 70));
 
         jbtnEspacios.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnEspacios.setText("<html><body style='text-align: center'>Nuevo Espacio</body></html>");
@@ -126,7 +130,7 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnEspaciosActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 162, 70));
+        jPanel1.add(jbtnEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 162, 70));
 
         jbtnMaterias.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnMaterias.setText("Materias");
@@ -135,9 +139,18 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnMateriasActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnMaterias, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 160, 78));
+        jPanel1.add(jbtnMaterias, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 160, 78));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 200, 560));
+        jbtnReservas.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnReservas.setText("Reservas");
+        jbtnReservas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnReservasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtnReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 160, 78));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 190, 570));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -206,10 +219,10 @@ public class VisPrincipal extends javax.swing.JFrame {
         );
         jdskEscritorioLayout.setVerticalGroup(
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+            .addGap(0, 570, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 1030, 580));
+        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 950, 570));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png"))); // NOI18N
 
@@ -285,7 +298,7 @@ public class VisPrincipal extends javax.swing.JFrame {
 
     private void jbtnFeriadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFeriadosActionPerformed
         VistaNuevoFeriado vf = new VistaNuevoFeriado();
-        vf.consumirDatos(this,this.vishorario);
+        vf.consumirDatos(this, this.vishorario);
         vf.setVisible(true);
         this.dispose();
         // TODO add your handling code here:
@@ -302,7 +315,7 @@ public class VisPrincipal extends javax.swing.JFrame {
 
     private void jbtnGestionPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGestionPersonasActionPerformed
         CRUDDocentes cru = new CRUDDocentes();
-        cru.consumirVistaReserva(null,this);
+        cru.consumirVistaReserva(null, this);
         cru.setVisible(true);
         this.dispose();
 
@@ -315,6 +328,14 @@ public class VisPrincipal extends javax.swing.JFrame {
         visM.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jbtnMateriasActionPerformed
+
+    private void jbtnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReservasActionPerformed
+        VisListReservas visLR = new VisListReservas();
+        visLR.consumirDatos(this);
+        visLR.setVisible(true);
+        this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnReservasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -365,6 +386,7 @@ public class VisPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jbtnFeriados;
     private javax.swing.JButton jbtnGestionPersonas;
     private javax.swing.JButton jbtnMaterias;
+    private javax.swing.JButton jbtnReservas;
     public javax.swing.JDesktopPane jdskEscritorio;
     // End of variables declaration//GEN-END:variables
 }

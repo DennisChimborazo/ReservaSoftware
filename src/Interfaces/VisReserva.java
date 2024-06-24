@@ -100,7 +100,7 @@ public class VisReserva extends javax.swing.JFrame {
         if (!this.jtxtNombres.getText().isEmpty() && !this.jtxtaDescripcion.getText().isEmpty()) {
             return true;
         } else {
-            JOptionPane.showMessageDialog(null, "Ingrese todos los datos requeridos");
+            JOptionPane.showMessageDialog(null, "Ingrese todos los datos requeridos", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -128,7 +128,7 @@ public class VisReserva extends javax.swing.JFrame {
         String idPersona = "";
         String[] nombres = this.jtxtNombres.getText().split(" ");
         if (nombres.length <= 1) {
-            JOptionPane.showMessageDialog(null, "ingrese dos nombres");
+            JOptionPane.showMessageDialog(null, "ingrese dos nombres", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
                 Conexiones cc = new Conexiones();
@@ -153,7 +153,8 @@ public class VisReserva extends javax.swing.JFrame {
     public String buscarIdPersonaModificada() {
         String idPersona = "";
         if (this.nombresModificados.length <= 1) {
-            JOptionPane.showMessageDialog(null, "ingrese dos nombres");
+            JOptionPane.showMessageDialog(null, "ingrese dos nombres", "Error", JOptionPane.ERROR_MESSAGE);
+            
         } else {
             try {
                 Conexiones cc = new Conexiones();
@@ -223,7 +224,8 @@ public class VisReserva extends javax.swing.JFrame {
                 this.dispose();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar");
+            JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar", "Error", JOptionPane.ERROR_MESSAGE);
+            
         }
 
     }
@@ -235,7 +237,7 @@ public class VisReserva extends javax.swing.JFrame {
     }
 
     public void editarReserva() {
-        int op = JOptionPane.showConfirmDialog(null, "Desea editar la reserva", "Confirmacion", JOptionPane.YES_NO_OPTION);
+        int op = JOptionPane.showConfirmDialog(null, "Desea editar la reserva", "Advertencia", JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
         if (op == 0) {
             String[] nombres = this.jtxtNombres.getText().split(" ");
             try {
@@ -251,7 +253,7 @@ public class VisReserva extends javax.swing.JFrame {
 
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Verifique los datos que desea editar");
+                JOptionPane.showMessageDialog(null, "Verifique los datos que desea editar", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
         }
@@ -276,7 +278,7 @@ public class VisReserva extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Verifique los datos que desea editar");
+            JOptionPane.showMessageDialog(null, "Verifique los datos que desea editar", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -284,7 +286,7 @@ public class VisReserva extends javax.swing.JFrame {
     public boolean verificarDatos() {
         String[] nombres = this.jtxtNombres.getText().split(" ");
         if (nombres.length <= 1) {
-            JOptionPane.showMessageDialog(null, "ingrese dos nombres");
+            JOptionPane.showMessageDialog(null, "ingrese dos nombres", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
                 Conexiones cc = new Conexiones();
@@ -518,7 +520,7 @@ public class VisReserva extends javax.swing.JFrame {
                 if (verificarDatos()) {
                     guardarReserva();
                 } else {
-                    int mensaje = JOptionPane.showConfirmDialog(null, "¿El nombre registrado no corresponde a ningun\nregistro previo desea registrarlo?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                    int mensaje = JOptionPane.showConfirmDialog(null, "¿El nombre registrado no corresponde a ningun\nregistro previo desea registrarlo?", "Error", JOptionPane.YES_NO_OPTION);
                     if (mensaje == JOptionPane.YES_OPTION) {
                         guardarPersona();
                         guardarReserva();
@@ -537,11 +539,9 @@ public class VisReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnReservarActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-
-        if (mensaje == JOptionPane.YES_OPTION) {
-            this.dispose();
+  int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?","Advertencia",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            System.exit(0);
         }
 
     }//GEN-LAST:event_jPnl_salidaMouseClicked

@@ -102,7 +102,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
 
                     if (Validadores.isValidTelefono(this.jtxtTelefono.getText())) {
                         if (nombreCompleto.length < 2 || nombreCompleto[0].isEmpty() || nombreCompleto[1].isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Debe ingresar nombre y apellido");
+                            JOptionPane.showMessageDialog(null, "Debe ingresar nombre y apellido", "Error", JOptionPane.ERROR_MESSAGE);
                         } else {
                             try {
                                 Conexiones cc = new Conexiones();
@@ -132,16 +132,16 @@ public class CRUDDocentes extends javax.swing.JFrame {
                         }
 
                     } else {
-                        JOptionPane.showMessageDialog(null, "Numero de telefono ingresado no valido");
+                        JOptionPane.showMessageDialog(null, "Numero de telefono ingresado no valido", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "La persona a ingresar ya existe");
+                    JOptionPane.showMessageDialog(null, "La persona a ingresar ya existe", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Numero de cedula ingresado no valido");
+                JOptionPane.showMessageDialog(null, "Numero de cedula ingresado no valido", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos","Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }

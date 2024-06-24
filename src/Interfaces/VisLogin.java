@@ -196,17 +196,15 @@ public class VisLogin extends javax.swing.JFrame {
             visPrincipal.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
-
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbtnIniciarSesionActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-        if (mensaje == JOptionPane.YES_OPTION) {
+  int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?","Advertencia",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (respuesta == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
-
     }//GEN-LAST:event_jPnl_salidaMouseClicked
 
     private void jPnl_salidaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseEntered

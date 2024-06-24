@@ -195,11 +195,10 @@ public class VisPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-        if (mensaje == JOptionPane.YES_OPTION) {
+       int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?","Advertencia",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (respuesta == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
-        // TODO add your handling code here:
     }//GEN-LAST:event_jPnl_salidaMouseClicked
 
     private void jPnl_salidaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseEntered
@@ -242,7 +241,7 @@ public class VisPrincipal extends javax.swing.JFrame {
             this.jdskEscritorio.add(vishorario);
             this.jdskEscritorio.updateUI();
         } else {
-            JOptionPane.showMessageDialog(this.jdskEscritorio, "No puede generar mas de 1 Ventana");
+                JOptionPane.showMessageDialog(this.jdskEscritorio, "No puede generar más de 1 Ventana", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbtnAulasActionPerformed
 

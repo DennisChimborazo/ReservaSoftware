@@ -293,19 +293,17 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
                 guardarEspacios();
                 
             } else {
-                JOptionPane.showMessageDialog(null, "El nombre elegido ya se encuentra en los registros");
-
+                JOptionPane.showMessageDialog(null, "El nombre elegido ya se encuentra en los registros", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Porfavor ingrese el nombre");
+            JOptionPane.showMessageDialog(null, "Porfavor ingrese el nombre", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbtnCrearActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
 
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-
-        if (mensaje == JOptionPane.YES_OPTION) {
+    int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?","Advertencia",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (respuesta == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_jPnl_salidaMouseClicked

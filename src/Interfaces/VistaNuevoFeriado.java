@@ -277,7 +277,7 @@ VisPrincipal vsP;
         if (!this.jtxtDescripFeriado.getText().isEmpty() && !this.jtxtDiasFeriado.getText().isEmpty()) {
             guardarFeriado();
         } else {
-            JOptionPane.showMessageDialog(null, "Ingrese todos los campos requeridos");
+            JOptionPane.showMessageDialog(null, "Ingrese todos los campos requeridos", "Error", JOptionPane.ERROR_MESSAGE);
 
         }
 
@@ -286,10 +286,8 @@ VisPrincipal vsP;
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-
-        if (mensaje == JOptionPane.YES_OPTION) {
+  int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?","Advertencia",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (respuesta == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_jPnl_salidaMouseClicked

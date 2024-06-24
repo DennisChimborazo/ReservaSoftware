@@ -16,6 +16,7 @@ public class Docente extends Persona {
     private String correo;
     private String contrasenia;
     private String tipoUsuario;
+    
 
     public Docente(String cedula, String nombre, String apellido, Date fecha_nac, String telefono, String direccion, String usuario, String correo, String contrasenia, String tipoUsuario) {
         super(cedula, nombre, apellido, fecha_nac, telefono, direccion);

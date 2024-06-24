@@ -30,7 +30,7 @@ public class VisLogin extends javax.swing.JFrame {
     public VisLogin() {
         initComponents();
         this.setLocationRelativeTo(null);
-       rsscalelabel.RSScaleLabel.setScaleLabel(jlb_banner, "src/Imagenes/banner1.jpg");
+       rsscalelabel.RSScaleLabel.setScaleLabel(jlb_banner, "src/Imagenes/banner.png");
         ImageIcon iconosello = new ImageIcon(getClass().getResource("/Imagenes/sello_login.png"));
         jLabel2.setIcon(iconosello);
          rsscalelabel.RSScaleLabel.setScaleLabel(lb_fondo, "src/Imagenes/fondo_escritorio.png");

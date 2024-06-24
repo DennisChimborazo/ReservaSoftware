@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
  */
 public class VisReserva extends javax.swing.JFrame {
 
+    String claveUnicaReserva;
     int Xmov, Ymov;
     int horainico;
     int horasTotales;
@@ -35,6 +36,7 @@ public class VisReserva extends javax.swing.JFrame {
     VisHorario vistHorario;
     String nombreAula;
     String[] nombresModificados;
+    VisPrincipal visPrin;
 
     /**
      * Creates new form VisReserva
@@ -57,6 +59,7 @@ public class VisReserva extends javax.swing.JFrame {
         this.horainico = horainico;
         this.horasTotales = horasTotales;
         this.nombreAula = nombreAula;
+        System.out.println("fecha  " + this.fecha);
         verificacionAccion();
         this.jtxtHoraInicio.setEditable(false);
         setButtonIcon(jbtnReservar, "/Imagenes/reserva.png");
@@ -175,13 +178,20 @@ public class VisReserva extends javax.swing.JFrame {
         return idPersona;
     }
 
-    private void guardarReserva() {
+    public void guardarReserva() {
+
+        String idPersona = "";
+        if (this.claveUnicaReserva == null) {
+            idPersona = buscarIdPersona();
+        } else {
+            idPersona = this.claveUnicaReserva;
+        }
 
         try {
             Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
+
             String idAula = buscarIdAula();
-            String idPersona = buscarIdPersona();
             String sql = "insert into reservas (id_per_reserv,id_lab_reser,fecha_reserv,hor_reserv,hora_fin_reserv,desc_reser)values(?,?,?,?,?,?)";
             PreparedStatement psd = cn.prepareStatement(sql);
             psd.setString(1, idPersona);
@@ -204,28 +214,8 @@ public class VisReserva extends javax.swing.JFrame {
         }
     }
 
-    private void guardarPersona() {
-        String[] nombres = this.jtxtNombres.getText().split(" ");
-        try {
-            Conexiones cc = new Conexiones();
-            Connection cn = cc.conectar();
-            String sql = "insert into personas (ced_per,nom_per,ape_per,fech_nac,telf_per,dir_per)values(?,?,?,?,?,?)";
-            PreparedStatement psd = cn.prepareStatement(sql);
-            psd.setString(1, "000000");
-            psd.setString(2, nombres[0]);
-            psd.setString(3, nombres[1]);
-            psd.setString(4, "estudiante");
-            psd.setString(5, "estudiante");
-            psd.setString(6, "estudiante");
-            int num = psd.executeUpdate();
-            if (num != 0) {
-                this.vistHorario.actualizarDatos();
-                this.dispose();
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar");
-        }
-
+    public void consumirClaveUnica(String clave) {
+        this.claveUnicaReserva = clave;
     }
 
     private String obtenerHoraFinal() {
@@ -316,6 +306,10 @@ public class VisReserva extends javax.swing.JFrame {
             this.jbtnReservar.setText("Editar");
             this.nombresModificados = this.jtxtNombres.getText().split(" ");
         }
+    }
+
+    public void consumirVistaPrincipal(VisPrincipal vp) {
+        this.visPrin = vp;
     }
 
     private VisReserva() {
@@ -520,8 +514,11 @@ public class VisReserva extends javax.swing.JFrame {
                 } else {
                     int mensaje = JOptionPane.showConfirmDialog(null, "¿El nombre registrado no corresponde a ningun\nregistro previo desea registrarlo?", "Confirmación", JOptionPane.YES_NO_OPTION);
                     if (mensaje == JOptionPane.YES_OPTION) {
-                        guardarPersona();
-                        guardarReserva();
+                        CRUDDocentes crdDoc = new CRUDDocentes();
+                        crdDoc.consumirVistaReserva(this,this.visPrin);
+                        crdDoc.jtxtNombre.setText(this.jtxtNombres.getText());
+                        crdDoc.setVisible(true);
+                        this.dispose();
                     }
                 }
             }
@@ -585,6 +582,9 @@ public class VisReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_jcmbHorasDisponiblesActionPerformed
 
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        this.visPrin.setVisible(true);
+        this.dispose();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnCancelarActionPerformed
 

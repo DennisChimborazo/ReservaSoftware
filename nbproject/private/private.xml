@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VisHorario.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VisReserva.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VistNuevosEspacios.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/CRUDDocentes.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VistaNuevoFeriado.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VisLogin.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/reservasoftware/Feriados.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Repositorio/Conexiones.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Interfaces/VisPrincipal.java</file>
+            <file>file:/C:/Users/Dalex/Documents/NetBeansProjects/ReservaSoftware/src/Validadores/Validadores.java</file>
+        </group>
     </open-files>
 </project-private>

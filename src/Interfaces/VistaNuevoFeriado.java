@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 public class VistaNuevoFeriado extends javax.swing.JFrame {
 VisPrincipal vsP;
     int Xmov, Ymov;
+    VisHorario vistaHorario;
     private SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
@@ -61,7 +62,10 @@ VisPrincipal vsP;
             int num = psd.executeUpdate();
             if (num != 0) {
                 JOptionPane.showMessageDialog(null, "Se agrego un nuevo feriado");
-                limpiarCampos();
+                this.vistaHorario.actualizarDatos();
+                this.vsP.setVisible(true);
+                this.dispose();
+                
 
             }
         } catch (SQLException ex) {
@@ -69,8 +73,10 @@ VisPrincipal vsP;
 
         }
     }
-      public void consumirDatos(VisPrincipal vsP){
+      public void consumirDatos(VisPrincipal vsP,VisHorario vh){
         this.vsP=vsP;
+                this.vistaHorario=vh;
+
     }
 
     /**
@@ -280,9 +286,6 @@ VisPrincipal vsP;
             JOptionPane.showMessageDialog(null, "Ingrese todos los campos requeridos");
 
         }
-
-        // TODO add your handling code here:
-        System.out.println("fecha de feriado " + determinarFechaFinal());
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked

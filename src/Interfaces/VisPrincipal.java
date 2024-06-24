@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  * @author Dalex
  */
 public class VisPrincipal extends javax.swing.JFrame {
+
     int Xmov, Ymov;
      public VisHorario vishorario =new VisHorario();
 
@@ -30,7 +31,7 @@ public class VisPrincipal extends javax.swing.JFrame {
         jbtnFeriados.setBackground(Color.WHITE);
         ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/calendar.png"));
         jbtnFeriados.setIcon(icono);
-         ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/nuevo.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/nuevo.png"));
         jbtnEspacios.setIcon(icon);
         jbtnEspacios.setBackground(Color.WHITE);
         ImageIcon ico = new ImageIcon(getClass().getResource("/Imagenes/aguser.png"));
@@ -40,8 +41,9 @@ public class VisPrincipal extends javax.swing.JFrame {
         //jbtnListado.setIcon(iconoL);
         //jbtnListado.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
-        jPanel2.setBackground(Color.WHITE);
-        
+        ImageIcon iconos = new ImageIcon(getClass().getResource("/Imagenes/materias.png"));
+        jbtnMaterias.setIcon(iconos);
+        this.jbtnMaterias.setBackground(Color.WHITE);
     }
 
     /**
@@ -58,6 +60,7 @@ public class VisPrincipal extends javax.swing.JFrame {
         jbtnFeriados = new javax.swing.JButton();
         jbtnGestionPersonas = new javax.swing.JButton();
         jbtnEspacios = new javax.swing.JButton();
+        jbtnMaterias = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -102,7 +105,7 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnFeriadosActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnFeriados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 162, 78));
+        jPanel1.add(jbtnFeriados, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 164, 162, 70));
 
         jbtnGestionPersonas.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnGestionPersonas.setText("Personas");
@@ -113,20 +116,28 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnGestionPersonasActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnGestionPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 160, 78));
+        jPanel1.add(jbtnGestionPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 160, 70));
 
         jbtnEspacios.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnEspacios.setText("<html><body style='text-align: center'>Nuevo Espacio</body></html>");
-        jbtnEspacios.setActionCommand("");
-        jbtnEspacios.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jbtnEspacios.setToolTipText("");
         jbtnEspacios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnEspaciosActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 162, 78));
+        jPanel1.add(jbtnEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 162, 70));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 190, 570));
+        jbtnMaterias.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnMaterias.setText("Materias");
+        jbtnMaterias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnMateriasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtnMaterias, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 160, 78));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 200, 560));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -294,9 +305,16 @@ public class VisPrincipal extends javax.swing.JFrame {
         cru.consumirVistaReserva(null,this);
         cru.setVisible(true);
         this.dispose();
-       
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnGestionPersonasActionPerformed
+
+    private void jbtnMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnMateriasActionPerformed
+        VisCrearMaterias visM = new VisCrearMaterias();
+        visM.consumirDatos(this);
+        visM.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbtnMateriasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,6 +364,7 @@ public class VisPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jbtnEspacios;
     private javax.swing.JButton jbtnFeriados;
     private javax.swing.JButton jbtnGestionPersonas;
+    private javax.swing.JButton jbtnMaterias;
     public javax.swing.JDesktopPane jdskEscritorio;
     // End of variables declaration//GEN-END:variables
 }

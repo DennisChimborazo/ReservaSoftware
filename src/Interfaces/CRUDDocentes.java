@@ -23,8 +23,10 @@ import javax.swing.event.ListSelectionListener;
  */
 public class CRUDDocentes extends javax.swing.JFrame {
 
+    VisReserva vistRes;
     Docente doc;
     VisPrincipal vsP;
+    String claveUnicaReserva;
 
     public CRUDDocentes() {
         initComponents();
@@ -36,7 +38,8 @@ public class CRUDDocentes extends javax.swing.JFrame {
         cambiarTamanioCeldasAncho();
     }
 
-    public void consumirDatos(VisPrincipal vsP) {
+    public void consumirVistaReserva(VisReserva vr, VisPrincipal vsP) {
+        this.vistRes = vr;
         this.vsP = vsP;
     }
 
@@ -51,7 +54,9 @@ public class CRUDDocentes extends javax.swing.JFrame {
     }
 
     private void textosBlancos() {
-        this.jtxtNombre.setText("");
+        if (this.vistRes == null) {
+            this.jtxtNombre.setText("");
+        }
         this.jtxtTelefono.setText("");
         this.jtxtDireccion.setText("");
     }
@@ -67,6 +72,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
     }
 
     private void btnNuevo() {
+
         this.jtxtNombre.setEnabled(true);
         this.jtxtTelefono.setEnabled(true);
         this.jtxtDireccion.setEnabled(true);
@@ -127,10 +133,18 @@ public class CRUDDocentes extends javax.swing.JFrame {
                         int res = ps.executeUpdate();
                         if (res > 0) {
                             JOptionPane.showMessageDialog(null, "Se ingreso correctamene");
-                            cargarTabla();
-                            textosBlancos();
-                            bloquearTextos();
-                            ps.close();
+                            if (this.vistRes != null) {
+                                this.vistRes.consumirClaveUnica(crearClaveUnica());
+                                this.vistRes.guardarReserva();
+                                this.vsP.setVisible(true);
+                                this.vsP.vishorario.actualizarDatos();
+                                this.dispose();
+                            } else {
+                                cargarTabla();
+                                textosBlancos();
+                                bloquearTextos();
+                                ps.close();
+                            }
                         }
 
                     } catch (SQLException e) {
@@ -292,6 +306,11 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 jbtnNuevoMouseClicked(evt);
             }
         });
+        jbtnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnNuevoActionPerformed(evt);
+            }
+        });
         jPanel1.add(jbtnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 140, 30));
 
         jbtnGuardar.setFont(new java.awt.Font("Microsoft Uighur", 1, 25)); // NOI18N
@@ -299,6 +318,11 @@ public class CRUDDocentes extends javax.swing.JFrame {
         jbtnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtnGuardarMouseClicked(evt);
+            }
+        });
+        jbtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnGuardarActionPerformed(evt);
             }
         });
         jPanel1.add(jbtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, 140, 30));
@@ -368,7 +392,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -376,11 +400,11 @@ public class CRUDDocentes extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -414,6 +438,14 @@ public class CRUDDocentes extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jbtnVolverActionPerformed
 
+    private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnGuardarActionPerformed
+
+    private void jbtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNuevoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnNuevoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -434,7 +466,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcmbTipoPersona;
     private javax.swing.JTable jtblPersonas;
     private javax.swing.JTextField jtxtDireccion;
-    private javax.swing.JTextField jtxtNombre;
+    public javax.swing.JTextField jtxtNombre;
     private javax.swing.JTextField jtxtTelefono;
     // End of variables declaration//GEN-END:variables
 }

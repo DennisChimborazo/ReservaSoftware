@@ -24,7 +24,7 @@ public class VisPrincipal extends javax.swing.JFrame {
      */
     public VisPrincipal() {
         initComponents();
-        rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, "src/Imagenes/banner1.jpg");
+        rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, "src/Imagenes/banner.png");
         ImageIcon iconoa = new ImageIcon(getClass().getResource("/Imagenes/aulas.png"));
         jbtnAulas.setIcon(iconoa);
         jbtnFeriados.setBackground(Color.WHITE);
@@ -37,6 +37,7 @@ public class VisPrincipal extends javax.swing.JFrame {
         jbtnGestionPersonas.setIcon(ico);
         jbtnGestionPersonas.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
+        jPanel2.setBackground(Color.WHITE);
         
     }
 
@@ -49,7 +50,6 @@ public class VisPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jbtnAulas = new javax.swing.JButton();
         jbtnFeriados = new javax.swing.JButton();
@@ -67,7 +67,10 @@ public class VisPrincipal extends javax.swing.JFrame {
                 g.drawImage(imagen,0,0,getWidth(), getHeight(),this);
             }
         };
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -184,11 +187,7 @@ public class VisPrincipal extends javax.swing.JFrame {
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 950, Short.MAX_VALUE)
         );
-        jdskEscritorioLayout.setVerticalGroup(
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
-        );
-
         getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 950, 540));
 
         pack();
@@ -312,6 +311,7 @@ public class VisPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLbl_min;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;

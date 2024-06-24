@@ -571,10 +571,10 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
-        jLabel1.setText("Fecha");
+        jLabel1.setText("Fecha:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 20, -1, -1));
 
-        jcmbtipoAula.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jcmbtipoAula.setFont(new java.awt.Font("Microsoft Uighur", 0, 24)); // NOI18N
         jcmbtipoAula.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jcmbtipoAulaItemStateChanged(evt);
@@ -586,18 +586,19 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jLabel2.setText("Tipo:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
 
+        jtblHorarios.setFont(new java.awt.Font("Microsoft Uighur", 0, 20)); // NOI18N
         jScrollPane2.setViewportView(jtblHorarios);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 900, 430));
 
-        jcnlCalendar.setFont(new java.awt.Font("Microsoft Uighur", 1, 18)); // NOI18N
+        jcnlCalendar.setFont(new java.awt.Font("Microsoft Uighur", 0, 24)); // NOI18N
         jPanel1.add(jcnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, 160, 30));
 
         jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jLabel3.setText("Edificio:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        jcmbEspaciosDisponibles.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jcmbEspaciosDisponibles.setFont(new java.awt.Font("Microsoft Uighur", 0, 24)); // NOI18N
         jcmbEspaciosDisponibles.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jcmbEspaciosDisponiblesItemStateChanged(evt);
@@ -605,6 +606,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jcmbEspaciosDisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 170, 30));
 
+        jcmbEdificios.setFont(new java.awt.Font("Microsoft Uighur", 0, 24)); // NOI18N
         jcmbEdificios.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jcmbEdificiosItemStateChanged(evt);

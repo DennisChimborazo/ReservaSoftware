@@ -238,6 +238,7 @@ public class VisPrincipal extends javax.swing.JFrame {
 
     private void jbtnAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAulasActionPerformed
         this.vishorario.show(true);
+        this.vishorario.consumirVistaPrincipal(this);
         if (this.jdskEscritorio.getComponentCount() < 1) {
             this.jdskEscritorio.add(this.vishorario);
             this.jdskEscritorio.updateUI();

@@ -78,6 +78,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
 
     private void seleccionarFecha() {
         jcnlCalendar.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            
             LimpiarTablaReserva();
             String fechaVerificacion = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
             int indexSemana = indiceSemana(fechaVerificacion);
@@ -283,7 +284,9 @@ public class VisHorario extends javax.swing.JInternalFrame {
         try {
             Conexiones cn = new Conexiones();
             Connection cc = cn.conectar();
-            String sql = "SELECT reservas.*,personas.nom_per AS nombre_persona FROM reservas JOIN aulas ON reservas.id_lab_reser = aulas.id_aul JOIN personas ON reservas.id_per_reserv = personas.id_per WHERE aulas.nom_aul = '" + this.jcmbEspaciosDisponibles.getSelectedItem().toString() + "'";
+            //String sql = "SELECT reservas.*,personas.nom_per AS nombre_persona FROM reservas JOIN aulas ON reservas.id_lab_reser = aulas.id_aul JOIN personas ON reservas.id_per_reserv = personas.ced_per WHERE aulas.nom_aul = '" + this.jcmbEspaciosDisponibles.getSelectedItem().toString() + "'";
+                      String sql = "SELECT reservas.*, personas.nom_per AS nombre_persona FROM reservas JOIN aulas ON reservas.id_lab_reser = aulas.id_aul JOIN personas ON (reservas.id_per_reserv = personas.ced_per OR reservas.id_per_reserv = personas.id_per) WHERE aulas.nom_aul = '" + this.jcmbEspaciosDisponibles.getSelectedItem().toString() + "'";
+
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {
@@ -297,6 +300,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 int indexSemana = indiceSemana(dia);
                 if (indice == indexSemana) {
                     for (int i = 0; i < horas; i++) {
+                        System.out.println("---- "+profe);
                         this.jtblHorarios.setValueAt(id_reser + "  reserva\n" + profe, (indicehorario + i), indiceDia(dia) - 1);
                     }
                 }

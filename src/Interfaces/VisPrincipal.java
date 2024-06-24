@@ -36,6 +36,9 @@ public class VisPrincipal extends javax.swing.JFrame {
         ImageIcon ico = new ImageIcon(getClass().getResource("/Imagenes/aguser.png"));
         jbtnGestionPersonas.setIcon(ico);
         jbtnGestionPersonas.setBackground(Color.WHITE);
+        ImageIcon iconoL = new ImageIcon(getClass().getResource("/Imagenes/lista_reserva.png"));
+        jbtnListado.setIcon(iconoL);
+        jbtnListado.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
         
     }
@@ -55,6 +58,7 @@ public class VisPrincipal extends javax.swing.JFrame {
         jbtnFeriados = new javax.swing.JButton();
         jbtnGestionPersonas = new javax.swing.JButton();
         jbtnEspacios = new javax.swing.JButton();
+        jbtnListado = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -88,36 +92,53 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnAulasActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 55, 162, 78));
+        jPanel1.add(jbtnAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 162, 78));
 
         jbtnFeriados.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnFeriados.setText("Feriados");
+        jbtnFeriados.setActionCommand("");
+        jbtnFeriados.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jbtnFeriados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnFeriadosActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnFeriados, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 164, 162, 78));
+        jPanel1.add(jbtnFeriados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 162, 78));
 
         jbtnGestionPersonas.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnGestionPersonas.setText("Personas");
+        jbtnGestionPersonas.setActionCommand("");
+        jbtnGestionPersonas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jbtnGestionPersonas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnGestionPersonasActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnGestionPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 396, 160, 78));
+        jPanel1.add(jbtnGestionPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 160, 78));
 
         jbtnEspacios.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
-        jbtnEspacios.setText("Nuevo Espacio");
+        jbtnEspacios.setText("<html><body style='text-align: center'>Nuevo Espacio</body></html>");
+        jbtnEspacios.setActionCommand("");
+        jbtnEspacios.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jbtnEspacios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnEspaciosActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 279, 162, 78));
+        jPanel1.add(jbtnEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 162, 78));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 190, 550));
+        jbtnListado.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
+        jbtnListado.setText("<html><body style='text-align: center'>Listado Reservas</body></html>");
+        jbtnListado.setActionCommand("");
+        jbtnListado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jbtnListado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnListadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtnListado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 160, 78));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 190, 570));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(530, 420));
@@ -186,10 +207,10 @@ public class VisPrincipal extends javax.swing.JFrame {
         );
         jdskEscritorioLayout.setVerticalGroup(
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+            .addGap(0, 580, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 1030, 550));
+        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 1030, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -272,6 +293,15 @@ public class VisPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnGestionPersonasActionPerformed
 
+    private void jbtnListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnListadoActionPerformed
+        // TODO add your handling code here:
+        
+        VisListReservas visE = new VisListReservas();
+        visE.consumirDatos(this);
+        visE.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbtnListadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -319,6 +349,7 @@ public class VisPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jbtnEspacios;
     private javax.swing.JButton jbtnFeriados;
     private javax.swing.JButton jbtnGestionPersonas;
+    private javax.swing.JButton jbtnListado;
     public javax.swing.JDesktopPane jdskEscritorio;
     // End of variables declaration//GEN-END:variables
 }

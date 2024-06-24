@@ -33,6 +33,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
         bloquearTextos();
         this.setLocationRelativeTo(null);
         selecionarTabla();
+        rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, "src/Imagenes/banner.png");
     }
 
     public void consumirDatos(VisPrincipal vsP) {
@@ -224,7 +225,6 @@ public class CRUDDocentes extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
-        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -243,51 +243,51 @@ public class CRUDDocentes extends javax.swing.JFrame {
         jbtnCancelar = new javax.swing.JButton();
         jbtnEliminar = new javax.swing.JButton();
         jbtnVolver = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         setUndecorated(true);
         setResizable(false);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png"))); // NOI18N
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Microsoft Uighur", 1, 50)); // NOI18N
         jLabel2.setText("Lista Docentes");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(454, 0, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
         jLabel3.setText("Cedula:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 124, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 124, -1));
 
         jLabel4.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
         jLabel4.setText("Nombre:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 124, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 124, -1));
 
         jLabel5.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
         jLabel5.setText("Telefono:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 124, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 124, -1));
 
         jLabel7.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
         jLabel7.setText("Dirección:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 124, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 124, -1));
 
         jLabel8.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
         jLabel8.setText("Buscar:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, 124, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 124, -1));
 
         jtxtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtxtCedulaActionPerformed(evt);
             }
         });
-        jPanel1.add(jtxtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 216, 30));
-        jPanel1.add(jtxtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 216, 30));
-        jPanel1.add(jtxtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 216, 30));
-        jPanel1.add(jtxtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, 216, 30));
-        jPanel1.add(jtxtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 216, 30));
+        jPanel1.add(jtxtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 216, 30));
+        jPanel1.add(jtxtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 216, 30));
+        jPanel1.add(jtxtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 200, 216, 30));
+        jPanel1.add(jtxtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 250, 216, 30));
+        jPanel1.add(jtxtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, 216, 30));
 
         jbtnNuevo.setFont(new java.awt.Font("Microsoft Uighur", 1, 25)); // NOI18N
         jbtnNuevo.setText("Nuevo");
@@ -296,7 +296,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 jbtnNuevoMouseClicked(evt);
             }
         });
-        jPanel1.add(jbtnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 140, 30));
+        jPanel1.add(jbtnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 190, 140, 30));
 
         jbtnGuardar.setFont(new java.awt.Font("Microsoft Uighur", 1, 25)); // NOI18N
         jbtnGuardar.setText("Guardar");
@@ -305,7 +305,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 jbtnGuardarMouseClicked(evt);
             }
         });
-        jPanel1.add(jbtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, 140, 30));
+        jPanel1.add(jbtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 240, 140, 30));
 
         jbtnEditar.setFont(new java.awt.Font("Microsoft Uighur", 1, 25)); // NOI18N
         jbtnEditar.setText("Editar");
@@ -314,7 +314,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 jbtnEditarMouseClicked(evt);
             }
         });
-        jPanel1.add(jbtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 150, 140, 30));
+        jPanel1.add(jbtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 190, 140, 30));
 
         jbtnCancelar.setBackground(new java.awt.Color(110, 7, 7));
         jbtnCancelar.setFont(new java.awt.Font("Microsoft Uighur", 1, 25)); // NOI18N
@@ -325,7 +325,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 jbtnCancelarMouseClicked(evt);
             }
         });
-        jPanel1.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 280, 111, 40));
+        jPanel1.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 350, 111, 40));
 
         jbtnEliminar.setFont(new java.awt.Font("Microsoft Uighur", 1, 25)); // NOI18N
         jbtnEliminar.setText("Eliminar");
@@ -334,7 +334,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 jbtnEliminarMouseClicked(evt);
             }
         });
-        jPanel1.add(jbtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 200, 140, 30));
+        jPanel1.add(jbtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 240, 140, 30));
 
         jbtnVolver.setBackground(new java.awt.Color(25, 134, 191));
         jbtnVolver.setFont(new java.awt.Font("Microsoft Uighur", 1, 25)); // NOI18N
@@ -345,10 +345,13 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 jbtnVolverActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 280, 110, 40));
+        jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 350, 110, 40));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 128));
 
         jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTable1.setFont(new java.awt.Font("Microsoft Uighur", 0, 23)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Microsoft Uighur", 0, 26)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -362,27 +365,9 @@ public class CRUDDocentes extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 1120, 250));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 670));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

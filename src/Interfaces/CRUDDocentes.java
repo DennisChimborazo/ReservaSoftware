@@ -33,25 +33,33 @@ public class CRUDDocentes extends javax.swing.JFrame {
         bloquearTextos();
         this.setLocationRelativeTo(null);
         selecionarTabla();
+        cambiarTamanioCeldasAncho();
     }
 
     public void consumirDatos(VisPrincipal vsP) {
         this.vsP = vsP;
     }
 
+    public String crearClaveUnica() {
+        String[] nombre = jtxtNombre.getText().split(" ");
+        StringBuilder combinacionAleatoria = new StringBuilder();
+        combinacionAleatoria.append(this.jcmbTipoPersona.getSelectedItem().toString().substring(0, 3).toUpperCase());
+        combinacionAleatoria.append(nombre[0].substring(0, 2).toUpperCase());
+        combinacionAleatoria.append(nombre[1].substring(0, 2).toUpperCase());
+        combinacionAleatoria.append(this.jtxtTelefono.getText().substring(4, 7).toUpperCase());
+        return combinacionAleatoria.toString();
+    }
+
     private void textosBlancos() {
-        this.jtxtCedula.setText("");
         this.jtxtNombre.setText("");
         this.jtxtTelefono.setText("");
         this.jtxtDireccion.setText("");
-        this.jtxtBuscar.setText("");
     }
 
     private void bloquearTextos() {
         this.jbtnGuardar.setEnabled(false);
         this.jbtnEditar.setEnabled(false);
         this.jbtnCancelar.setEnabled(false);
-        this.jtxtCedula.setEnabled(false);
         this.jtxtNombre.setEnabled(false);
         this.jtxtTelefono.setEnabled(false);
         this.jtxtDireccion.setEnabled(false);
@@ -59,7 +67,6 @@ public class CRUDDocentes extends javax.swing.JFrame {
     }
 
     private void btnNuevo() {
-        this.jtxtCedula.setEnabled(true);
         this.jtxtNombre.setEnabled(true);
         this.jtxtTelefono.setEnabled(true);
         this.jtxtDireccion.setEnabled(true);
@@ -70,8 +77,8 @@ public class CRUDDocentes extends javax.swing.JFrame {
     }
 
     private void cargarTabla() {
-        DefaultTableModel modeloTabla = new DefaultTableModel(new Object[]{"Cedula", "Nombre", "Telefono", "Direccion"}, 0);
-        this.jTable1.setModel(modeloTabla);
+        DefaultTableModel modeloTabla = new DefaultTableModel(new Object[]{"Codigo", "Nombre", "Telefono", "Direccion", "Tipo"}, 0);
+        this.jtblPersonas.setModel(modeloTabla);
         modeloTabla.setRowCount(0);
         try {
             Conexiones cn = new Conexiones();
@@ -85,9 +92,10 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 docente[1] = ModeloUsuarios.modelomayus(rs.getString("nom_per")) + " " + ModeloUsuarios.modelomayus(rs.getString("ape_per"));
                 docente[2] = rs.getString("telf_per");
                 docente[3] = rs.getString("dir_per");
+                docente[4] = rs.getString("tipo");
                 modeloTabla.addRow(docente);
             }
-            this.jTable1.setModel(modeloTabla);
+            this.jtblPersonas.setModel(modeloTabla);
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
@@ -96,50 +104,44 @@ public class CRUDDocentes extends javax.swing.JFrame {
     private void agregarDocente() {
         String sql;
         String[] nombreCompleto = this.jtxtNombre.getText().split(" ");
-        if (!this.jtxtCedula.getText().isEmpty() && !this.jtxtNombre.getText().isEmpty() && !this.jtxtTelefono.getText().isEmpty() && !this.jtxtDireccion.getText().isEmpty()) {
-            if (Validadores.isValidCedula(this.jtxtCedula.getText())) {
-                if (Validadores.existeUsuario(this.jtxtCedula.getText())) {
+        if (!this.jtxtNombre.getText().isEmpty() && !this.jtxtTelefono.getText().isEmpty() && !this.jtxtDireccion.getText().isEmpty()) {
+            if (Validadores.isValidTelefono(this.jtxtTelefono.getText())) {
+                if (nombreCompleto.length < 2 || nombreCompleto[0].isEmpty() || nombreCompleto[1].isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Debe ingresar nombre y apellido");
+                } else {
+                    try {
+                        Conexiones cc = new Conexiones();
+                        Connection cn = cc.conectar();
+                        sql = "INSERT INTO personas"
+                                + "(ced_per, nom_per, ape_per, fech_nac, telf_per, dir_per,tipo)"
+                                + "VALUES(?, ?, ?, ?, ?, ?, ?);";
+                        PreparedStatement ps = cn.prepareStatement(sql);
+                        ps.setString(1, crearClaveUnica());
+                        ps.setString(2, nombreCompleto[0].toLowerCase());
+                        ps.setString(3, nombreCompleto[1].toLowerCase());
+                        ps.setString(4, "2001-05-01");
+                        ps.setString(5, this.jtxtTelefono.getText());
+                        ps.setString(6, this.jtxtDireccion.getText().toLowerCase());
+                        ps.setString(7, this.jcmbTipoPersona.getSelectedItem().toString().toLowerCase());
 
-                    if (Validadores.isValidTelefono(this.jtxtTelefono.getText())) {
-                        if (nombreCompleto.length < 2 || nombreCompleto[0].isEmpty() || nombreCompleto[1].isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Debe ingresar nombre y apellido");
-                        } else {
-                            try {
-                                Conexiones cc = new Conexiones();
-                                Connection cn = cc.conectar();
-                                sql = "INSERT INTO personas"
-                                        + "(ced_per, nom_per, ape_per, fech_nac, telf_per, dir_per)"
-                                        + "VALUES(?, ?, ?, ?, ?, ?);";
-                                PreparedStatement ps = cn.prepareStatement(sql);
-                                ps.setString(1, this.jtxtCedula.getText());
-                                ps.setString(2, nombreCompleto[0].toLowerCase());
-                                ps.setString(3, nombreCompleto[1].toLowerCase());
-                                ps.setString(4, "2001-05-01");
-                                ps.setString(5, this.jtxtTelefono.getText());
-                                ps.setString(6, this.jtxtDireccion.getText().toLowerCase());
-                                int res = ps.executeUpdate();
-                                if (res > 0) {
-                                    JOptionPane.showMessageDialog(null, "Se ingreso correctamene");
-                                    cargarTabla();
-                                    textosBlancos();
-                                    bloquearTextos();
-                                    ps.close();
-                                }
-
-                            } catch (SQLException e) {
-                                System.out.println(e.toString());
-                            }
+                        int res = ps.executeUpdate();
+                        if (res > 0) {
+                            JOptionPane.showMessageDialog(null, "Se ingreso correctamene");
+                            cargarTabla();
+                            textosBlancos();
+                            bloquearTextos();
+                            ps.close();
                         }
 
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Numero de telefono ingresado no valido");
+                    } catch (SQLException e) {
+                        System.out.println(e.toString());
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "La persona a ingresar ya existe");
                 }
+
             } else {
-                JOptionPane.showMessageDialog(null, "Numero de cedula ingresado no valido");
+                JOptionPane.showMessageDialog(null, "Numero de telefono ingresado no valido");
             }
+
         } else {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
         }
@@ -147,9 +149,10 @@ public class CRUDDocentes extends javax.swing.JFrame {
     }
 
     private void editarDocente() {
+        String claveUnica = String.valueOf(this.jtblPersonas.getValueAt(this.jtblPersonas.getSelectedRow(), 0));
 
-        if (!this.jtxtCedula.getText().isEmpty() && !this.jtxtNombre.getText().isEmpty() && !this.jtxtTelefono.getText().isEmpty() && !this.jtxtDireccion.getText().isEmpty()) {
-            String sql = "UPDATE personas SET  telf_per='" + this.jtxtTelefono.getText() + "', dir_per='" + this.jtxtDireccion.getText() + "' WHERE ced_per='" + this.jtxtCedula.getText() + "'";
+        if (!this.jtxtNombre.getText().isEmpty() && !this.jtxtTelefono.getText().isEmpty() && !this.jtxtDireccion.getText().isEmpty()) {
+            String sql = "UPDATE personas SET  telf_per='" + this.jtxtTelefono.getText() + "', dir_per='" + this.jtxtDireccion.getText() + "' WHERE ced_per='" + claveUnica + "'";
             try {
                 Conexiones cc = new Conexiones();
                 Connection cn = cc.conectar();
@@ -171,10 +174,11 @@ public class CRUDDocentes extends javax.swing.JFrame {
     }
 
     private void eliminarDocente() {
+        String claveUnica = String.valueOf(this.jtblPersonas.getValueAt(this.jtblPersonas.getSelectedRow(), 0));
         try {
             Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
-            String sql = "Delete from personas where ced_per='" + this.jtxtCedula.getText() + "'";
+            String sql = "Delete from personas where ced_per='" + claveUnica + "'";
             PreparedStatement psd = cn.prepareStatement(sql);
             int res = psd.executeUpdate();
             if (res > 0) {
@@ -191,19 +195,17 @@ public class CRUDDocentes extends javax.swing.JFrame {
     }
 
     private void selecionarTabla() {
-        this.jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        this.jtblPersonas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                int row = jTable1.getSelectedRow();
+                int row = jtblPersonas.getSelectedRow();
                 if (row != -1) {
-                    jtxtCedula.setText(jTable1.getValueAt(row, 0).toString());
-                    jtxtNombre.setText(jTable1.getValueAt(row, 1).toString());
-                    jtxtTelefono.setText(jTable1.getValueAt(row, 2).toString());
-                    jtxtDireccion.setText(jTable1.getValueAt(row, 3).toString());
+                    jtxtNombre.setText(jtblPersonas.getValueAt(row, 1).toString());
+                    jtxtTelefono.setText(jtblPersonas.getValueAt(row, 2).toString());
+                    jtxtDireccion.setText(jtblPersonas.getValueAt(row, 3).toString());
                     jbtnGuardar.setEnabled(false);
                     jbtnEditar.setEnabled(true);
                     jbtnCancelar.setEnabled(true);
-                    jtxtCedula.setEnabled(false);
                     jtxtNombre.setEnabled(false);
                     jtxtTelefono.setEnabled(true);
                     jtxtDireccion.setEnabled(true);
@@ -219,6 +221,14 @@ public class CRUDDocentes extends javax.swing.JFrame {
         doc.setVisible(true);
     }
 
+    private void cambiarTamanioCeldasAncho() {
+        for (int i = 0; i < this.jtblPersonas.getRowCount(); i++) {
+            this.jtblPersonas.setRowHeight(i, 35);
+
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -231,20 +241,18 @@ public class CRUDDocentes extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jtxtCedula = new javax.swing.JTextField();
         jtxtNombre = new javax.swing.JTextField();
         jtxtTelefono = new javax.swing.JTextField();
         jtxtDireccion = new javax.swing.JTextField();
-        jtxtBuscar = new javax.swing.JTextField();
         jbtnNuevo = new javax.swing.JButton();
         jbtnGuardar = new javax.swing.JButton();
         jbtnEditar = new javax.swing.JButton();
         jbtnCancelar = new javax.swing.JButton();
         jbtnEliminar = new javax.swing.JButton();
         jbtnVolver = new javax.swing.JButton();
+        jcmbTipoPersona = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtblPersonas = new javax.swing.JTable();
 
         setUndecorated(true);
         setResizable(false);
@@ -259,7 +267,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(454, 0, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
-        jLabel3.setText("Cedula:");
+        jLabel3.setText("Tipo:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 124, -1));
 
         jLabel4.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
@@ -273,21 +281,9 @@ public class CRUDDocentes extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
         jLabel7.setText("Dirección:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 124, -1));
-
-        jLabel8.setFont(new java.awt.Font("Microsoft Uighur", 1, 33)); // NOI18N
-        jLabel8.setText("Buscar:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, 124, -1));
-
-        jtxtCedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtCedulaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jtxtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 216, 30));
         jPanel1.add(jtxtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 216, 30));
         jPanel1.add(jtxtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 216, 30));
         jPanel1.add(jtxtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, 216, 30));
-        jPanel1.add(jtxtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 216, 30));
 
         jbtnNuevo.setFont(new java.awt.Font("Microsoft Uighur", 1, 25)); // NOI18N
         jbtnNuevo.setText("Nuevo");
@@ -325,7 +321,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 jbtnCancelarMouseClicked(evt);
             }
         });
-        jPanel1.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 280, 111, 40));
+        jPanel1.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 250, 111, 40));
 
         jbtnEliminar.setFont(new java.awt.Font("Microsoft Uighur", 1, 25)); // NOI18N
         jbtnEliminar.setText("Eliminar");
@@ -345,11 +341,15 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 jbtnVolverActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 280, 110, 40));
+        jPanel1.add(jbtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 250, 110, 40));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTable1.setFont(new java.awt.Font("Microsoft Uighur", 0, 23)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jcmbTipoPersona.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
+        jcmbTipoPersona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Docente", "Estudiante", "Invitado" }));
+        jPanel1.add(jcmbTipoPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 220, 30));
+
+        jtblPersonas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jtblPersonas.setFont(new java.awt.Font("Microsoft Uighur", 0, 23)); // NOI18N
+        jtblPersonas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -360,7 +360,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtblPersonas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -376,11 +376,11 @@ public class CRUDDocentes extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -414,10 +414,6 @@ public class CRUDDocentes extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jbtnVolverActionPerformed
 
-    private void jtxtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCedulaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtCedulaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -426,19 +422,17 @@ public class CRUDDocentes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnCancelar;
     private javax.swing.JButton jbtnEditar;
     private javax.swing.JButton jbtnEliminar;
     private javax.swing.JButton jbtnGuardar;
     private javax.swing.JButton jbtnNuevo;
     private javax.swing.JButton jbtnVolver;
-    private javax.swing.JTextField jtxtBuscar;
-    private javax.swing.JTextField jtxtCedula;
+    private javax.swing.JComboBox<String> jcmbTipoPersona;
+    private javax.swing.JTable jtblPersonas;
     private javax.swing.JTextField jtxtDireccion;
     private javax.swing.JTextField jtxtNombre;
     private javax.swing.JTextField jtxtTelefono;

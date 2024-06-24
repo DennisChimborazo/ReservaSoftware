@@ -37,6 +37,9 @@ public class VisPrincipal extends javax.swing.JFrame {
         ImageIcon ico = new ImageIcon(getClass().getResource("/Imagenes/aguser.png"));
         jbtnGestionPersonas.setIcon(ico);
         jbtnGestionPersonas.setBackground(Color.WHITE);
+      //  ImageIcon iconoL = new ImageIcon(getClass().getResource("/Imagenes/lista_reserva.png"));
+        //jbtnListado.setIcon(iconoL);
+        //jbtnListado.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
         ImageIcon iconos = new ImageIcon(getClass().getResource("/Imagenes/materias.png"));
         jbtnMaterias.setIcon(iconos);
@@ -91,10 +94,12 @@ public class VisPrincipal extends javax.swing.JFrame {
                 jbtnAulasActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 55, 162, 78));
+        jPanel1.add(jbtnAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 162, 78));
 
         jbtnFeriados.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnFeriados.setText("Feriados");
+        jbtnFeriados.setActionCommand("");
+        jbtnFeriados.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jbtnFeriados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnFeriadosActionPerformed(evt);
@@ -104,6 +109,8 @@ public class VisPrincipal extends javax.swing.JFrame {
 
         jbtnGestionPersonas.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
         jbtnGestionPersonas.setText("Personas");
+        jbtnGestionPersonas.setActionCommand("");
+        jbtnGestionPersonas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jbtnGestionPersonas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnGestionPersonasActionPerformed(evt);
@@ -199,10 +206,10 @@ public class VisPrincipal extends javax.swing.JFrame {
         );
         jdskEscritorioLayout.setVerticalGroup(
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 580, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 950, 540));
+        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 1030, 580));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png"))); // NOI18N
 

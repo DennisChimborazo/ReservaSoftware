@@ -18,13 +18,14 @@ import javax.swing.JOptionPane;
 public class VisPrincipal extends javax.swing.JFrame {
 
     int Xmov, Ymov;
+     public VisHorario vishorario =new VisHorario();
 
     /**
      * Creates new form VisPrincipal
      */
     public VisPrincipal() {
         initComponents();
-        rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, "src/Imagenes/banner1.jpg");
+        rsscalelabel.RSScaleLabel.setScaleLabel(jLabel3, "src/Imagenes/banner.png");
         ImageIcon iconoa = new ImageIcon(getClass().getResource("/Imagenes/aulas.png"));
         jbtnAulas.setIcon(iconoa);
         jbtnFeriados.setBackground(Color.WHITE);
@@ -51,7 +52,6 @@ public class VisPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jbtnAulas = new javax.swing.JButton();
         jbtnFeriados = new javax.swing.JButton();
@@ -70,12 +70,12 @@ public class VisPrincipal extends javax.swing.JFrame {
                 g.drawImage(imagen,0,0,getWidth(), getHeight(),this);
             }
         };
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner1.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1220, -1));
 
         jPanel1.setBackground(new java.awt.Color(110, 7, 7));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -164,7 +164,7 @@ public class VisPrincipal extends javax.swing.JFrame {
         jLabel2.setText("   X");
         jPnl_salida.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 30));
 
-        jPanel3.add(jPnl_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 0, 50, 30));
+        jPanel3.add(jPnl_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 0, 50, 30));
 
         jPnl_min.setBackground(new java.awt.Color(255, 255, 255));
         jPnl_min.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -185,9 +185,9 @@ public class VisPrincipal extends javax.swing.JFrame {
         jLbl_min.setText("   -");
         jPnl_min.add(jLbl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 30));
 
-        jPanel3.add(jPnl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 0, 50, 30));
+        jPanel3.add(jPnl_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 0, 50, 30));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 30));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 30));
 
         jdskEscritorio.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -195,14 +195,31 @@ public class VisPrincipal extends javax.swing.JFrame {
         jdskEscritorio.setLayout(jdskEscritorioLayout);
         jdskEscritorioLayout.setHorizontalGroup(
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1020, Short.MAX_VALUE)
+            .addGap(0, 950, Short.MAX_VALUE)
         );
         jdskEscritorioLayout.setVerticalGroup(
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 1020, 560));
+        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 950, 540));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1140, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 48, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1140, 150));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -249,10 +266,10 @@ public class VisPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MousePressed
 
     private void jbtnAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAulasActionPerformed
-        VisHorario vishorario = new VisHorario();
-        vishorario.show(true);
+        this.vishorario.show(true);
+        this.vishorario.consumirVistaPrincipal(this);
         if (this.jdskEscritorio.getComponentCount() < 1) {
-            this.jdskEscritorio.add(vishorario);
+            this.jdskEscritorio.add(this.vishorario);
             this.jdskEscritorio.updateUI();
         } else {
             JOptionPane.showMessageDialog(this.jdskEscritorio, "No puede generar mas de 1 Ventana");
@@ -261,7 +278,7 @@ public class VisPrincipal extends javax.swing.JFrame {
 
     private void jbtnFeriadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFeriadosActionPerformed
         VistaNuevoFeriado vf = new VistaNuevoFeriado();
-        vf.consumirDatos(this);
+        vf.consumirDatos(this,this.vishorario);
         vf.setVisible(true);
         this.dispose();
         // TODO add your handling code here:
@@ -278,7 +295,7 @@ public class VisPrincipal extends javax.swing.JFrame {
 
     private void jbtnGestionPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGestionPersonasActionPerformed
         CRUDDocentes cru = new CRUDDocentes();
-        cru.consumirDatos(this);
+        cru.consumirVistaReserva(null,this);
         cru.setVisible(true);
         this.dispose();
 
@@ -328,10 +345,11 @@ public class VisPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLbl_min;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPnl_min;
     public javax.swing.JPanel jPnl_salida;

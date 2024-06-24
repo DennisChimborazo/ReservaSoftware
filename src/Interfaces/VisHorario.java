@@ -18,10 +18,13 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import reservasoftware.Feriados;
@@ -59,8 +62,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jitmEliminarReserva();
         cargarcomboEfidicios();
         seleccionarFecha();
-        // cargarTabla();
-
     }
 
     public void LimpiarTabla() {
@@ -76,6 +77,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
             LimpiarTablaReserva();
             String fechaVerificacion = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
             int indexSemana = indiceSemana(fechaVerificacion);
+            cargarFeriadosTabla();
             cargarReservas(indexSemana);
         });
     }
@@ -95,9 +97,13 @@ public class VisHorario extends javax.swing.JInternalFrame {
     public void actualizarDatos() {
         int fechaActual = indiceSemana(this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime()));
         cargarReservas(fechaActual);
+        cargarFeriadosTabla();
+        cargarFeriados();
+        cargarFeriadosTabla();
     }
 
-    private void cargarFeriados() {
+    public void cargarFeriados() {
+          this.listaFeriados.clear();
         try {
             Conexiones cn = new Conexiones();
             Connection cc = cn.conectar();
@@ -105,10 +111,11 @@ public class VisHorario extends javax.swing.JInternalFrame {
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {
+                String id_fer = rs.getString("id_fer");
                 String descripcion = rs.getString("descip");
-                int fechaInicio[] = tranformarFechas(rs.getString("fecha_inicio").split("-"));
-                int fechaFin[] = tranformarFechas(rs.getString("fecha_fin").split("-"));
-                Feriados f = new Feriados(fechaInicio, fechaFin, descripcion);
+                String fechaInicio = rs.getString("fecha_inicio");
+                String fechaFin = rs.getString("fecha_fin");
+                Feriados f = new Feriados(id_fer, fechaInicio, fechaFin, descripcion);
                 this.listaFeriados.add(f);
             }
 
@@ -130,7 +137,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         String[] fechaActual = String.valueOf(this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime())).split("-");
         if (!this.listaFeriados.isEmpty()) {
             for (Feriados fer : this.listaFeriados) {
-                if (verificacionRangoFeriado(fer.fechaInicio, fer.fechaFinal, tranformarFechas(fechaActual))) {
+                if (verificacionRangoFeriado(fer.vecFechaInicio, fer.vecFechaFinal, tranformarFechas(fechaActual))) {
                     return fer;
                 }
             }
@@ -144,6 +151,67 @@ public class VisHorario extends javax.swing.JInternalFrame {
         LocalDate fechaCompr = LocalDate.of(fechaComprobacion[0], fechaComprobacion[1], fechaComprobacion[2]);
         return (fechaCompr.isEqual(fechaIni) || fechaCompr.isAfter(fechaIni))
                 && (fechaCompr.isEqual(fechaFin) || fechaCompr.isBefore(fechaFin));
+    }
+
+    public void cargarFeriadosTabla() {
+        LimpiarTablaFeriados();
+        int indiceSemana = indiceSemana(this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime()));
+        for (Feriados f : this.listaFeriados) {
+            if (indiceSemana(f.fechaInicio) == indiceSemana || indiceSemana(f.fechaFinal) == indiceSemana) {
+                List<LocalDate> fechas = obtenerFechasEnRango(f.fechaInicio, f.fechaFinal);
+                fechas = obtenerFechasNumeroSemana(fechas, indiceSemana);
+                for (int i = 0; i < fechas.size(); i++) {
+                    int indiceDia = indiceDia(String.valueOf(fechas.get(i))) - 1;
+                    for (int j = 0; j < this.jtblHorarios.getRowCount(); j++) {
+                        if (indiceDia <= 6 && indiceDia != 0) {
+                            this.jtblHorarios.setValueAt(f.idFeriado + " Feriado\n" + f.descripcion, j, indiceDia);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private List<LocalDate> obtenerFechasEnRango(String fechaInicio, String fechaFin) {
+        LocalDate fechaInicial = LocalDate.parse(fechaInicio);
+        LocalDate fechaFinal = LocalDate.parse(fechaFin);
+        List<LocalDate> fechas = new ArrayList<>();
+        LocalDate fechaActual = fechaInicial;
+        while (!fechaActual.isAfter(fechaFinal)) {
+            fechas.add(fechaActual);
+            fechaActual = fechaActual.plusDays(1);
+        }
+        return fechas;
+    }
+
+    private List<LocalDate> obtenerFechasNumeroSemana(List<LocalDate> fechas, int indiceSemana) {
+        List<LocalDate> fechasSemana = new ArrayList<>();
+
+        for (LocalDate fecha : fechas) {
+            if (esSemana(fecha, indiceSemana)) {
+                fechasSemana.add(fecha);
+            }
+        }
+
+        return fechasSemana;
+    }
+
+    private boolean esSemana(LocalDate fecha, int indiceSemana) {
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        int semanaFecha = fecha.get(weekFields.weekOfWeekBasedYear());
+        return semanaFecha == indiceSemana;
+    }
+
+    private void LimpiarTablaFeriados() {
+        for (int i = 0; i < this.jtblHorarios.getRowCount(); i++) {
+            for (int j = 1; j < this.jtblHorarios.getColumnCount(); j++) {
+                String valor = String.valueOf(jtblHorarios.getValueAt(i, j));
+                if (valor.contains("Feriado")) {
+                    this.jtblHorarios.setValueAt(null, i, j);
+                }
+            }
+        }
+
     }
 
     private void cargarcomboEfidicios() {
@@ -219,6 +287,31 @@ public class VisHorario extends javax.swing.JInternalFrame {
                     String fechaVerificacion = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
                     int indexSemana = indiceSemana(fechaVerificacion);
                     cargarReservas(indexSemana);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Verifique los datos que desea borrar");
+            }
+
+        }
+
+    }
+     private void borrarFerado() {
+        int op = JOptionPane.showConfirmDialog(null, "Desea borrar Feriado", "Confirmacion", JOptionPane.YES_NO_OPTION);
+        if (op == 0) {
+            try {
+                int fila = this.jtblHorarios.getSelectedRow();
+                int columna = this.jtblHorarios.getSelectedColumn();
+                String valor[] = String.valueOf(this.jtblHorarios.getValueAt(fila, columna)).split(" ");
+                Conexiones cc = new Conexiones();
+                Connection cn = cc.conectar();
+                String Sql = "delete from feriados where id_fer='" + valor[0] + " ' ";
+                PreparedStatement psd = cn.prepareStatement(Sql);
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Se elimino la feriado del registro");
+                    cargarFeriados();
+                    cargarFeriadosTabla();
+
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Verifique los datos que desea borrar");
@@ -398,8 +491,14 @@ public class VisHorario extends javax.swing.JInternalFrame {
                         int filHora = jtblHorarios.getSelectedRow();
                         int columDia = jtblHorarios.getSelectedColumn();
                         String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
-                        if (valor.contains("reserva")) {
-                            borrarReserva();
+
+                        if (valor.contains("reserva") || valor.contains("Feriado")) {
+                            if (valor.contains("reserva")) {
+                                borrarReserva();
+
+                            } else {
+                                borrarFerado();
+                            }
 
                         } else {
                             JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede elinimar");
@@ -501,9 +600,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println("fecha ingreso "+fecha);
-                System.out.println("fecha hoy "+fechaActual.toString());
-
+ 
 
         if (fechaOtra != null && !fechaOtra.before(fechaActual)
                 || fechaOtra.toString().substring(0, 10).equals(fechaActual.toString().substring(0, 10))) {
@@ -634,7 +731,9 @@ public class VisHorario extends javax.swing.JInternalFrame {
 
     private void jcmbEdificiosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmbEdificiosItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
+
             cargarcomboTipoAula(this.jcmbEdificios.getSelectedItem().toString());
+            cargarFeriadosTabla();
         }
 
     }//GEN-LAST:event_jcmbEdificiosItemStateChanged
@@ -654,6 +753,9 @@ public class VisHorario extends javax.swing.JInternalFrame {
             String fechaVerificacion = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
             int indexSemana = indiceSemana(fechaVerificacion);
             cargarReservas(indexSemana);
+            cargarFeriadosTabla();
+            cargarFeriadosTabla();
+
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jcmbEspaciosDisponiblesItemStateChanged

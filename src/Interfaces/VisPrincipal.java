@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class VisPrincipal extends javax.swing.JFrame {
     
     int Xmov, Ymov;
+    VisHorario vishorario =new VisHorario();
 
     /**
      * Creates new form VisPrincipal
@@ -236,10 +237,9 @@ public class VisPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MousePressed
 
     private void jbtnAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAulasActionPerformed
-        VisHorario vishorario = new VisHorario();
-        vishorario.show(true);
+        this.vishorario.show(true);
         if (this.jdskEscritorio.getComponentCount() < 1) {
-            this.jdskEscritorio.add(vishorario);
+            this.jdskEscritorio.add(this.vishorario);
             this.jdskEscritorio.updateUI();
         } else {
             JOptionPane.showMessageDialog(this.jdskEscritorio, "No puede generar mas de 1 Ventana");
@@ -248,7 +248,7 @@ public class VisPrincipal extends javax.swing.JFrame {
 
     private void jbtnFeriadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFeriadosActionPerformed
         VistaNuevoFeriado vf = new VistaNuevoFeriado();
-        vf.consumirDatos(this);
+        vf.consumirDatos(this,this.vishorario);
         vf.setVisible(true);
         this.dispose();
         // TODO add your handling code here:

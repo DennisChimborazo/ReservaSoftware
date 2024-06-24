@@ -97,7 +97,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
         cargarReservas(fechaActual);
     }
 
-    private void cargarFeriados() {
+    public void cargarFeriados() {
         try {
             Conexiones cn = new Conexiones();
             Connection cc = cn.conectar();
@@ -105,10 +105,11 @@ public class VisHorario extends javax.swing.JInternalFrame {
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {
+                String id_fer = rs.getString("id_fer");
                 String descripcion = rs.getString("descip");
-                int fechaInicio[] = tranformarFechas(rs.getString("fecha_inicio").split("-"));
-                int fechaFin[] = tranformarFechas(rs.getString("fecha_fin").split("-"));
-                Feriados f = new Feriados(fechaInicio, fechaFin, descripcion);
+                String fechaInicio = rs.getString("fecha_inicio");
+                String fechaFin = rs.getString("fecha_fin");
+                Feriados f = new Feriados(id_fer, fechaInicio, fechaFin, descripcion);
                 this.listaFeriados.add(f);
             }
 
@@ -126,11 +127,11 @@ public class VisHorario extends javax.swing.JInternalFrame {
         return fechaTransformada;
     }
 
-    public Feriados feriadoValido() {
+       public Feriados feriadoValido() {
         String[] fechaActual = String.valueOf(this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime())).split("-");
         if (!this.listaFeriados.isEmpty()) {
             for (Feriados fer : this.listaFeriados) {
-                if (verificacionRangoFeriado(fer.fechaInicio, fer.fechaFinal, tranformarFechas(fechaActual))) {
+                if (verificacionRangoFeriado(fer.vecFechaInicio, fer.vecFechaFinal, tranformarFechas(fechaActual))) {
                     return fer;
                 }
             }

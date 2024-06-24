@@ -73,19 +73,19 @@ public class VisReserva extends javax.swing.JFrame {
         }
     }
 
-    public void asignarHorasDisponibles(int horainico, int horaFin) {
+public void asignarHorasDisponibles(int horainico, int horaFin) {
         if (horainico >= 13) {
             horainico = horainico + 1;
         }
         int cont = 0;
-        this.jtxtHoraInicio.setText(String.valueOf(horainico));
+        this.jtxtHoraInicio.setText(String.valueOf(horainico)+":00");
         if (horainico <= 12) {
             cont = horainico;
             for (int i = 0; i < horaFin; i++) {
                 if (cont == 13) {
                     horainico = horainico + 1;
                 }
-                this.jcmbHorasDisponibles.addItem((horainico + i) + ":00 - " + (horainico + i + 1) + ":00");
+                this.jcmbHorasDisponibles.addItem((horainico + i + 1) + ":00");
                 cont++;
             }
         } else {
@@ -95,6 +95,7 @@ public class VisReserva extends javax.swing.JFrame {
             }
         }
     }
+
 
     private boolean controlIngresosValidos() {
         if (!this.jtxtNombres.getText().isEmpty() && !this.jtxtaDescripcion.getText().isEmpty()) {
@@ -231,7 +232,7 @@ public class VisReserva extends javax.swing.JFrame {
     private String obtenerHoraFinal() {
         String h = this.jcmbHorasDisponibles.getSelectedItem().toString();
         h = h.split(":")[0];
-        return String.valueOf(Integer.parseInt(h) + 1);
+        return String.valueOf(Integer.parseInt(h));
     }
 
     public void editarReserva() {

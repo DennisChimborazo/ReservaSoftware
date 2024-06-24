@@ -36,9 +36,9 @@ public class VisPrincipal extends javax.swing.JFrame {
         ImageIcon ico = new ImageIcon(getClass().getResource("/Imagenes/aguser.png"));
         jbtnGestionPersonas.setIcon(ico);
         jbtnGestionPersonas.setBackground(Color.WHITE);
-        ImageIcon iconoL = new ImageIcon(getClass().getResource("/Imagenes/lista_reserva.png"));
-        jbtnListado.setIcon(iconoL);
-        jbtnListado.setBackground(Color.WHITE);
+      //  ImageIcon iconoL = new ImageIcon(getClass().getResource("/Imagenes/lista_reserva.png"));
+        //jbtnListado.setIcon(iconoL);
+        //jbtnListado.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
         jPanel2.setBackground(Color.WHITE);
         
@@ -58,7 +58,6 @@ public class VisPrincipal extends javax.swing.JFrame {
         jbtnFeriados = new javax.swing.JButton();
         jbtnGestionPersonas = new javax.swing.JButton();
         jbtnEspacios = new javax.swing.JButton();
-        jbtnListado = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPnl_salida = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -126,17 +125,6 @@ public class VisPrincipal extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jbtnEspacios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 162, 78));
-
-        jbtnListado.setFont(new java.awt.Font("Microsoft Uighur", 1, 30)); // NOI18N
-        jbtnListado.setText("<html><body style='text-align: center'>Listado Reservas</body></html>");
-        jbtnListado.setActionCommand("");
-        jbtnListado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jbtnListado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnListadoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jbtnListado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 160, 78));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 190, 570));
 
@@ -207,10 +195,10 @@ public class VisPrincipal extends javax.swing.JFrame {
         );
         jdskEscritorioLayout.setVerticalGroup(
             jdskEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 580, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 950, 540));
+        getContentPane().add(jdskEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 1030, 580));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png"))); // NOI18N
 
@@ -310,15 +298,6 @@ public class VisPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnGestionPersonasActionPerformed
 
-    private void jbtnListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnListadoActionPerformed
-        // TODO add your handling code here:
-        
-        VisListReservas visE = new VisListReservas();
-        visE.consumirDatos(this);
-        visE.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jbtnListadoActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -367,7 +346,6 @@ public class VisPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jbtnEspacios;
     private javax.swing.JButton jbtnFeriados;
     private javax.swing.JButton jbtnGestionPersonas;
-    private javax.swing.JButton jbtnListado;
     public javax.swing.JDesktopPane jdskEscritorio;
     // End of variables declaration//GEN-END:variables
 }

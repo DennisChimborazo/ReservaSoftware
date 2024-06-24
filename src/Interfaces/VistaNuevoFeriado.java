@@ -37,7 +37,7 @@ VisPrincipal vsP;
         int month = Integer.parseInt(valores[1]);
         int day = Integer.parseInt(valores[2]);
         LocalDate fechaInicial = LocalDate.of(year, month, day);
-        LocalDate fechaResultado = fechaInicial.plusDays(Integer.parseInt(this.jtxtDiasFeriado.getText()));
+        LocalDate fechaResultado = fechaInicial.plusDays(Integer.parseInt(this.jtxtDiasFeriado.getText())-1);
         return String.valueOf(fechaResultado);
     }
 

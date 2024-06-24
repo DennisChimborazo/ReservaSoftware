@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * @author Dalex
  */
 public class VisReserva extends javax.swing.JFrame {
-
+    
     int Xmov, Ymov;
     int horainico;
     int horasTotales;
@@ -35,6 +35,7 @@ public class VisReserva extends javax.swing.JFrame {
     VisHorario vistHorario;
     String nombreAula;
     String[] nombresModificados;
+    VisPrincipal visPrin;
 
     /**
      * Creates new form VisReserva
@@ -57,12 +58,13 @@ public class VisReserva extends javax.swing.JFrame {
         this.horainico = horainico;
         this.horasTotales = horasTotales;
         this.nombreAula = nombreAula;
+        System.out.println("fecha  " + this.fecha);
         verificacionAccion();
         this.jtxtHoraInicio.setEditable(false);
         setButtonIcon(jbtnReservar, "/Imagenes/reserva.png");
         setButtonIcon(jbtnCancelar, "/Imagenes/cancel.png");
     }
-
+    
     private void setButtonIcon(JButton button, String resourcePath) {
         java.net.URL imgURL = getClass().getResource(resourcePath);
         if (imgURL != null) {
@@ -72,7 +74,7 @@ public class VisReserva extends javax.swing.JFrame {
             System.err.println("No se pudo encontrar la imagen: " + resourcePath);
         }
     }
-
+    
     public void asignarHorasDisponibles(int horainico, int horaFin) {
         if (horainico >= 13) {
             horainico = horainico + 1;
@@ -89,13 +91,13 @@ public class VisReserva extends javax.swing.JFrame {
                 cont++;
             }
         } else {
-
+            
             for (int i = 0; i < horaFin; i++) {
                 this.jcmbHorasDisponibles.addItem((horainico + i) + ":00 - " + (horainico + i + 1) + ":00");
             }
         }
     }
-
+    
     private boolean controlIngresosValidos() {
         if (!this.jtxtNombres.getText().isEmpty() && !this.jtxtaDescripcion.getText().isEmpty()) {
             return true;
@@ -104,7 +106,7 @@ public class VisReserva extends javax.swing.JFrame {
         }
         return false;
     }
-
+    
     private String buscarIdAula() {
         String idAula = "";
         try {
@@ -121,9 +123,9 @@ public class VisReserva extends javax.swing.JFrame {
             Logger.getLogger(VisReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
         return idAula;
-
+        
     }
-
+    
     public String buscarIdPersona() {
         String idPersona = "";
         String[] nombres = this.jtxtNombres.getText().split(" ");
@@ -144,12 +146,12 @@ public class VisReserva extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 // System.out.println(ex);
                 JOptionPane.showMessageDialog(null, " buscarIdPersona  " + ex);
-
+                
             }
         }
         return idPersona;
     }
-
+    
     public String buscarIdPersonaModificada() {
         String idPersona = "";
         if (this.nombresModificados.length <= 1) {
@@ -169,14 +171,14 @@ public class VisReserva extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 // System.out.println(ex);
                 JOptionPane.showMessageDialog(null, " buscarIdPersona  " + ex);
-
+                
             }
         }
         return idPersona;
     }
-
+    
     private void guardarReserva() {
-
+        
         try {
             Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
@@ -190,7 +192,7 @@ public class VisReserva extends javax.swing.JFrame {
             psd.setString(4, this.jtxtHoraInicio.getText());
             psd.setString(5, obtenerHoraFinal());
             psd.setString(6, this.jtxtaDescripcion.getText().toLowerCase());
-
+            
             int num = psd.executeUpdate();
             if (num != 0) {
                 JOptionPane.showMessageDialog(null, "Se guardo la reserva");
@@ -203,7 +205,7 @@ public class VisReserva extends javax.swing.JFrame {
             // JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar");
         }
     }
-
+    
     private void guardarPersona() {
         String[] nombres = this.jtxtNombres.getText().split(" ");
         try {
@@ -225,15 +227,15 @@ public class VisReserva extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Verifique los datos que desea guardar");
         }
-
+        
     }
-
+    
     private String obtenerHoraFinal() {
         String h = this.jcmbHorasDisponibles.getSelectedItem().toString();
         h = h.split(":")[0];
         return String.valueOf(Integer.parseInt(h) + 1);
     }
-
+    
     public void editarReserva() {
         int op = JOptionPane.showConfirmDialog(null, "Desea editar la reserva", "Confirmacion", JOptionPane.YES_NO_OPTION);
         if (op == 0) {
@@ -248,20 +250,20 @@ public class VisReserva extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Se actualizo la infomacion de la reserva");
                     this.vistHorario.actualizarDatos();
                     this.dispose();
-
+                    
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Verifique los datos que desea editar");
             }
-
+            
         }
-
+        
     }
-
+    
     public void editarPersona() {
-
+        
         String[] nombres = this.jtxtNombres.getText().split(" ");
-
+        
         String idPersonas = buscarIdPersonaModificada();
         try {
             Conexiones cc = new Conexiones();
@@ -273,14 +275,14 @@ public class VisReserva extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Se actualizo la infomacion de la reserva");
                 this.vistHorario.actualizarDatos();
                 this.dispose();
-
+                
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Verifique los datos que desea editar");
         }
-
+        
     }
-
+    
     public boolean verificarDatos() {
         String[] nombres = this.jtxtNombres.getText().split(" ");
         if (nombres.length <= 1) {
@@ -303,7 +305,7 @@ public class VisReserva extends javax.swing.JFrame {
         }
         return false;
     }
-
+    
     public void verificacionAccion() {
         if (this.id == null) {
             this.jbtnReservar.setText("Reservar");
@@ -318,6 +320,10 @@ public class VisReserva extends javax.swing.JFrame {
         }
     }
 
+    public void consumirVistaPrincipal(VisPrincipal vp) {
+        this.visPrin = vp;
+    }
+    
     private VisReserva() {
         // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -529,7 +535,7 @@ public class VisReserva extends javax.swing.JFrame {
             if (controlIngresosValidos()) {
                 editarReserva();
                 editarPersona();
-
+                
             }
         }
 
@@ -537,9 +543,9 @@ public class VisReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnReservarActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-
+        
         int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-
+        
         if (mensaje == JOptionPane.YES_OPTION) {
             this.dispose();
         }
@@ -585,6 +591,9 @@ public class VisReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_jcmbHorasDisponiblesActionPerformed
 
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        this.visPrin.setVisible(true);
+        this.dispose();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnCancelarActionPerformed
 

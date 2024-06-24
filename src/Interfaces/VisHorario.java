@@ -17,7 +17,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,9 +40,10 @@ public class VisHorario extends javax.swing.JInternalFrame {
 
     private SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
     public JMenuItem jitmReserva = new JMenuItem("Reservar");
-    public JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar reserva");
+    public JMenuItem jitmEliminarReserva = new JMenuItem(" Eliminar");
     public JMenuItem jitmModfificarReserva = new JMenuItem(" Modificar reserva");
     LinkedList<Feriados> listaFeriados = new LinkedList();
+    VisPrincipal visPrin;
 
     /**
      * Creates new form VisHorarios
@@ -103,7 +107,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
     }
 
     public void cargarFeriados() {
-          this.listaFeriados.clear();
+        this.listaFeriados.clear();
         try {
             Conexiones cn = new Conexiones();
             Connection cc = cn.conectar();
@@ -123,34 +127,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
 
-    }
-
-    private int[] tranformarFechas(String fecha[]) {
-        int[] fechaTransformada = new int[fecha.length];
-        for (int i = 0; i < fecha.length; i++) {
-            fechaTransformada[i] = Integer.parseInt(fecha[i]);
-        }
-        return fechaTransformada;
-    }
-
-    public Feriados feriadoValido() {
-        String[] fechaActual = String.valueOf(this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime())).split("-");
-        if (!this.listaFeriados.isEmpty()) {
-            for (Feriados fer : this.listaFeriados) {
-                if (verificacionRangoFeriado(fer.vecFechaInicio, fer.vecFechaFinal, tranformarFechas(fechaActual))) {
-                    return fer;
-                }
-            }
-        }
-        return null;
-    }
-
-    public boolean verificacionRangoFeriado(int fechaInicio[], int fechaFinal[], int fechaComprobacion[]) {
-        LocalDate fechaIni = LocalDate.of(fechaInicio[0], fechaInicio[1], fechaInicio[2]);
-        LocalDate fechaFin = LocalDate.of(fechaFinal[0], fechaFinal[1], fechaFinal[2]);
-        LocalDate fechaCompr = LocalDate.of(fechaComprobacion[0], fechaComprobacion[1], fechaComprobacion[2]);
-        return (fechaCompr.isEqual(fechaIni) || fechaCompr.isAfter(fechaIni))
-                && (fechaCompr.isEqual(fechaFin) || fechaCompr.isBefore(fechaFin));
     }
 
     public void cargarFeriadosTabla() {
@@ -231,31 +207,12 @@ public class VisHorario extends javax.swing.JInternalFrame {
         }
     }
 
-    public void cargarcomboTipoAula(String nombre) {
-        this.jcmbtipoAula.removeAllItems();
-        try {
-            Conexiones cn = new Conexiones();
-            Connection cc = cn.conectar();
-            String sql = "SELECT DISTINCT aulas.tipo_aul FROM aulas JOIN edificios ON aulas.id_edi_per = edificios.id_edi WHERE edificios.nom_edi = '" + nombre + "'";
-            Statement psd = cc.createStatement();
-            ResultSet rs = psd.executeQuery(sql);
-            while (rs.next()) {
-                String materia = rs.getString("tipo_aul");
-                this.jcmbtipoAula.addItem(materia);
-            }
-            cc.close();
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
-    }
-
-    public void cargarcomboAulasDisponibles(String idEdificio, String tipoAula) {
+    public void cargarcomboAulasDisponibles(String idEdificio) {
         this.jcmbEspaciosDisponibles.removeAllItems();
         try {
             Conexiones cn = new Conexiones();
             Connection cc = cn.conectar();
-            String sql = "SELECT nom_aul FROM aulas JOIN edificios ON aulas.id_edi_per = edificios.id_edi WHERE edificios.nom_edi = '" + idEdificio + "' and aulas.tipo_aul = '" + tipoAula + "'";
+            String sql = "SELECT nom_aul FROM aulas JOIN edificios ON aulas.id_edi_per = edificios.id_edi WHERE edificios.nom_edi = '" + idEdificio + "'";
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {
@@ -295,7 +252,8 @@ public class VisHorario extends javax.swing.JInternalFrame {
         }
 
     }
-     private void borrarFerado() {
+
+    private void borrarFerado() {
         int op = JOptionPane.showConfirmDialog(null, "Desea borrar Feriado", "Confirmacion", JOptionPane.YES_NO_OPTION);
         if (op == 0) {
             try {
@@ -415,30 +373,25 @@ public class VisHorario extends javax.swing.JInternalFrame {
             if (jtblHorarios.getSelectedRow() == -1) {
                 JOptionPane.showMessageDialog(null, "Porfavor seleccione de \nde manera adecuada");
             } else {
-                Feriados f = feriadoValido();
-                if (f == null) {
-                    if (jtblHorarios.getSelectedColumn() != 0) {
-                        int filHora = jtblHorarios.getSelectedRow();
-                        int columDia = jtblHorarios.getSelectedColumn();
-                        String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
-                        if (!valor.contains("reserva")) {
-                            if (valor.contains("null")) {
-                                verificacionDatosReserva();
-                            } else {
-                                JOptionPane.showMessageDialog(null, "La fecha seleccionada corresponde \na un jornada laboral");
-                            }
+                if (jtblHorarios.getSelectedColumn() != 0) {
+                    int filHora = jtblHorarios.getSelectedRow();
+                    int columDia = jtblHorarios.getSelectedColumn();
+                    String valor = String.valueOf(jtblHorarios.getValueAt(filHora, columDia));
+                    if (!valor.contains("reserva")) {
+                        if (valor.contains("null")) {
+                            verificacionDatosReserva();
                         } else {
-                            JOptionPane.showMessageDialog(null, "No puede reversar esta fecha se \nencuentra ya reservada");
-                        }
 
+                            JOptionPane.showMessageDialog(null, "La fecha seleccionada corresponde \na un jornada laboral");
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
+                        JOptionPane.showMessageDialog(null, "No puede reversar esta fecha se \nencuentra ya reservada");
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "No puede reservar esta fecha: " + f.descripcion);
-
+                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
                 }
+
             }
 
         });
@@ -450,7 +403,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Porfavor seleccione de \nde manera adecuada");
             } else {
                 if (jtblHorarios.getSelectedColumn() != 0) {
-                    String valordia = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
+                    String valordia = fechaAutomaticaReserva();
                     if (verificacionFechaValida(valordia)) {
                         int filHora = jtblHorarios.getSelectedRow();
                         int columDia = jtblHorarios.getSelectedColumn();
@@ -458,9 +411,8 @@ public class VisHorario extends javax.swing.JInternalFrame {
                         if (valor.contains("reserva")) {
                             int fila = jtblHorarios.getSelectedRow();
                             int columna = jtblHorarios.getSelectedColumn();
-                            String id = String.valueOf(jtblHorarios.getValueAt(fila, columna));
-                            id = id.substring(0, 1);
-                            VisReserva vr = new VisReserva(this, this.jcmbEspaciosDisponibles.getSelectedItem().toString(), jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, id, cargarReservasindividual());
+                            String[] id = String.valueOf(jtblHorarios.getValueAt(fila, columna)).split(" ");
+                            VisReserva vr = new VisReserva(this, this.jcmbEspaciosDisponibles.getSelectedItem().toString(), jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, id[0], cargarReservasindividual());
                             vr.setVisible(true);
 
                         } else {
@@ -486,7 +438,8 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Porfavor seleccione de \nde manera adecuada");
             } else {
                 if (jtblHorarios.getSelectedColumn() != 0) {
-                    String valordia = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
+                    String valordia = fechaAutomaticaReserva();
+
                     if (verificacionFechaValida(valordia)) {
                         int filHora = jtblHorarios.getSelectedRow();
                         int columDia = jtblHorarios.getSelectedColumn();
@@ -600,7 +553,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
- 
 
         if (fechaOtra != null && !fechaOtra.before(fechaActual)
                 || fechaOtra.toString().substring(0, 10).equals(fechaActual.toString().substring(0, 10))) {
@@ -618,15 +570,27 @@ public class VisHorario extends javax.swing.JInternalFrame {
             if (verificacionDiaValido == 1) {
                 JOptionPane.showMessageDialog(null, "No se puede reservar en fines de semana");
                 return false;
-            } else if ((this.jtblHorarios.getSelectedColumn() + 1) != verificacionDiaValido) {
-                JOptionPane.showMessageDialog(null, "El dia seleccionado no"
-                        + "\ncorresponde a la fecha selecionada");
-                return false;
 
             } else {
-                VisReserva vr = new VisReserva(this, this.jcmbEspaciosDisponibles.getSelectedItem().toString(), this.jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, null, null);
-                vr.setVisible(true);
-                return true;
+                Date fechaActual = new Date();
+                if (fechaAutomaticaReserva().equalsIgnoreCase(this.formatoFecha.format(fechaActual))) {
+                    if (!verificacionHora()) {
+                        VisReserva vr = new VisReserva(this, this.jcmbEspaciosDisponibles.getSelectedItem().toString(), this.jtblHorarios.getSelectedRow() + 7, horasDisponibles(), fechaAutomaticaReserva(), null, null);
+                        vr.consumirVistaPrincipal(this.visPrin);
+                        vr.setVisible(true);
+                        return true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No puede reservar esta hora seleccionda");
+                        return false;
+                    }
+                } else {
+
+                    VisReserva vr = new VisReserva(this, this.jcmbEspaciosDisponibles.getSelectedItem().toString(), this.jtblHorarios.getSelectedRow() + 7, horasDisponibles(), fechaAutomaticaReserva(), null, null);
+                    vr.consumirVistaPrincipal(this.visPrin);
+                    vr.setVisible(true);
+                    return true;
+                }
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "No puede reservar en una fecha"
@@ -634,6 +598,35 @@ public class VisHorario extends javax.swing.JInternalFrame {
             return false;
         }
 
+    }
+
+    public String fechaAutomaticaReserva() {
+        int semana = indiceSemana(this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime()));
+        int indiceIngreso = this.jtblHorarios.getSelectedColumn();
+        LocalDate primerDiaSemana = LocalDate.of(2024, 1, 1)
+                .with(TemporalAdjusters.firstDayOfYear())
+                .plusWeeks(semana - 1);
+        LocalDate fechaCalculada = primerDiaSemana.with(DayOfWeek.of(indiceIngreso));
+        return fechaCalculada.toString();
+    }
+
+    public boolean verificacionHora() {
+
+        LocalDateTime tiempoActual = LocalDateTime.now();
+        int horaActual = Integer.parseInt(tiempoActual.toString().substring(11, 13));
+        int horaTabla = this.jtblHorarios.getSelectedRow() + 7;
+        if (horaTabla >= 13) {
+            horaTabla++;
+        }
+        if (horaActual <= horaTabla) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void consumirVistaPrincipal(VisPrincipal vp) {
+        this.visPrin = vp;
     }
 
     /**
@@ -648,8 +641,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jppmMenu = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jcmbtipoAula = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtblHorarios = new ComponentesPropios.utcJTable();
         jcnlCalendar = new com.toedter.calendar.JDateChooser();
@@ -671,18 +662,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
         jLabel1.setText("Fecha");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 20, -1, -1));
 
-        jcmbtipoAula.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
-        jcmbtipoAula.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jcmbtipoAulaItemStateChanged(evt);
-            }
-        });
-        jPanel1.add(jcmbtipoAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 160, 30));
-
-        jLabel2.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
-        jLabel2.setText("Tipo:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
-
         jScrollPane2.setViewportView(jtblHorarios);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 900, 430));
@@ -700,18 +679,19 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 jcmbEspaciosDisponiblesItemStateChanged(evt);
             }
         });
-        jPanel1.add(jcmbEspaciosDisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 170, 30));
+        jPanel1.add(jcmbEspaciosDisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 260, 30));
 
+        jcmbEdificios.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jcmbEdificios.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jcmbEdificiosItemStateChanged(evt);
             }
         });
-        jPanel1.add(jcmbEdificios, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 160, 30));
+        jPanel1.add(jcmbEdificios, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 210, 30));
 
         jLabel4.setFont(new java.awt.Font("Microsoft Uighur", 1, 24)); // NOI18N
         jLabel4.setText("Aula:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -732,19 +712,11 @@ public class VisHorario extends javax.swing.JInternalFrame {
     private void jcmbEdificiosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmbEdificiosItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
 
-            cargarcomboTipoAula(this.jcmbEdificios.getSelectedItem().toString());
+            cargarcomboAulasDisponibles(this.jcmbEdificios.getSelectedItem().toString());
             cargarFeriadosTabla();
         }
 
     }//GEN-LAST:event_jcmbEdificiosItemStateChanged
-
-    private void jcmbtipoAulaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmbtipoAulaItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            cargarcomboAulasDisponibles(this.jcmbEdificios.getSelectedItem().toString(), this.jcmbtipoAula.getSelectedItem().toString());
-        }
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcmbtipoAulaItemStateChanged
 
     private void jcmbEspaciosDisponiblesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmbEspaciosDisponiblesItemStateChanged
 
@@ -798,14 +770,12 @@ public class VisHorario extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox<String> jcmbEdificios;
     public javax.swing.JComboBox<String> jcmbEspaciosDisponibles;
-    public javax.swing.JComboBox<String> jcmbtipoAula;
     private com.toedter.calendar.JDateChooser jcnlCalendar;
     private javax.swing.JPopupMenu jppmMenu;
     public ComponentesPropios.utcJTable jtblHorarios;

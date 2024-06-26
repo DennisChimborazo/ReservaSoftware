@@ -18,13 +18,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class Sounds {
      public static void sonidoAdvertencia(){
-         sonido("src/Sonidos/fat-kick-drumloop-99bpm-141016.wav");
+         sonido("src/Sonidos/advertencia.wav");
      }
      public static void sonidoError(){
-         sonido("src/Sonidos/fat-kick-drumloop-99bpm-141016.wav");
+         sonido("src/Sonidos/error.wav");
      }
      public static void sonidoOk(){
-         sonido("src/Sonidos/fat-kick-drumloop-99bpm-141016.wav");
+         sonido("src/Sonidos/ok.wav");
      }
 
     private static void sonido(String file) {

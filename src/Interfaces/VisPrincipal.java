@@ -10,6 +10,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import reservasoftware.Sounds;
 
 /**
  *
@@ -245,7 +246,8 @@ public class VisPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
+        Sounds.sonidoAdvertencia();
+        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (mensaje == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
@@ -292,7 +294,9 @@ public class VisPrincipal extends javax.swing.JFrame {
             this.jdskEscritorio.add(this.vishorario);
             this.jdskEscritorio.updateUI();
         } else {
-            JOptionPane.showMessageDialog(this.jdskEscritorio, "No puede generar mas de 1 Ventana");
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "No puede generar mas de 1 Ventana", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_jbtnAulasActionPerformed
 

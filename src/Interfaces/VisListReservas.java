@@ -64,7 +64,7 @@ public class VisListReservas extends javax.swing.JFrame {
                     + "    r.hora_fin_reserv\n"
                     + "FROM reservas r\n"
                     + "INNER JOIN aulas a ON a.id_aul = r.id_lab_reser\n"
-                    + "INNER JOIN personas p ON p.id_per = r.id_per_reserv;");
+                    + "INNER JOIN personas p ON p.ced_per = r.id_per_reserv;");
             rs = ps.executeQuery();
             rsm = rs.getMetaData();
             columnas = rsm.getColumnCount();

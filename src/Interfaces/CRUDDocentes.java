@@ -34,22 +34,26 @@ public class CRUDDocentes extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         selecionarTabla();
         cambiarTamanioCeldasAncho();
-        litimanteAccion();
     }
 
     public void litimanteAccion() {
         if (this.vistRes != null) {
             this.jtxtNombre.setEnabled(true);
+            this.jtxtDireccion.setEnabled(true);
+            this.jtxtTelefono.setEnabled(true);
             this.jbtnGuardar.setEnabled(true);
             this.jbtnEditar.setEnabled(false);
             this.jbtnNuevo.setEnabled(false);
             this.jbtnEliminar.setEnabled(false);
+            this.jtblPersonas.setEnabled(false);
         }
     }
 
     public void consumirVistaReserva(VisReserva vr, VisPrincipal vsP) {
         this.vistRes = vr;
         this.vsP = vsP;
+        litimanteAccion();
+
     }
 
     public String crearClaveUnica() {

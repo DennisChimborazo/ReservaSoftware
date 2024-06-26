@@ -31,6 +31,7 @@ import java.util.Locale;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import reservasoftware.Feriados;
+import reservasoftware.Sounds;
 
 /**
  *
@@ -78,7 +79,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
 
     private void seleccionarFecha() {
         jcnlCalendar.addPropertyChangeListener((PropertyChangeEvent evt) -> {
-            
+
             LimpiarTablaReserva();
             String fechaVerificacion = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
             int indexSemana = indiceSemana(fechaVerificacion);
@@ -240,6 +241,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 PreparedStatement psd = cn.prepareStatement(Sql);
                 int n = psd.executeUpdate();
                 if (n > 0) {
+                    Sounds.sonidoOk();
                     JOptionPane.showMessageDialog(null, "Se elimino la reserva del registro");
                     LimpiarTablaReserva();
                     String fechaVerificacion = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
@@ -247,7 +249,8 @@ public class VisHorario extends javax.swing.JInternalFrame {
                     cargarReservas(indexSemana);
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Verifique los datos que desea borrar");
+                Sounds.sonidoError();
+                JOptionPane.showMessageDialog(null, "Verifique los datos que desea borrar", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
             }
 
         }
@@ -267,13 +270,15 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 PreparedStatement psd = cn.prepareStatement(Sql);
                 int n = psd.executeUpdate();
                 if (n > 0) {
+                    Sounds.sonidoOk();
                     JOptionPane.showMessageDialog(null, "Se elimino la feriado del registro");
                     cargarFeriados();
                     cargarFeriadosTabla();
 
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Verifique los datos que desea borrar");
+                Sounds.sonidoError();
+                JOptionPane.showMessageDialog(null, "Verifique los datos que desea borrar", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
             }
 
         }
@@ -285,7 +290,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
             Conexiones cn = new Conexiones();
             Connection cc = cn.conectar();
             //String sql = "SELECT reservas.*,personas.nom_per AS nombre_persona FROM reservas JOIN aulas ON reservas.id_lab_reser = aulas.id_aul JOIN personas ON reservas.id_per_reserv = personas.ced_per WHERE aulas.nom_aul = '" + this.jcmbEspaciosDisponibles.getSelectedItem().toString() + "'";
-                      String sql = "SELECT reservas.*, personas.nom_per AS nombre_persona FROM reservas JOIN aulas ON reservas.id_lab_reser = aulas.id_aul JOIN personas ON (reservas.id_per_reserv = personas.ced_per OR reservas.id_per_reserv = personas.id_per) WHERE aulas.nom_aul = '" + this.jcmbEspaciosDisponibles.getSelectedItem().toString() + "'";
+            String sql = "SELECT reservas.*, personas.nom_per AS nombre_persona FROM reservas JOIN aulas ON reservas.id_lab_reser = aulas.id_aul JOIN personas ON (reservas.id_per_reserv = personas.ced_per OR reservas.id_per_reserv = personas.id_per) WHERE aulas.nom_aul = '" + this.jcmbEspaciosDisponibles.getSelectedItem().toString() + "'";
 
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sql);
@@ -300,7 +305,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 int indexSemana = indiceSemana(dia);
                 if (indice == indexSemana) {
                     for (int i = 0; i < horas; i++) {
-                        System.out.println("---- "+profe);
+                        System.out.println("---- " + profe);
                         this.jtblHorarios.setValueAt(id_reser + "  reserva\n" + profe, (indicehorario + i), indiceDia(dia) - 1);
                     }
                 }
@@ -372,10 +377,11 @@ public class VisHorario extends javax.swing.JInternalFrame {
     }
 
     private void accionJitmReserva() {
-
         this.jitmReserva.addActionListener((ActionEvent e) -> {
             if (jtblHorarios.getSelectedRow() == -1) {
-                JOptionPane.showMessageDialog(null, "Porfavor seleccione de \nde manera adecuada");
+                Sounds.sonidoError();
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione de \nde manera adecuada", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
+
             } else {
                 if (jtblHorarios.getSelectedColumn() != 0) {
                     int filHora = jtblHorarios.getSelectedRow();
@@ -385,15 +391,17 @@ public class VisHorario extends javax.swing.JInternalFrame {
                         if (valor.contains("null")) {
                             verificacionDatosReserva();
                         } else {
-
-                            JOptionPane.showMessageDialog(null, "La fecha seleccionada corresponde \na un jornada laboral");
+                            Sounds.sonidoError();
+                            JOptionPane.showMessageDialog(null, "La fecha seleccionada corresponde \no puede reservarla", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "No puede reversar esta fecha se \nencuentra ya reservada");
+                        Sounds.sonidoError();
+                        JOptionPane.showMessageDialog(null, "No puede reversar esta fecha se \nencuentra ya reservada", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
+                    Sounds.sonidoError();
+                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
@@ -418,18 +426,17 @@ public class VisHorario extends javax.swing.JInternalFrame {
                             String[] id = String.valueOf(jtblHorarios.getValueAt(fila, columna)).split(" ");
                             VisReserva vr = new VisReserva(this, this.jcmbEspaciosDisponibles.getSelectedItem().toString(), jtblHorarios.getSelectedRow() + 7, horasDisponibles(), valor, id[0], cargarReservasindividual());
                             vr.setVisible(true);
-
                         } else {
-                            JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede modificar");
+                            Sounds.sonidoError();
+                            JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede modificar", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                         }
-
                     } else {
-                        JOptionPane.showMessageDialog(null, "No puede modificar la reserva corespondiente\na esa fecha");
-
+                        Sounds.sonidoError();
+                        JOptionPane.showMessageDialog(null, "No puede modificar la reserva corespondiente\na esa fecha", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                     }
-
                 } else {
-                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
+                    Sounds.sonidoError();
+                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -439,7 +446,8 @@ public class VisHorario extends javax.swing.JInternalFrame {
     private void jitmEliminarReserva() {
         this.jitmEliminarReserva.addActionListener((ActionEvent e) -> {
             if (jtblHorarios.getSelectedRow() == -1) {
-                JOptionPane.showMessageDialog(null, "Porfavor seleccione de \nde manera adecuada");
+                Sounds.sonidoError();
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione de \nde manera adecuada", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (jtblHorarios.getSelectedColumn() != 0) {
                     String valordia = fechaAutomaticaReserva();
@@ -458,15 +466,16 @@ public class VisHorario extends javax.swing.JInternalFrame {
                             }
 
                         } else {
-                            JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede elinimar");
+                            Sounds.sonidoError();
+                            JOptionPane.showMessageDialog(null, "La fecha selecionada \nno se puede elinimar", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                         }
-
                     } else {
-                        JOptionPane.showMessageDialog(null, "No puede borrar la reserva corespondiente\na esa fecha");
-
+                        Sounds.sonidoError();
+                        JOptionPane.showMessageDialog(null, "No puede borrar la reserva corespondiente\na esa fecha", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido");
+                    Sounds.sonidoError();
+                    JOptionPane.showMessageDialog(null, "Porfavor selecione un horario valido", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -584,21 +593,20 @@ public class VisHorario extends javax.swing.JInternalFrame {
                         vr.setVisible(true);
                         return true;
                     } else {
-                        JOptionPane.showMessageDialog(null, "No puede reservar esta hora seleccionda");
+                        Sounds.sonidoError();
+                        JOptionPane.showMessageDialog(null, "No puede reservar esta hora seleccionda", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
                 } else {
-
                     VisReserva vr = new VisReserva(this, this.jcmbEspaciosDisponibles.getSelectedItem().toString(), this.jtblHorarios.getSelectedRow() + 7, horasDisponibles(), fechaAutomaticaReserva(), null, null);
                     vr.consumirVistaPrincipal(this.visPrin);
                     vr.setVisible(true);
                     return true;
                 }
-
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No puede reservar en una fecha"
-                    + "\nanterior a la fecha actual");
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "No puede reservar en una fecha \nanterior a la fecha actual", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 

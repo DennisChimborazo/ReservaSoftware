@@ -8,14 +8,12 @@ import Modelos.Docente;
 import Modelos.ModeloUsuarios;
 import Repositorio.Conexiones;
 import Validadores.Validadores;
-import java.awt.HeadlessException;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import reservasoftware.Sounds;
 
 /**
  *
@@ -38,9 +36,24 @@ public class CRUDDocentes extends javax.swing.JFrame {
         cambiarTamanioCeldasAncho();
     }
 
+    public void litimanteAccion() {
+        if (this.vistRes != null) {
+            this.jtxtNombre.setEnabled(true);
+            this.jtxtDireccion.setEnabled(true);
+            this.jtxtTelefono.setEnabled(true);
+            this.jbtnGuardar.setEnabled(true);
+            this.jbtnEditar.setEnabled(false);
+            this.jbtnNuevo.setEnabled(false);
+            this.jbtnEliminar.setEnabled(false);
+            this.jtblPersonas.setEnabled(false);
+        }
+    }
+
     public void consumirVistaReserva(VisReserva vr, VisPrincipal vsP) {
         this.vistRes = vr;
         this.vsP = vsP;
+        litimanteAccion();
+
     }
 
     public String crearClaveUnica() {
@@ -89,13 +102,13 @@ public class CRUDDocentes extends javax.swing.JFrame {
         try {
             Conexiones cn = new Conexiones();
             Connection cc = cn.conectar();
-            String sql = "SELECT * FROM personas";
+            String sql = "SELECT * FROM personas ORDER BY ape_per ASC";
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {
                 Object[] docente = new Object[5];
                 docente[0] = rs.getString("ced_per");
-                docente[1] = ModeloUsuarios.modelomayus(rs.getString("nom_per")) + " " + ModeloUsuarios.modelomayus(rs.getString("ape_per"));
+                docente[1] = ModeloUsuarios.modelomayus(rs.getString("ape_per")) + " " + ModeloUsuarios.modelomayus(rs.getString("nom_per"));
                 docente[2] = rs.getString("telf_per");
                 docente[3] = rs.getString("dir_per");
                 docente[4] = rs.getString("tipo");
@@ -105,6 +118,8 @@ public class CRUDDocentes extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
+        cambiarTamanioCeldasAncho();
+
     }
 
     private void agregarDocente() {
@@ -132,6 +147,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
 
                         int res = ps.executeUpdate();
                         if (res > 0) {
+                            Sounds.sonidoOk();
                             JOptionPane.showMessageDialog(null, "Se ingreso correctamene");
                             if (this.vistRes != null) {
                                 this.vistRes.consumirClaveUnica(crearClaveUnica());
@@ -148,16 +164,18 @@ public class CRUDDocentes extends javax.swing.JFrame {
                         }
 
                     } catch (SQLException e) {
-                        System.out.println(e.toString());
+                        Sounds.sonidoError();
+                        JOptionPane.showMessageDialog(null, "Revisa los datos ingresados", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-
             } else {
-                JOptionPane.showMessageDialog(null, "Numero de telefono ingresado no valido");
+                Sounds.sonidoError();
+                JOptionPane.showMessageDialog(null, "Numero de telefono ingresado no valido", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -173,6 +191,8 @@ public class CRUDDocentes extends javax.swing.JFrame {
                 PreparedStatement ps = cn.prepareStatement(sql);
                 int res = ps.executeUpdate();
                 if (res > 0) {
+
+                    Sounds.sonidoOk();
                     JOptionPane.showMessageDialog(null, "Se actualizo correctamene");
                     cargarTabla();
                     textosBlancos();
@@ -180,7 +200,9 @@ public class CRUDDocentes extends javax.swing.JFrame {
                     ps.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(CRUDDocentes.class.getName()).log(Level.SEVERE, null, ex);
+                Sounds.sonidoError();
+                JOptionPane.showMessageDialog(null, "Revisa los datos que desea editar", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
+
             }
         } else {
 
@@ -196,6 +218,7 @@ public class CRUDDocentes extends javax.swing.JFrame {
             PreparedStatement psd = cn.prepareStatement(sql);
             int res = psd.executeUpdate();
             if (res > 0) {
+                Sounds.sonidoOk();
                 JOptionPane.showMessageDialog(null, "Se Elimino correctamene");
                 cargarTabla();
                 textosBlancos();
@@ -204,11 +227,14 @@ public class CRUDDocentes extends javax.swing.JFrame {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "Revisa los datos que desea eliminar", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
+
         }
     }
 
     private void selecionarTabla() {
+
         this.jtblPersonas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -238,7 +264,6 @@ public class CRUDDocentes extends javax.swing.JFrame {
     private void cambiarTamanioCeldasAncho() {
         for (int i = 0; i < this.jtblPersonas.getRowCount(); i++) {
             this.jtblPersonas.setRowHeight(i, 35);
-
         }
 
     }

@@ -15,14 +15,13 @@ import javax.swing.JOptionPane;
  */
 public class Conexiones {
 
-    
     Connection conectar;
 
     public Connection conectar() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             try {
-                conectar = DriverManager.getConnection("jdbc:mysql://localhost:33060/proyectot", "root", "mysql");
+                 conectar = DriverManager.getConnection("jdbc:mysql://localhost:33060/proyectot", "root", "mysql");
 
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex);

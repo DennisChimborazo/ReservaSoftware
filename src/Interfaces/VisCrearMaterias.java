@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import reservasoftware.Sounds;
 
 /**
  *
@@ -35,19 +36,20 @@ public class VisCrearMaterias extends javax.swing.JFrame {
         ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/banner.png"));
         this.jLabel1.setIcon(imagen);
         setLocationRelativeTo(this);
-        jbtnVolver.setBackground(new Color(25,134,191));
+        jbtnVolver.setBackground(new Color(25, 134, 191));
         jbtnVolver.setForeground(Color.WHITE);
-        jbtnCrear.setBackground(new Color(110,7,7));
+        jbtnCrear.setBackground(new Color(110, 7, 7));
         jbtnCrear.setForeground(Color.WHITE);
         this.cargarcomboMateria();
         this.cargarcomboPersonas();
-        
+
     }
 
-     public void consumirDatos(VisPrincipal vsP){
-        this.vsP=vsP;
+    public void consumirDatos(VisPrincipal vsP) {
+        this.vsP = vsP;
     }
-  public void cargarcomboMateria() {
+
+    public void cargarcomboMateria() {
         this.jcbxCarerra.removeAllItems();
         try {
             Conexiones cn = new Conexiones();
@@ -64,12 +66,13 @@ public class VisCrearMaterias extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-  public void cargarcomboPersonas() {
+
+    public void cargarcomboPersonas() {
         this.jcbxDocente.removeAllItems();
         try {
             Conexiones cn = new Conexiones();
             Connection cc = cn.conectar();
-            String sql = "SELECT * FROM personas";
+            String sql = "SELECT * FROM personas WHERE 	tipo='DOCENTE' ";
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {
@@ -82,7 +85,8 @@ public class VisCrearMaterias extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-  private String buscarIdCarrera() {
+
+    private String buscarIdCarrera() {
         String idCarrera = "";
         try {
             Conexiones cc = new Conexiones();
@@ -100,43 +104,45 @@ public class VisCrearMaterias extends javax.swing.JFrame {
         return idCarrera;
 
     }
-  private String buscarIdPersona() {
-    String idPersona = "";
-    try {
-        Conexiones cc = new Conexiones();
-        Connection cn = cc.conectar();
-        String nombreCompleto = this.jcbxDocente.getSelectedItem().toString();
-        
-        // Dividir el nombre completo en nombre y apellido
-        String[] partes = nombreCompleto.split(" ");
-        if (partes.length < 2) {
-            JOptionPane.showMessageDialog(null, "Nombre completo inválido.");
-            return idPersona;
-        }
-        String nombre = partes[0];
-        String apellido = partes[1];
 
-        String queryBuscarIdPersona = "SELECT id_per FROM personas WHERE nom_per= ? AND ape_per= ?";
-        PreparedStatement declaración = cn.prepareStatement(queryBuscarIdPersona);
-        declaración.setString(1, nombre);
-        declaración.setString(2, apellido);
-        
-        ResultSet resultado = declaración.executeQuery();
-        if (resultado.next()) {
-            idPersona = resultado.getString("id_per");
+    private String buscarIdPersona() {
+        String idPersona = "";
+        try {
+            Conexiones cc = new Conexiones();
+            Connection cn = cc.conectar();
+            String nombreCompleto = this.jcbxDocente.getSelectedItem().toString();
+
+            // Dividir el nombre completo en nombre y apellido
+            String[] partes = nombreCompleto.split(" ");
+            if (partes.length < 2) {
+                JOptionPane.showMessageDialog(null, "Nombre completo inválido.");
+                return idPersona;
+            }
+            String nombre = partes[0];
+            String apellido = partes[1];
+
+            String queryBuscarIdPersona = "SELECT id_per FROM personas WHERE nom_per= ? AND ape_per= ?";
+            PreparedStatement declaración = cn.prepareStatement(queryBuscarIdPersona);
+            declaración.setString(1, nombre);
+            declaración.setString(2, apellido);
+
+            ResultSet resultado = declaración.executeQuery();
+            if (resultado.next()) {
+                idPersona = resultado.getString("id_per");
+            }
+            cn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VisReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
-        cn.close();
-    } catch (SQLException ex) {
-        Logger.getLogger(VisReserva.class.getName()).log(Level.SEVERE, null, ex);
+        return idPersona;
     }
-    return idPersona;
-}
-  private void guardarMateria() {
+
+    private void guardarMateria() {
         try {
             Conexiones cc = new Conexiones();
             Connection cn = cc.conectar();
             String idCarrera = buscarIdCarrera();
-            String idPersona= buscarIdPersona();
+            String idPersona = buscarIdPersona();
             String sql = "insert into materias (nombre,id_carrera,id_per) values (?,?,?)";
             PreparedStatement psd = cn.prepareStatement(sql);
             psd.setString(1, this.jtxtMateria.getText());
@@ -144,13 +150,15 @@ public class VisCrearMaterias extends javax.swing.JFrame {
             psd.setString(3, idPersona);
             int num = psd.executeUpdate();
             if (num != 0) {
+                Sounds.sonidoOk();
                 JOptionPane.showMessageDialog(null, "Se creo una nueva materia");
                 this.vsP.setVisible(true);
                 this.dispose();
                 this.jtxtMateria.setText("");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "Revisa los datos ingresados", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
 
         }
     }
@@ -336,19 +344,17 @@ public class VisCrearMaterias extends javax.swing.JFrame {
 
     private void jbtnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCrearActionPerformed
         // TODO add your handling code here:
-         if (!this.jtxtMateria.getText().isEmpty()) {
-            
-                guardarMateria();
- 
+        if (!this.jtxtMateria.getText().isEmpty()) {
+            guardarMateria();
         } else {
-            JOptionPane.showMessageDialog(null, "Porfavor ingrese el nombre");
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "Porfavor ingrese el nombre de la materia", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbtnCrearActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-
+        Sounds.sonidoAdvertencia();
+        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (mensaje == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
@@ -390,7 +396,7 @@ public class VisCrearMaterias extends javax.swing.JFrame {
     private void jbtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverActionPerformed
         // TODO add your handling code here:
         this.vsP.setVisible(true);
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jbtnVolverActionPerformed
 
     /**

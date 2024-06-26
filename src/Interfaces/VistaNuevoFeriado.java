@@ -13,13 +13,15 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import reservasoftware.Sounds;
 
 /**
  *
  * @author Dalex
  */
 public class VistaNuevoFeriado extends javax.swing.JFrame {
-VisPrincipal vsP;
+
+    VisPrincipal vsP;
     int Xmov, Ymov;
     VisHorario vistaHorario;
     private SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -38,7 +40,7 @@ VisPrincipal vsP;
         int month = Integer.parseInt(valores[1]);
         int day = Integer.parseInt(valores[2]);
         LocalDate fechaInicial = LocalDate.of(year, month, day);
-        LocalDate fechaResultado = fechaInicial.plusDays(Integer.parseInt(this.jtxtDiasFeriado.getText())-1);
+        LocalDate fechaResultado = fechaInicial.plusDays(Integer.parseInt(this.jtxtDiasFeriado.getText()) - 1);
         return String.valueOf(fechaResultado);
     }
 
@@ -62,20 +64,21 @@ VisPrincipal vsP;
             int num = psd.executeUpdate();
             if (num != 0) {
                 JOptionPane.showMessageDialog(null, "Se agrego un nuevo feriado");
+                Sounds.sonidoOk();
                 this.vistaHorario.actualizarDatos();
                 this.vsP.setVisible(true);
                 this.dispose();
-                
-
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "Revisa los datos ingresados", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
 
         }
     }
-      public void consumirDatos(VisPrincipal vsP,VisHorario vh){
-        this.vsP=vsP;
-                this.vistaHorario=vh;
+
+    public void consumirDatos(VisPrincipal vsP, VisHorario vh) {
+        this.vsP = vsP;
+        this.vistaHorario = vh;
 
     }
 
@@ -282,16 +285,19 @@ VisPrincipal vsP;
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
         if (!this.jtxtDescripFeriado.getText().isEmpty() && !this.jtxtDiasFeriado.getText().isEmpty()) {
             guardarFeriado();
+
         } else {
-            JOptionPane.showMessageDialog(null, "Ingrese todos los campos requeridos");
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "Ingrese todos los campos requeridos", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
 
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-
+        // int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
+        Sounds.sonidoAdvertencia();
+        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (mensaje == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
@@ -340,9 +346,8 @@ VisPrincipal vsP;
     }//GEN-LAST:event_jtxtDiasFeriadoKeyTyped
 
     private void jbtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverActionPerformed
-         this.vsP.setVisible(true);
-    this.dispose();
-        
+        this.vsP.setVisible(true);
+        this.dispose();
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jbtnVolverActionPerformed

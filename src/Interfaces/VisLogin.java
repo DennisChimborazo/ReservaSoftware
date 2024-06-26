@@ -12,9 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import reservasoftware.Sounds;
 
 /**
  *
@@ -30,10 +29,10 @@ public class VisLogin extends javax.swing.JFrame {
     public VisLogin() {
         initComponents();
         this.setLocationRelativeTo(null);
-       rsscalelabel.RSScaleLabel.setScaleLabel(jlb_banner, "src/Imagenes/banner.png");
+        rsscalelabel.RSScaleLabel.setScaleLabel(jlb_banner, "src/Imagenes/banner.png");
         ImageIcon iconosello = new ImageIcon(getClass().getResource("/Imagenes/sello_login.png"));
         jLabel2.setIcon(iconosello);
-         rsscalelabel.RSScaleLabel.setScaleLabel(lb_fondo, "src/Imagenes/fondo_escritorio.png");
+        rsscalelabel.RSScaleLabel.setScaleLabel(lb_fondo, "src/Imagenes/fondo_escritorio.png");
 
     }
 
@@ -190,19 +189,23 @@ public class VisLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIniciarSesionActionPerformed
-      
+
         if (verificarDatos()) {
+            Sounds.sonidoOk();
+
             VisPrincipal visPrincipal = new VisPrincipal();
             visPrincipal.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_jbtnIniciarSesionActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
+        Sounds.sonidoAdvertencia();
+        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (mensaje == JOptionPane.YES_OPTION) {
             System.exit(0);
         }

@@ -4,25 +4,24 @@
  */
 package Interfaces;
 
-import Interfaces.VisReserva;
 import Repositorio.Conexiones;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import reservasoftware.Sounds;
 
 /**
  *
  * @author Dalex
  */
 public class VistNuevosEspacios extends javax.swing.JFrame {
+
     int Xmov, Ymov;
     VisPrincipal vsP;
 
@@ -45,9 +44,9 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
         this.jcmbTipoEspacio.addItem("Taller");
         this.jcmbTipoEspacio.addItem("Auditorio");
     }
-    
-    public void consumirDatos(VisPrincipal vsP){
-        this.vsP=vsP;
+
+    public void consumirDatos(VisPrincipal vsP) {
+        this.vsP = vsP;
     }
 
     private void guardarEspacios() {
@@ -62,11 +61,13 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
             psd.setString(3, idEdidicio);
             int num = psd.executeUpdate();
             if (num != 0) {
+                Sounds.sonidoOk();
                 JOptionPane.showMessageDialog(null, "Se creo un nuevo espacio");
                 this.jtxtNombreEspacio.setText("");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "Revisa los datos ingresados", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
 
         }
     }
@@ -293,20 +294,22 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
                 guardarEspacios();
                 this.vsP.setVisible(true);
                 this.dispose();
-                
+
             } else {
-                JOptionPane.showMessageDialog(null, "El nombre elegido ya se encuentra en los registros");
+                Sounds.sonidoError();
+                JOptionPane.showMessageDialog(null, "El nombre elegido ya se encuentra en los registros", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
 
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Porfavor ingrese el nombre");
+            Sounds.sonidoError();
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el nombre", "Ha ocurrido un error.", JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_jbtnCrearActionPerformed
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
-
+        Sounds.sonidoAdvertencia();
+        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (mensaje == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
@@ -346,9 +349,9 @@ public class VistNuevosEspacios extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MousePressed
 
     private void jbtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverActionPerformed
-   
-    this.vsP.setVisible(true);
-    this.dispose();
+
+        this.vsP.setVisible(true);
+        this.dispose();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnVolverActionPerformed

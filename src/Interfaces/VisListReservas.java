@@ -11,11 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import reservasoftware.Sounds;
 
 /**
  *
@@ -64,7 +64,7 @@ public class VisListReservas extends javax.swing.JFrame {
                     + "    r.hora_fin_reserv\n"
                     + "FROM reservas r\n"
                     + "INNER JOIN aulas a ON a.id_aul = r.id_lab_reser\n"
-                    + "INNER JOIN personas p ON p.id_per = r.id_per_reserv;");
+                    + "INNER JOIN personas p ON p.ced_per = r.id_per_reserv;");
             rs = ps.executeQuery();
             rsm = rs.getMetaData();
             columnas = rsm.getColumnCount();
@@ -221,8 +221,8 @@ public class VisListReservas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPnl_salidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnl_salidaMouseClicked
-
-        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
+        Sounds.sonidoAdvertencia();
+        int mensaje = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
         if (mensaje == JOptionPane.YES_OPTION) {
             System.exit(0);

@@ -87,13 +87,13 @@ public class VisReserva extends javax.swing.JFrame {
                 if (cont == 13) {
                     horainico = horainico + 1;
                 }
-                this.jcmbHorasDisponibles.addItem((horainico + i) + ":00 - " + (horainico + i + 1) + ":00");
+                this.jcmbHorasDisponibles.addItem((horainico + i + 1) + ":00");
                 cont++;
             }
         } else {
 
             for (int i = 0; i < horaFin; i++) {
-                this.jcmbHorasDisponibles.addItem((horainico + i) + ":00 - " + (horainico + i + 1) + ":00");
+                this.jcmbHorasDisponibles.addItem((horainico + i + 1) + ":00");
             }
         }
     }

@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -305,7 +307,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
                 int indexSemana = indiceSemana(dia);
                 if (indice == indexSemana) {
                     for (int i = 0; i < horas; i++) {
-                        System.out.println("---- " + profe);
                         this.jtblHorarios.setValueAt(id_reser + "  reserva\n" + profe, (indicehorario + i), indiceDia(dia) - 1);
                     }
                 }
@@ -451,7 +452,6 @@ public class VisHorario extends javax.swing.JInternalFrame {
             } else {
                 if (jtblHorarios.getSelectedColumn() != 0) {
                     String valordia = fechaAutomaticaReserva();
-
                     if (verificacionFechaValida(valordia)) {
                         int filHora = jtblHorarios.getSelectedRow();
                         int columDia = jtblHorarios.getSelectedColumn();
@@ -577,7 +577,7 @@ public class VisHorario extends javax.swing.JInternalFrame {
     }
 
     public boolean verificacionDatosReserva() {
-        String valor = this.formatoFecha.format(this.jcnlCalendar.getCalendar().getTime());
+        String valor = fechaAutomaticaReserva();
         if (verificacionFechaValida(valor)) {
             int verificacionDiaValido = indiceDia(valor);
             if (verificacionDiaValido == 1) {
@@ -623,14 +623,15 @@ public class VisHorario extends javax.swing.JInternalFrame {
     }
 
     public boolean verificacionHora() {
-
-        LocalDateTime tiempoActual = LocalDateTime.now();
-        int horaActual = Integer.parseInt(tiempoActual.toString().substring(11, 13));
         int horaTabla = this.jtblHorarios.getSelectedRow() + 7;
-        if (horaTabla >= 13) {
-            horaTabla++;
-        }
-        if (horaActual <= horaTabla) {
+        String cadenaHoraTabla = String.valueOf(horaTabla) + ":00";
+        LocalDateTime tiempoActual = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime horaObjetivo = LocalTime.parse(cadenaHoraTabla, formatter);
+        LocalTime horaActual = tiempoActual.toLocalTime();
+        if (horaActual.isAfter(horaObjetivo)) {
+            return true;
+        } else if (horaActual.isBefore(horaObjetivo)) {
             return false;
         } else {
             return true;
